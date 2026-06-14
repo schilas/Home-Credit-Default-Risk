@@ -1,0 +1,63 @@
+table factInstallmentDPD5Summary
+	lineageTag: dded8c92-b806-4a92-8ad5-7bc04b429f0d
+
+	column SK_ID_CURR
+		dataType: int64
+		formatString: 0
+		lineageTag: 35b122ac-0b0e-4621-b3e1-dd5d425ff579
+		summarizeBy: none
+		sourceColumn: SK_ID_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+	column InstallmentCount
+		dataType: int64
+		formatString: 0
+		lineageTag: ce1559a9-1480-4bdb-80e0-108ae1e782c9
+		summarizeBy: none
+		sourceColumn: InstallmentCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column DPD5InstallmentCount
+		dataType: int64
+		formatString: 0
+		lineageTag: e0f36c0e-2c85-4065-9e33-623606d1cfb7
+		summarizeBy: none
+		sourceColumn: DPD5InstallmentCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column EverDPD5
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: df530916-801a-4182-86ed-5fb0bba0f060
+		summarizeBy: none
+		sourceColumn: EverDPD5
+
+		annotation SummarizationSetBy = Automatic
+
+	column EverDPD5Unit
+		dataType: int64
+		formatString: 0
+		lineageTag: 92a624e8-4281-4129-b24e-1c6b98843f17
+		summarizeBy: none
+		sourceColumn: EverDPD5Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	partition factInstallmentDPD5Summary = m
+		mode: import
+		queryGroup: FACTS
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\factInstallmentDPD5Summary.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SK_ID_CURR", Int64.Type}, {"InstallmentCount", Int64.Type}, {"DPD5InstallmentCount", Int64.Type}, {"EverDPD5", type logical}, {"EverDPD5Unit", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

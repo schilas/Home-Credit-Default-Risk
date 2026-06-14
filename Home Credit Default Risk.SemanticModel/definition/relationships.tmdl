@@ -20,3 +20,25 @@ relationship AutoDetected_54106f80-7575-4325-8dfe-9ecba31dd828
 	fromColumn: factBureauMonthlyStatus.STATUS
 	toColumn: dimBureauStatus.STATUS
 
+relationship AutoDetected_61f5cb37-ae8f-46ba-b26d-2ceb71ec44d8
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: factApplications.SK_ID_CURR
+	toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+
+relationship AutoDetected_a6d220ce-818b-455b-8816-c38bf567b5e3
+	fromColumn: factBureauCredits.SK_ID_CURR
+	toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+
+relationship AutoDetected_65a9098a-e5e6-4f13-8ccf-231958377cf2
+	isActive: false
+	fromColumn: factPreviousApplications.SK_ID_CURR
+	toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+
+relationship AutoDetected_673df9f0-4297-426b-8683-9e92b54c3242
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: dimApplicant.SK_ID_CURR
+	toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+

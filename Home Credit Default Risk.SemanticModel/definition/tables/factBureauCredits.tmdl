@@ -5,7 +5,7 @@ table factBureauCredits
 		dataType: int64
 		formatString: 0
 		lineageTag: c6cde2cc-0d7a-4144-b8df-705e3b683934
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: SK_ID_CURR
 
 		annotation SummarizationSetBy = Automatic
