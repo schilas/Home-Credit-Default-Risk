@@ -5,7 +5,7 @@ table 'Measures Design'
 		displayFolder: Report Wide Measures
 		lineageTag: 17ad2d3a-7cc7-42b3-b63b-db6f185c7ab5
 
-	measure 'Report Information' = "Template Example • Powered by Master Data Domain"
+	measure 'Report Information' = "Home Credit Default Risk • Vytvořeno: Vojtěch Šildberger"
 		displayFolder: Report Wide Measures
 		lineageTag: b7cd2610-6c47-42f5-9e2c-f2ccb6498032
 

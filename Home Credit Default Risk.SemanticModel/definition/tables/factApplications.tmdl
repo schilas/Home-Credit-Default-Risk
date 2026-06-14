@@ -1,0 +1,330 @@
+table factApplications
+	lineageTag: 14147082-6939-4488-ade6-fad419711a7c
+
+	column SK_ID_CURR
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c2e4b49-68e7-4142-8a9a-5e2e0bec4443
+		summarizeBy: sum
+		sourceColumn: SK_ID_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+	column TARGET
+		dataType: int64
+		formatString: 0
+		lineageTag: b8bd1828-bd41-4a21-af96-ef43a912679b
+		summarizeBy: sum
+		sourceColumn: TARGET
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Application Unit'
+		dataType: int64
+		formatString: 0
+		lineageTag: a7f0d049-76f7-447c-bb82-ad0f1912bdc8
+		summarizeBy: sum
+		sourceColumn: Application Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column AMT_CREDIT
+		dataType: double
+		lineageTag: cfd3c28b-20d2-4f32-befc-9d02be7c7fe5
+		summarizeBy: sum
+		sourceColumn: AMT_CREDIT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMT_INCOME_TOTAL
+		dataType: double
+		lineageTag: 14f917ce-26aa-41a4-9d90-5e76e5fa53ab
+		summarizeBy: sum
+		sourceColumn: AMT_INCOME_TOTAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NAME_CONTRACT_TYPE
+		dataType: string
+		lineageTag: 86d6bf4e-1500-4931-9f1f-e975a61b575d
+		summarizeBy: none
+		sourceColumn: NAME_CONTRACT_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Cash Application'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f6ed4283-0c5e-4f46-b0da-4de167eb56c3
+		summarizeBy: none
+		sourceColumn: Is Cash Application
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODE_GENDER
+		dataType: string
+		lineageTag: 32520e75-2654-4b0b-8c70-ab6ba89d7d48
+		summarizeBy: none
+		sourceColumn: CODE_GENDER
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: f48268c6-a18c-4b0a-a35d-884020dc5418
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column DAYS_BIRTH
+		dataType: int64
+		formatString: 0
+		lineageTag: 9329c484-e221-400d-bda9-25a75a0b301a
+		summarizeBy: sum
+		sourceColumn: DAYS_BIRTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Years'
+		dataType: int64
+		formatString: 0
+		lineageTag: fccc54fd-253d-4512-9f33-90e9f43c6786
+		summarizeBy: sum
+		sourceColumn: Age Years
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group'
+		dataType: string
+		lineageTag: 337b6552-1ec8-4015-9b50-913e8314ff68
+		summarizeBy: none
+		sourceColumn: Age Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 59d4efe5-e3ea-48bc-81c7-5be6e0856f57
+		summarizeBy: sum
+		sourceColumn: Age Group Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column NAME_EDUCATION_TYPE
+		dataType: string
+		lineageTag: 1f5c6551-dc68-4984-8c6d-200d9f982c55
+		summarizeBy: none
+		sourceColumn: NAME_EDUCATION_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column NAME_FAMILY_STATUS
+		dataType: string
+		lineageTag: a138fc37-d0fb-4433-b70c-c0c8cb2e2d7e
+		summarizeBy: none
+		sourceColumn: NAME_FAMILY_STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column NAME_INCOME_TYPE
+		dataType: string
+		lineageTag: 67cbeee3-bc50-4290-b08b-3b2adff9247a
+		summarizeBy: none
+		sourceColumn: NAME_INCOME_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition factApplications = m
+		mode: import
+		queryGroup: FACTS
+		source =
+				let
+				    // Načtení zdrojového CSV souboru application_train.csv
+				    // Tento soubor je hlavní TRAIN dataset, kde jeden řádek představuje jednu aktuální žádost o úvěr
+				    Source = Csv.Document(
+				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\application_train.csv"),
+				        [
+				            Delimiter = ",",
+				            Columns = 122,
+				            Encoding = 1252,
+				            QuoteStyle = QuoteStyle.None
+				        ]
+				    ),
+				
+				    // První řádek souboru obsahuje názvy sloupců, proto jej použijeme jako hlavičky tabulky
+				    #"Promoted Headers" = Table.PromoteHeaders(
+				        Source,
+				        [PromoteAllScalars = true]
+				    ),
+				
+				    // Výběr pouze těch sloupců, které jsou potřeba pro zadané úlohy
+				    // SK_ID_CURR = klíč aktuální žádosti
+				    // TARGET = informace o defaultu / problému se splácením v TRAIN datasetu
+				    // NAME_CONTRACT_TYPE = typ aktuální žádosti, potřebný pro filtr Cash loans
+				    // CODE_GENDER = demografická dimenze pohlaví
+				    // DAYS_BIRTH = věk klienta v relativních dnech, z toho vytvoříme věkové skupiny
+				    // NAME_EDUCATION_TYPE = typ vzdělání
+				    // NAME_FAMILY_STATUS = rodinný stav
+				    // NAME_INCOME_TYPE = typ příjmu, potřebný pro výpočet mediánu DTI
+				    // AMT_CREDIT = výše aktuálně požadovaného úvěru, zároveň váha pro objemovou distribuci
+				    // AMT_INCOME_TOTAL = roční příjem klienta, potřebný pro výpočet DTI
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        #"Promoted Headers",
+				        {
+				            "SK_ID_CURR",
+				            "TARGET",
+				            "NAME_CONTRACT_TYPE",
+				            "CODE_GENDER",
+				            "DAYS_BIRTH",
+				            "NAME_EDUCATION_TYPE",
+				            "NAME_FAMILY_STATUS",
+				            "NAME_INCOME_TYPE",
+				            "AMT_CREDIT",
+				            "AMT_INCOME_TOTAL"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Nastavení správných datových typů
+				    // Číselné sloupce převádíme na number / Int64, aby se daly správně agregovat
+				    // Textové sloupce ponecháváme jako text, protože budou použity jako dimenze a filtry
+				    #"Changed Type" = Table.TransformColumnTypes(
+				        #"Selected Needed Columns",
+				        {
+				            {"SK_ID_CURR", Int64.Type},
+				            {"TARGET", Int64.Type},
+				            {"NAME_CONTRACT_TYPE", type text},
+				            {"CODE_GENDER", type text},
+				            {"DAYS_BIRTH", Int64.Type},
+				            {"NAME_EDUCATION_TYPE", type text},
+				            {"NAME_FAMILY_STATUS", type text},
+				            {"NAME_INCOME_TYPE", type text},
+				            {"AMT_CREDIT", type number},
+				            {"AMT_INCOME_TOTAL", type number}
+				        }
+				    ),
+				
+				    // Očištění textových hodnot od případných mezer na začátku nebo na konci
+				    // To je důležité pro správné seskupování kategorií v reportu
+				    #"Trimmed Text Columns" = Table.TransformColumns(
+				        #"Changed Type",
+				        {
+				            {"NAME_CONTRACT_TYPE", each if _ = null then null else Text.Trim(_), type text},
+				            {"CODE_GENDER", each if _ = null then null else Text.Trim(_), type text},
+				            {"NAME_EDUCATION_TYPE", each if _ = null then null else Text.Trim(_), type text},
+				            {"NAME_FAMILY_STATUS", each if _ = null then null else Text.Trim(_), type text},
+				            {"NAME_INCOME_TYPE", each if _ = null then null else Text.Trim(_), type text}
+				        }
+				    ),
+				
+				    // Vytvoření čitelného pole Gender
+				    // V datasetu je pohlaví uloženo jako M/F/XNA, proto převádíme hodnoty na reportovací popisky
+				    #"Added Gender Label" = Table.AddColumn(
+				        #"Trimmed Text Columns",
+				        "Gender",
+				        each
+				            if [CODE_GENDER] = "M" then "Male"
+				            else if [CODE_GENDER] = "F" then "Female"
+				            else "Unknown",
+				        type text
+				    ),
+				
+				    // Přepočet věku klienta z relativního počtu dnů
+				    // DAYS_BIRTH je záporné číslo, protože vyjadřuje počet dnů před aktuální žádostí
+				    // Například -12000 znamená, že klient se narodil přibližně 12000 dnů před žádostí
+				    #"Added Age Years" = Table.AddColumn(
+				        #"Added Gender Label",
+				        "Age Years",
+				        each
+				            if [DAYS_BIRTH] = null then null
+				            else Number.RoundDown(Number.Abs([DAYS_BIRTH]) / 365.25),
+				        Int64.Type
+				    ),
+				
+				    // Vytvoření věkových skupin pro demografickou analýzu
+				    // Tyto skupiny budou použity v distribuci žádostí podle věku
+				    #"Added Age Group" = Table.AddColumn(
+				        #"Added Age Years",
+				        "Age Group",
+				        each
+				            if [Age Years] = null then "Unknown"
+				            else if [Age Years] < 25 then "18-24"
+				            else if [Age Years] < 35 then "25-34"
+				            else if [Age Years] < 45 then "35-44"
+				            else if [Age Years] < 55 then "45-54"
+				            else if [Age Years] < 65 then "55-64"
+				            else "65+",
+				        type text
+				    ),
+				
+				    // Vytvoření číselného řazení pro věkové skupiny
+				    // Bez tohoto sloupce by Power BI mohl řadit věkové skupiny abecedně místo logicky podle věku
+				    #"Added Age Group Sort" = Table.AddColumn(
+				        #"Added Age Group",
+				        "Age Group Sort",
+				        each
+				            if [Age Group] = "18-24" then 1
+				            else if [Age Group] = "25-34" then 2
+				            else if [Age Group] = "35-44" then 3
+				            else if [Age Group] = "45-54" then 4
+				            else if [Age Group] = "55-64" then 5
+				            else if [Age Group] = "65+" then 6
+				            else 99,
+				        Int64.Type
+				    ),
+				
+				    // Příznak, zda je aktuální žádost typu Cash loans
+				    // Tento sloupec bude užitečný pro třetí úlohu, kde se mají analyzovat pouze cash žádosti
+				    #"Added Cash Application Flag" = Table.AddColumn(
+				        #"Added Age Group Sort",
+				        "Is Cash Application",
+				        each [NAME_CONTRACT_TYPE] = "Cash loans",
+				        type logical
+				    ),
+				
+				    // Pomocný metrický sloupec pro jednoduché počítání žádostí
+				    // Každý řádek představuje jednu žádost, proto má každý řádek hodnotu 1
+				    #"Added Application Unit" = Table.AddColumn(
+				        #"Added Cash Application Flag",
+				        "Application Unit",
+				        each 1,
+				        Int64.Type
+				    ),
+				
+				    // Finální seřazení sloupců do logického pořadí
+				    // Nejprve klíče a hlavní metriky, potom dimenze a odvozené reportovací sloupce
+				    #"Reordered Columns" = Table.ReorderColumns(
+				        #"Added Application Unit",
+				        {
+				            "SK_ID_CURR",
+				            "TARGET",
+				            "Application Unit",
+				            "AMT_CREDIT",
+				            "AMT_INCOME_TOTAL",
+				            "NAME_CONTRACT_TYPE",
+				            "Is Cash Application",
+				            "CODE_GENDER",
+				            "Gender",
+				            "DAYS_BIRTH",
+				            "Age Years",
+				            "Age Group",
+				            "Age Group Sort",
+				            "NAME_EDUCATION_TYPE",
+				            "NAME_FAMILY_STATUS",
+				            "NAME_INCOME_TYPE"
+				        }
+				    )
+				
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1364,79 +1364,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "measure_technical.number_of_stakeholders": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Measures Technical",
-			          "ConceptualProperty": "NumberOfStakeholders"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "number of stakeholders": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "NumberOfStakeholders": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        },
-			        {
-			          "quantity of stakeholder": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.769
-			          }
-			        },
-			        {
-			          "amount of stakeholder": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.746
-			          }
-			        },
-			        {
-			          "count of stakeholder": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.746
-			          }
-			        },
-			        {
-			          "number of stakeholder": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.746
-			          }
-			        },
-			        {
-			          "no of stakeholder": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.739
-			          }
-			        }
-			      ]
-			    },
 			    "measures_design.accent_light_green": {
 			      "Definition": {
 			        "Binding": {
@@ -4784,7 +4711,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "Measures Technical",
-			          "ConceptualProperty": "EndUsers"
+			          "ConceptualProperty": "measure"
 			        }
 			      },
 			      "State": "Generated",
@@ -4905,122 +4832,6 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.5
-			          }
-			        }
-			      ]
-			    },
-			    "measure_technical.tools": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Measures Technical",
-			          "ConceptualProperty": "Tools"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "tools": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "utensil": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "apparatus": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "paraphernalia": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "gear": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "tackle": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "rigging": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "outfit": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "trapping": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "implement": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "kit": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
 			          }
 			        }
 			      ]
