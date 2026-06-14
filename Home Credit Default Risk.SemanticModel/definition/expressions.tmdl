@@ -1,0 +1,38 @@
+expression Parameter_Environment = "DEV" meta [IsParameterQuery=true, List={"UAT", "DEV", "PRD"}, DefaultValue="DEV", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 5cdad49b-297f-407f-aa2f-4058411c0693
+	queryGroup: 'DATA ISLANDS\PARAMETERS DATA ISLANDS'
+
+	annotation PBI_ResultType = Text
+
+	annotation LinkedQueryName = Parameter_Environment
+
+expression _EndDate =
+		let
+		    Source = Date.From(Date.EndOfYear(DateTime.FixedLocalNow()))
+		in
+		    Source
+	lineageTag: a1a9591a-4b62-46fb-b4ca-1a1160aece2b
+	queryGroup: 'CALENDAR\PARAMETERS CALENDAR'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Date
+
+expression _StartDate =
+		let
+		    Source = Date.From(Date.AddMonths(Date.StartOfYear(DateTime.FixedLocalNow()),-36))
+		in
+		    Source
+	lineageTag: 35079b6d-7272-4f49-af4a-4e58bcff6021
+	queryGroup: 'CALENDAR\PARAMETERS CALENDAR'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Date
+
+expression _Language = "en-us" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6845c0e2-a490-4bd3-adae-5ec481ece7f0
+	queryGroup: 'CALENDAR\PARAMETERS CALENDAR'
+
+	annotation PBI_ResultType = Text
+

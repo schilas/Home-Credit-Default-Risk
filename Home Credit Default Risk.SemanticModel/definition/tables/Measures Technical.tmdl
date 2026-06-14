@@ -1,0 +1,44 @@
+table 'Measures Technical'
+	lineageTag: 9fac9eba-a1b8-401d-8da3-dd5c276673e9
+
+	measure NumberOfStakeholders = CALCULATE(DISTINCTCOUNT(factStakeholders[Email]),factStakeholders[Type]<>"End User")
+		formatString: #,0
+		displayFolder: Fact1
+		lineageTag: e3bbc580-e035-4fbd-8a44-18b1b92cb119
+
+		changedProperty = FormatString
+
+	measure EndUsers = CALCULATE(DISTINCTCOUNT(factStakeholders[Email]),factStakeholders[Type]="End User")
+		formatString: #,0
+		displayFolder: Fact1
+		lineageTag: 77332b14-ba5d-4105-8282-dc6290ef79b5
+
+	measure Tools = DISTINCTCOUNT(factStakeholders[ReportID])
+		formatString: 0
+		displayFolder: Fact1
+		lineageTag: 4c4a63da-17da-4c95-b4fd-dedf8b3478b6
+
+	measure HIHI = CALCULATE(DISTINCTCOUNT(factStakeholders[Email]),factStakeholders[StakeholderType]="High Influence/High Interest")
+		formatString: 0
+		displayFolder: Fact1
+		lineageTag: e0e4d2a7-3e8e-4dad-b4c4-44055cc39dc1
+
+	partition 'Measures Technical-7ff08300-51f8-45e8-a681-19dcd996fb1d' = m
+		mode: import
+		queryGroup: 'MEASURE TABLES'
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_QueryRelationships = {"columnCount":0,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":[],"ColumnCount":0,"KeyColumnNames":[],"ColumnIdentities":[],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation LinkedQueryName = Measures Technical
+
+	annotation PBI_NavigationStepName = Navigation
+

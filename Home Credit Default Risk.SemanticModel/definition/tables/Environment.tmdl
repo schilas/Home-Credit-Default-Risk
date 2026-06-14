@@ -1,0 +1,40 @@
+table Environment
+	isHidden
+	lineageTag: 9116ef46-f2f8-4439-a001-1b17641ca044
+
+	column Environment
+		dataType: string
+		isHidden
+		lineageTag: 228e801d-0dc6-4be8-b64e-7960b7928441
+		summarizeBy: none
+		sourceColumn: Environment
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Environment Description'
+		dataType: string
+		isHidden
+		lineageTag: 896a13fb-0a41-4b54-98e4-68532ea4fbfd
+		summarizeBy: none
+		sourceColumn: Environment Description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Environment-523b3f94-a099-45f4-8657-febf98858b64 = m
+		mode: import
+		queryGroup: 'DATA ISLANDS'
+		source =
+				let
+				    Source = #table({"Environment"},{{ Parameter_Environment}}),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Environment", type text}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Environment Description", each if [Environment] = "UAT" then "USER ACCEPTANCE" else if [Environment] = "DEV" then "DEVELOPMENT" else ""),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Conditional Column",{{"Environment Description", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_ResultType = Table
+

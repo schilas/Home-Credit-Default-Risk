@@ -1,0 +1,51 @@
+table Par_AutoPeriod
+	lineageTag: 88cc63ea-60ee-4102-9a8c-a660e33bcdbe
+
+	column Par_AutoPeriod
+		lineageTag: 0400df17-9080-4045-8dce-fad673757eb9
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Par_AutoPeriod Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Par_AutoPeriod Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Par_AutoPeriod Fields'
+		isHidden
+		lineageTag: 2e935b44-a82e-4c73-9c51-9028604da86a
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Par_AutoPeriod Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Par_AutoPeriod Order'
+		isHidden
+		formatString: 0
+		lineageTag: c503cb6a-029b-497d-a6d6-5bfd9f5fffea
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Par_AutoPeriod = calculated
+		mode: import
+		source =
+				{
+				    ("Date", NAMEOF('Date'[Date]), 0),
+				    ("Week", NAMEOF('Date'[Year Week Long]), 1),
+				    ("Month", NAMEOF('Date'[Year Month Long]), 2),
+				    ("Quarter", NAMEOF('Date'[Year Quarter]), 3),
+				    ("Year", NAMEOF('Date'[Year]), 4)
+				}
+
+	annotation PBI_Id = 72978aee0b0e4de2881a244301495137
+

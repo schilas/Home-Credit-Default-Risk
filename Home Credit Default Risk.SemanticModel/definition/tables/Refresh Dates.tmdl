@@ -1,0 +1,73 @@
+table 'Refresh Dates'
+	isHidden
+	lineageTag: dbea20d9-65f6-4ec0-b2e2-a2833e4d313f
+
+	column Datasource
+		dataType: string
+		isHidden
+		lineageTag: 40d4ec8c-a3e0-4e8a-8656-dae38f58116f
+		summarizeBy: none
+		sourceColumn: Datasource
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Table
+		dataType: string
+		isHidden
+		lineageTag: bf0d4e8d-e227-4652-99c7-936cdbd5e0e7
+		summarizeBy: none
+		sourceColumn: Table
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Refresh Date'
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy hh:nn:ss
+		lineageTag: d080d2d5-5c0a-44b6-935f-27ea62e92f86
+		summarizeBy: none
+		sourceColumn: Refresh Date
+
+		changedProperty = IsHidden
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Time Zone'
+		dataType: string
+		isHidden
+		lineageTag: 06e345a9-fd96-45d1-b923-5444c1cd2cf2
+		summarizeBy: none
+		sourceColumn: Time Zone
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Refresh Dates-d1274a09-0d46-405c-bcc3-d1b8ce873a80' = m
+		mode: import
+		queryGroup: 'DATA ISLANDS'
+		source =
+				let
+				    Source = DateTime.From(DateTimeZone.FixedLocalNow() + #duration(0,0,0,0)),
+				    #"Converted to Table" = #table(1, {{Source}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Converted to Table",{{"Column1", type datetime}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Column1", "Refresh Date"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "Datasource", each "Power BI Dataset"),
+				    #"Added Custom2" = Table.AddColumn(#"Added Custom", "Table", each "All"),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Added Custom2",{"Datasource", "Table", "Refresh Date"}),
+				    #"Added Custom1" = Table.AddColumn(#"Reordered Columns", "Time Zone", each "CET")
+				in
+				    #"Added Custom1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
