@@ -1,0 +1,138 @@
+table factPreviousApplications
+	lineageTag: 9844b19c-8a36-495d-b868-6d63425d0e5e
+
+	column SK_ID_CURR
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f98e35a-b81f-491f-9e3e-74517aa1b9be
+		summarizeBy: none
+		sourceColumn: SK_ID_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SK_ID_PREV
+		dataType: int64
+		formatString: 0
+		lineageTag: 7de6fcb8-c54e-4ead-8447-af34e967b8f0
+		summarizeBy: sum
+		sourceColumn: SK_ID_PREV
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Application Unit'
+		dataType: int64
+		formatString: 0
+		lineageTag: 41fa233c-4c0c-4a87-bdb1-cee84ad91daf
+		summarizeBy: sum
+		sourceColumn: Previous Application Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	partition factPreviousApplications = m
+		mode: import
+		queryGroup: FACTS
+		source =
+				let
+				    // Načtení zdrojového CSV souboru previous_application.csv
+				    // Tento soubor obsahuje historické žádosti klientů u Home Credit
+				    // Jeden řádek představuje jednu předchozí žádost klienta
+				    Source = Csv.Document(
+				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\previous_application.csv"),
+				        [
+				            Delimiter = ",",
+				            Columns = 37,
+				            Encoding = 1252,
+				            QuoteStyle = QuoteStyle.None
+				        ]
+				    ),
+				
+				    // První řádek souboru obsahuje názvy sloupců, proto jej použijeme jako hlavičky tabulky
+				    #"Promoted Headers" = Table.PromoteHeaders(
+				        Source,
+				        [PromoteAllScalars = true]
+				    ),
+				
+				    // Výběr pouze sloupců potřebných pro zadané úlohy
+				    // SK_ID_CURR = klíč aktuální žádosti, přes který se historické žádosti napojují na Fact Applications
+				    // SK_ID_PREV = klíč předchozí žádosti, který jednoznačně identifikuje historickou žádost
+				    // Pro aktuální zadání nepotřebujeme detaily jako status, produkt nebo částky z předchozích žádostí
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        #"Promoted Headers",
+				        {
+				            "SK_ID_CURR",
+				            "SK_ID_PREV"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Nastavení správných datových typů
+				    // Oba sloupce jsou technické identifikátory, proto je převádíme na celá čísla
+				    #"Changed Type" = Table.TransformColumnTypes(
+				        #"Selected Needed Columns",
+				        {
+				            {"SK_ID_CURR", Int64.Type},
+				            {"SK_ID_PREV", Int64.Type}
+				        }
+				    ),
+				
+				    // Odstranění řádků bez klíče aktuální žádosti nebo bez klíče předchozí žádosti
+				    // Business logika: bez těchto klíčů nelze historickou žádost správně napojit ani započítat
+				    #"Removed Rows With Missing Keys" = Table.SelectRows(
+				        #"Changed Type",
+				        each [SK_ID_CURR] <> null and [SK_ID_PREV] <> null
+				    ),
+				
+				    // Odstranění případných duplicit na úrovni předchozí žádosti
+				    // Business logika: jeden SK_ID_PREV má reprezentovat jednu předchozí žádost
+				    // Tím zabráníme dvojímu započítání stejné historické žádosti
+				    #"Removed Duplicate Previous Applications" = Table.Distinct(
+				        #"Removed Rows With Missing Keys",
+				        {"SK_ID_PREV"}
+				    ),
+				
+				    // Filtrování pouze na klienty, kteří existují v TRAIN datasetu ve Fact Applications
+				    // Business logika: zadání se týká pouze TRAIN datasetu, proto nepotřebujeme historické žádosti klientů mimo TRAIN populaci
+				    // Tento krok předpokládá, že query Fact Applications už existuje a obsahuje sloupec SK_ID_CURR
+				    #"Merged With Fact Applications" = Table.NestedJoin(
+				        #"Removed Duplicate Previous Applications",
+				        {"SK_ID_CURR"},
+				        #"factApplications",
+				        {"SK_ID_CURR"},
+				        "factApplications",
+				        JoinKind.Inner
+				    ),
+				
+				    // Po inner joinu už pomocný vnořený sloupec nepotřebujeme
+				    // Výsledkem zůstávají pouze předchozí žádosti klientů z TRAIN datasetu
+				    #"Filtered To Train Applications" = Table.RemoveColumns(
+				        #"Merged With Fact Applications",
+				        {"factApplications"}
+				    ),
+				
+				    // Pomocný metrický sloupec pro počítání předchozích žádostí
+				    // Každý řádek představuje jednu předchozí žádost, proto má každý řádek hodnotu 1
+				    #"Added Previous Application Unit" = Table.AddColumn(
+				        #"Filtered To Train Applications",
+				        "Previous Application Unit",
+				        each 1,
+				        Int64.Type
+				    ),
+				
+				    // Finální seřazení sloupců do logického pořadí
+				    // Nejprve klíč aktuální žádosti, potom klíč předchozí žádosti a následně metrický sloupec
+				    #"Reordered Columns" = Table.ReorderColumns(
+				        #"Added Previous Application Unit",
+				        {
+				            "SK_ID_CURR",
+				            "SK_ID_PREV",
+				            "Previous Application Unit"
+				        }
+				    )
+				
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

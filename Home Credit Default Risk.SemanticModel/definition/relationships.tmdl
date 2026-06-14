@@ -1,0 +1,4 @@
+relationship AutoDetected_f307cf62-6596-43f8-b80d-5a3783a6a436
+	fromColumn: factPreviousApplications.SK_ID_CURR
+	toColumn: factApplications.SK_ID_CURR
+

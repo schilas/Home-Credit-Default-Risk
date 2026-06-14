@@ -5,7 +5,7 @@ table factApplications
 		dataType: int64
 		formatString: 0
 		lineageTag: 0c2e4b49-68e7-4142-8a9a-5e2e0bec4443
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: SK_ID_CURR
 
 		annotation SummarizationSetBy = Automatic
@@ -14,7 +14,7 @@ table factApplications
 		dataType: int64
 		formatString: 0
 		lineageTag: b8bd1828-bd41-4a21-af96-ef43a912679b
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: TARGET
 
 		annotation SummarizationSetBy = Automatic
@@ -23,7 +23,7 @@ table factApplications
 		dataType: int64
 		formatString: 0
 		lineageTag: a7f0d049-76f7-447c-bb82-ad0f1912bdc8
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Application Unit
 
 		annotation SummarizationSetBy = Automatic
@@ -31,7 +31,7 @@ table factApplications
 	column AMT_CREDIT
 		dataType: double
 		lineageTag: cfd3c28b-20d2-4f32-befc-9d02be7c7fe5
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: AMT_CREDIT
 
 		annotation SummarizationSetBy = Automatic
@@ -41,7 +41,7 @@ table factApplications
 	column AMT_INCOME_TOTAL
 		dataType: double
 		lineageTag: 14f917ce-26aa-41a4-9d90-5e76e5fa53ab
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: AMT_INCOME_TOTAL
 
 		annotation SummarizationSetBy = Automatic
@@ -85,7 +85,7 @@ table factApplications
 		dataType: int64
 		formatString: 0
 		lineageTag: 9329c484-e221-400d-bda9-25a75a0b301a
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: DAYS_BIRTH
 
 		annotation SummarizationSetBy = Automatic
@@ -94,7 +94,7 @@ table factApplications
 		dataType: int64
 		formatString: 0
 		lineageTag: fccc54fd-253d-4512-9f33-90e9f43c6786
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Age Years
 
 		annotation SummarizationSetBy = Automatic
@@ -111,7 +111,7 @@ table factApplications
 		dataType: int64
 		formatString: 0
 		lineageTag: 59d4efe5-e3ea-48bc-81c7-5be6e0856f57
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: Age Group Sort
 
 		annotation SummarizationSetBy = Automatic
