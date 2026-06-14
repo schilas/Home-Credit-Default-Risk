@@ -5,7 +5,7 @@ table factInstallmentDPD5Summary
 		dataType: int64
 		formatString: 0
 		lineageTag: 35b122ac-0b0e-4621-b3e1-dd5d425ff579
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: SK_ID_CURR
 
 		annotation SummarizationSetBy = Automatic
@@ -14,7 +14,7 @@ table factInstallmentDPD5Summary
 		dataType: int64
 		formatString: 0
 		lineageTag: ce1559a9-1480-4bdb-80e0-108ae1e782c9
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: InstallmentCount
 
 		annotation SummarizationSetBy = Automatic
@@ -23,7 +23,7 @@ table factInstallmentDPD5Summary
 		dataType: int64
 		formatString: 0
 		lineageTag: e0f36c0e-2c85-4065-9e33-623606d1cfb7
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: DPD5InstallmentCount
 
 		annotation SummarizationSetBy = Automatic
@@ -41,7 +41,7 @@ table factInstallmentDPD5Summary
 		dataType: int64
 		formatString: 0
 		lineageTag: 92a624e8-4281-4129-b24e-1c6b98843f17
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: EverDPD5Unit
 
 		annotation SummarizationSetBy = Automatic

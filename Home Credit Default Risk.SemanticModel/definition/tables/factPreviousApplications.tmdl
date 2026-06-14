@@ -5,7 +5,7 @@ table factPreviousApplications
 		dataType: int64
 		formatString: 0
 		lineageTag: 5f98e35a-b81f-491f-9e3e-74517aa1b9be
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: SK_ID_CURR
 
 		annotation SummarizationSetBy = Automatic

@@ -21,7 +21,7 @@ table dimBureauStatus
 		dataType: int64
 		formatString: 0
 		lineageTag: 05bfed70-dd6b-4c97-b5c5-23e8ceb3ebb3
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: Bureau Status Sort
 
 		annotation SummarizationSetBy = Automatic
