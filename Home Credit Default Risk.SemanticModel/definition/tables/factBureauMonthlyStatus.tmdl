@@ -1,0 +1,259 @@
+table factBureauMonthlyStatus
+	lineageTag: ff21a759-e0f6-44f3-b586-ff1f285cc383
+
+	column SK_ID_BUREAU
+		dataType: int64
+		formatString: 0
+		lineageTag: ba1e3267-5060-483b-a201-60778ed93cbf
+		summarizeBy: sum
+		sourceColumn: SK_ID_BUREAU
+
+		annotation SummarizationSetBy = Automatic
+
+	column MONTHS_BALANCE
+		dataType: int64
+		formatString: 0
+		lineageTag: ff0ca539-6f8a-47c3-8009-dc069068fd06
+		summarizeBy: sum
+		sourceColumn: MONTHS_BALANCE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Months Before Application'
+		dataType: int64
+		formatString: 0
+		lineageTag: f18f8745-6d2e-44c0-8343-ae02913e75c1
+		summarizeBy: sum
+		sourceColumn: Months Before Application
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Relative Month Label'
+		dataType: string
+		lineageTag: 6ce05db4-8424-41b5-ae0a-bf4265637b34
+		summarizeBy: none
+		sourceColumn: Relative Month Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATUS
+		dataType: string
+		lineageTag: 3ffc2917-43fa-4aae-9a57-c568f2d29874
+		summarizeBy: none
+		sourceColumn: STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bureau Status Label'
+		dataType: string
+		lineageTag: 85055ca8-0294-4758-99fe-02aa6f6fdd42
+		summarizeBy: none
+		sourceColumn: Bureau Status Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bureau Status Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 93c675e4-6993-4899-a919-19153a0e1da9
+		summarizeBy: sum
+		sourceColumn: Bureau Status Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is No DPD'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 439742d1-35df-4808-9e08-564e83e8db87
+		summarizeBy: none
+		sourceColumn: Is No DPD
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'No DPD Bureau Contract Unit'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5db8eb0d-4f5a-45f9-865d-49d698eb0459
+		summarizeBy: sum
+		sourceColumn: No DPD Bureau Contract Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bureau Monthly Status Unit'
+		dataType: int64
+		formatString: 0
+		lineageTag: 06a32c12-12e4-4f4c-a9b7-51ea9dd069a6
+		summarizeBy: sum
+		sourceColumn: Bureau Monthly Status Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	partition factBureauMonthlyStatus = m
+		mode: import
+		queryGroup: FACTS
+		source =
+				let
+				    // Načtení zdrojového CSV souboru bureau_balance.csv
+				    // Tento soubor obsahuje měsíční historii stavů bureau kontraktů
+				    // Jeden řádek představuje jeden měsíc jednoho kontraktu v úvěrovém registru
+				    Source = Csv.Document(
+				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\bureau_balance.csv"),
+				        [
+				            Delimiter = ",",
+				            Columns = 3,
+				            Encoding = 1252,
+				            QuoteStyle = QuoteStyle.None
+				        ]
+				    ),
+				
+				    // První řádek souboru obsahuje názvy sloupců, proto jej použijeme jako hlavičky tabulky
+				    #"Promoted Headers" = Table.PromoteHeaders(
+				        Source,
+				        [PromoteAllScalars = true]
+				    ),
+				
+				    // Výběr pouze sloupců potřebných pro zadané úlohy
+				    // SK_ID_BUREAU = klíč bureau kontraktu, přes který se tabulka napojuje na Fact Bureau Credits
+				    // MONTHS_BALANCE = měsíc relativně vůči datu aktuální žádosti
+				    // STATUS = měsíční stav kontraktu, kde hodnota 0 znamená bez prodlení / no-DPD
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        #"Promoted Headers",
+				        {
+				            "SK_ID_BUREAU",
+				            "MONTHS_BALANCE",
+				            "STATUS"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Nastavení správných datových typů
+				    // SK_ID_BUREAU je identifikátor bureau kontraktu
+				    // MONTHS_BALANCE je relativní měsíc před aktuální žádostí
+				    // STATUS je textový stav, protože obsahuje nejen čísla, ale také hodnoty C a X
+				    #"Changed Type" = Table.TransformColumnTypes(
+				        #"Selected Needed Columns",
+				        {
+				            {"SK_ID_BUREAU", Int64.Type},
+				            {"MONTHS_BALANCE", Int64.Type},
+				            {"STATUS", type text}
+				        }
+				    ),
+				
+				    // Očištění sloupce STATUS od případných mezer
+				    // Toto pomáhá zabránit duplicitním kategoriím způsobeným technickými nečistotami v textu
+				    #"Trimmed Status" = Table.TransformColumns(
+				        #"Changed Type",
+				        {
+				            {"STATUS", each if _ = null then null else Text.Trim(_), type text}
+				        }
+				    ),
+				
+				    // Pomocný metrický sloupec pro počítání měsíčních záznamů bureau kontraktů
+				    // Každý řádek představuje jeden měsíční stav jednoho bureau kontraktu
+				    #"Added Bureau Monthly Status Unit" = Table.AddColumn(
+				        #"Trimmed Status",
+				        "Bureau Monthly Status Unit",
+				        each 1,
+				        Int64.Type
+				    ),
+				
+				    // Vytvoření příznaku bez prodlení
+				    // Business logika: STATUS = 0 znamená no-DPD, tedy kontrakt je v daném měsíci nedelikventní
+				    // Tento příznak je klíčový pro třetí úlohu
+				    #"Added No DPD Flag" = Table.AddColumn(
+				        #"Added Bureau Monthly Status Unit",
+				        "Is No DPD",
+				        each [STATUS] = "0",
+				        type logical
+				    ),
+				
+				    // Vytvoření metrického sloupce pro počet nedelikventních bureau kontraktů
+				    // Pokud je STATUS = 0, řádek má hodnotu 1, jinak 0
+				    // Při agregaci podle MONTHS_BALANCE tím získáme počet kontraktů bez prodlení v daném relativním měsíci
+				    #"Added No DPD Bureau Contract Unit" = Table.AddColumn(
+				        #"Added No DPD Flag",
+				        "No DPD Bureau Contract Unit",
+				        each if [Is No DPD] = true then 1 else 0,
+				        Int64.Type
+				    ),
+				
+				    // Vytvoření čitelného popisu statusu pro reportovací účely
+				    // Pomáhá uživatelům lépe interpretovat hodnoty STATUS v reportu
+				    #"Added Bureau Status Label" = Table.AddColumn(
+				        #"Added No DPD Bureau Contract Unit",
+				        "Bureau Status Label",
+				        each
+				            if [STATUS] = "0" then "No DPD"
+				            else if [STATUS] = "1" then "DPD 1-30"
+				            else if [STATUS] = "2" then "DPD 31-60"
+				            else if [STATUS] = "3" then "DPD 61-90"
+				            else if [STATUS] = "4" then "DPD 91-120"
+				            else if [STATUS] = "5" then "DPD 120+"
+				            else if [STATUS] = "C" then "Closed"
+				            else if [STATUS] = "X" then "Unknown"
+				            else "Other / Missing",
+				        type text
+				    ),
+				
+				    // Vytvoření číselného pořadí statusů
+				    // Díky tomuto sloupci lze statusy v reportu řadit logicky, ne abecedně
+				    #"Added Bureau Status Sort" = Table.AddColumn(
+				        #"Added Bureau Status Label",
+				        "Bureau Status Sort",
+				        each
+				            if [STATUS] = "0" then 1
+				            else if [STATUS] = "1" then 2
+				            else if [STATUS] = "2" then 3
+				            else if [STATUS] = "3" then 4
+				            else if [STATUS] = "4" then 5
+				            else if [STATUS] = "5" then 6
+				            else if [STATUS] = "C" then 7
+				            else if [STATUS] = "X" then 8
+				            else 99,
+				        Int64.Type
+				    ),
+				
+				    // Přepočet relativního měsíce na počet měsíců před aktuální žádostí
+				    // MONTHS_BALANCE je typicky záporný, například -1 znamená jeden měsíc před žádostí
+				    // Tento sloupec je jednodušší pro business interpretaci
+				    #"Added Months Before Application" = Table.AddColumn(
+				        #"Added Bureau Status Sort",
+				        "Months Before Application",
+				        each Number.Abs([MONTHS_BALANCE]),
+				        Int64.Type
+				    ),
+				
+				    // Vytvoření textového popisku relativního měsíce
+				    // Tento popisek lze použít v reportu, pokud chceme zobrazit osu jako M-1, M-2 atd.
+				    #"Added Relative Month Label" = Table.AddColumn(
+				        #"Added Months Before Application",
+				        "Relative Month Label",
+				        each "M" & Text.From([MONTHS_BALANCE]),
+				        type text
+				    ),
+				
+				    // Finální seřazení sloupců do logického pořadí
+				    // Nejprve klíč, potom časová osa, status a nakonec metrické / pomocné sloupce
+				    #"Reordered Columns" = Table.ReorderColumns(
+				        #"Added Relative Month Label",
+				        {
+				            "SK_ID_BUREAU",
+				            "MONTHS_BALANCE",
+				            "Months Before Application",
+				            "Relative Month Label",
+				            "STATUS",
+				            "Bureau Status Label",
+				            "Bureau Status Sort",
+				            "Is No DPD",
+				            "No DPD Bureau Contract Unit",
+				            "Bureau Monthly Status Unit"
+				        }
+				    )
+				
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

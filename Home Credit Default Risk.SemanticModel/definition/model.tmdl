@@ -42,7 +42,7 @@ queryGroup 'DATA ISLANDS\PARAMETERS DATA ISLANDS'
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["Measures Technical","Measures Design","Environment","Parameter_Environment","_StartDate","_EndDate","Date","_Language","Refresh Dates","factBureauCredits","factApplications"]
+annotation PBI_QueryOrder = ["Measures Technical","Measures Design","Environment","Parameter_Environment","_StartDate","_EndDate","Date","_Language","Refresh Dates","factBureauCredits","factApplications","factBureauMonthlyStatus"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -54,6 +54,7 @@ ref table 'Refresh Dates'
 ref table Par_AutoPeriod
 ref table factApplications
 ref table factBureauCredits
+ref table factBureauMonthlyStatus
 
 ref cultureInfo en-US
 
