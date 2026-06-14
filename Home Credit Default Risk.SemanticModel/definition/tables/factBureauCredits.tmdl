@@ -1,0 +1,205 @@
+table factBureauCredits
+	lineageTag: 436e6c14-b154-4c86-a805-818f3d5afe09
+
+	column SK_ID_CURR
+		dataType: int64
+		formatString: 0
+		lineageTag: c6cde2cc-0d7a-4144-b8df-705e3b683934
+		summarizeBy: sum
+		sourceColumn: SK_ID_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SK_ID_BUREAU
+		dataType: int64
+		formatString: 0
+		lineageTag: ea906775-77c0-4964-a2f9-048c806f501e
+		summarizeBy: sum
+		sourceColumn: SK_ID_BUREAU
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bureau Credit Unit'
+		dataType: int64
+		formatString: 0
+		lineageTag: 96c5dcdb-a093-48f0-993c-4667024d8e09
+		summarizeBy: sum
+		sourceColumn: Bureau Credit Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column AMT_CREDIT_SUM
+		dataType: double
+		lineageTag: 47bdc070-e49c-4230-ad85-0dd01e9eca4e
+		summarizeBy: sum
+		sourceColumn: AMT_CREDIT_SUM
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Active Bureau Credit Sum'
+		dataType: double
+		lineageTag: f0cc9f27-b649-42ce-8c99-b37a4505330a
+		summarizeBy: sum
+		sourceColumn: Active Bureau Credit Sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CREDIT_ACTIVE
+		dataType: string
+		lineageTag: 00a6b7d9-0871-4d56-9dca-456bac346ab3
+		summarizeBy: none
+		sourceColumn: CREDIT_ACTIVE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Active Bureau Contract'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 79edd17f-474b-4df8-b521-8697f6142158
+		summarizeBy: none
+		sourceColumn: Is Active Bureau Contract
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREDIT_TYPE
+		dataType: string
+		lineageTag: 2d8bf0c2-b095-4dc7-9658-c8ee5d097f68
+		summarizeBy: none
+		sourceColumn: CREDIT_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition factBureauCredits = m
+		mode: import
+		queryGroup: FACTS
+		source =
+				let
+				    // Načtení zdrojového CSV souboru bureau.csv
+				    // Tento soubor obsahuje úvěrové kontrakty klienta reportované z externího úvěrového registru
+				    // Jeden řádek představuje jeden historický nebo aktivní bureau kontrakt klienta
+				    Source = Csv.Document(
+				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\bureau.csv"),
+				        [
+				            Delimiter = ",",
+				            Columns = 17,
+				            Encoding = 1252,
+				            QuoteStyle = QuoteStyle.None
+				        ]
+				    ),
+				
+				    // První řádek souboru obsahuje názvy sloupců, proto jej použijeme jako hlavičky tabulky
+				    #"Promoted Headers" = Table.PromoteHeaders(
+				        Source,
+				        [PromoteAllScalars = true]
+				    ),
+				
+				    // Výběr pouze sloupců potřebných pro zadané úlohy
+				    // SK_ID_CURR = klíč aktuální žádosti, přes který se bureau kontrakty napojují na Fact Applications
+				    // SK_ID_BUREAU = klíč bureau kontraktu, přes který se napojují měsíční stavy z bureau_balance
+				    // CREDIT_ACTIVE = stav bureau kontraktu, potřebný pro identifikaci aktivních kontraktů ve výpočtu DTI
+				    // CREDIT_TYPE = typ úvěru v registru, potřebný jako filtr ve třetí úloze
+				    // AMT_CREDIT_SUM = původní / celková výše bureau úvěru, potřebná pro výpočet DTI podle zadání
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        #"Promoted Headers",
+				        {
+				            "SK_ID_CURR",
+				            "SK_ID_BUREAU",
+				            "CREDIT_ACTIVE",
+				            "CREDIT_TYPE",
+				            "AMT_CREDIT_SUM"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Nastavení správných datových typů
+				    // Identifikátory převádíme na celá čísla
+				    // Kategorické atributy ponecháváme jako text
+				    // AMT_CREDIT_SUM převádíme na číslo, protože bude použito v agregacích a výpočtu DTI
+				    #"Changed Type" = Table.TransformColumnTypes(
+				        #"Selected Needed Columns",
+				        {
+				            {"SK_ID_CURR", Int64.Type},
+				            {"SK_ID_BUREAU", Int64.Type},
+				            {"CREDIT_ACTIVE", type text},
+				            {"CREDIT_TYPE", type text},
+				            {"AMT_CREDIT_SUM", type number}
+				        }
+				    ),
+				
+				    // Očištění textových sloupců od mezer na začátku a na konci
+				    // Toto je důležité pro správné filtrování a seskupování kategorií v Power BI
+				    #"Trimmed Text Columns" = Table.TransformColumns(
+				        #"Changed Type",
+				        {
+				            {"CREDIT_ACTIVE", each if _ = null then null else Text.Trim(_), type text},
+				            {"CREDIT_TYPE", each if _ = null then null else Text.Trim(_), type text}
+				        }
+				    ),
+				
+				    // Nahrazení chybějící hodnoty AMT_CREDIT_SUM nulou
+				    // Business logika: pokud není částka bureau úvěru vyplněna, pro účely součtu expozice ji nebudeme započítávat
+				    #"Replaced Null Credit Sum" = Table.ReplaceValue(
+				        #"Trimmed Text Columns",
+				        null,
+				        0,
+				        Replacer.ReplaceValue,
+				        {"AMT_CREDIT_SUM"}
+				    ),
+				
+				    // Vytvoření příznaku aktivního bureau kontraktu
+				    // Tento příznak bude použit při výpočtu DTI, kde se mají započítat pouze existující aktivní kontrakty
+				    #"Added Active Contract Flag" = Table.AddColumn(
+				        #"Replaced Null Credit Sum",
+				        "Is Active Bureau Contract",
+				        each [CREDIT_ACTIVE] = "Active",
+				        type logical
+				    ),
+				
+				    // Vytvoření částky aktivní bureau expozice
+				    // Business logika: pro DTI potřebujeme součet AMT_CREDIT_SUM pouze za aktivní bureau kontrakty klienta
+				    // Neaktivní kontrakty dostanou hodnotu 0, aby neovlivnily výpočet
+				    #"Added Active Credit Sum" = Table.AddColumn(
+				        #"Added Active Contract Flag",
+				        "Active Bureau Credit Sum",
+				        each
+				            if [Is Active Bureau Contract] = true then [AMT_CREDIT_SUM]
+				            else 0,
+				        type number
+				    ),
+				
+				    // Pomocný metrický sloupec pro počítání bureau kontraktů
+				    // Každý řádek představuje jeden bureau kontrakt
+				    #"Added Bureau Credit Unit" = Table.AddColumn(
+				        #"Added Active Credit Sum",
+				        "Bureau Credit Unit",
+				        each 1,
+				        Int64.Type
+				    ),
+				
+				    // Finální seřazení sloupců do logického pořadí
+				    // Nejprve klíče, potom metriky a následně kategorické atributy
+				    #"Reordered Columns" = Table.ReorderColumns(
+				        #"Added Bureau Credit Unit",
+				        {
+				            "SK_ID_CURR",
+				            "SK_ID_BUREAU",
+				            "Bureau Credit Unit",
+				            "AMT_CREDIT_SUM",
+				            "Active Bureau Credit Sum",
+				            "CREDIT_ACTIVE",
+				            "Is Active Bureau Contract",
+				            "CREDIT_TYPE"
+				        }
+				    )
+				
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
