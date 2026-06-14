@@ -1,0 +1,322 @@
+table dimApplicant
+	lineageTag: 6ed0e525-7a91-4452-aed8-c5ef6bc0ef64
+
+	column SK_ID_CURR
+		dataType: int64
+		formatString: 0
+		lineageTag: 73bad9b2-dbdd-43ee-854c-55be161b8e7e
+		summarizeBy: none
+		sourceColumn: SK_ID_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+	column TARGET
+		dataType: int64
+		formatString: 0
+		lineageTag: cb47a60d-d823-46bc-9466-b55e16c88c3f
+		summarizeBy: sum
+		sourceColumn: TARGET
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Target Label'
+		dataType: string
+		lineageTag: df578155-de0d-44ef-9cbb-f0287062710d
+		summarizeBy: none
+		sourceColumn: Target Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contract Type'
+		dataType: string
+		lineageTag: 9676c03d-7622-4bb7-aff5-67cab1ece650
+		summarizeBy: none
+		sourceColumn: Contract Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Cash Application'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e231bbdc-e3a0-4306-a56a-c9c438e6cf8a
+		summarizeBy: none
+		sourceColumn: Is Cash Application
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODE_GENDER
+		dataType: string
+		lineageTag: bf6411c1-5573-49de-8453-700cd01a3724
+		summarizeBy: none
+		sourceColumn: CODE_GENDER
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 8781e045-1716-4d13-9b55-73014ec1491d
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Years'
+		dataType: int64
+		formatString: 0
+		lineageTag: 956d6f9d-715d-48cc-85dd-7f4dea4cbfb9
+		summarizeBy: sum
+		sourceColumn: Age Years
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group'
+		dataType: string
+		lineageTag: b7b317b8-0792-4f81-b016-6c4b038e6a34
+		summarizeBy: none
+		sourceColumn: Age Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: dbe59c03-6635-438a-bb1b-7ce1b9e4b871
+		summarizeBy: sum
+		sourceColumn: Age Group Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Education Type'
+		dataType: string
+		lineageTag: f661a1b5-5a4c-42d9-868a-c53f3667425e
+		summarizeBy: none
+		sourceColumn: Education Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Family Status'
+		dataType: string
+		lineageTag: fe98708c-34e7-4f26-9682-4d06e8400baa
+		summarizeBy: none
+		sourceColumn: Family Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Income Type'
+		dataType: string
+		lineageTag: aa1bdf3e-b222-4579-b331-068a6375e2f9
+		summarizeBy: none
+		sourceColumn: Income Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Application Count'
+		dataType: int64
+		lineageTag: 965bf43a-d4e4-4f3d-8a93-6ad2f5e08be7
+		summarizeBy: sum
+		sourceColumn: Previous Application Count
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Previous Application Count Band'
+		dataType: string
+		lineageTag: 4d95db8d-c44f-4e92-bb7c-454556f3bd85
+		summarizeBy: none
+		sourceColumn: Previous Application Count Band
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Application Count Band Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: c870b180-4a16-4fdc-b44f-b4220904904c
+		summarizeBy: sum
+		sourceColumn: Previous Application Count Band Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimApplicant = m
+		mode: import
+		queryGroup: DIMENSIONS
+		source =
+				let
+				    // Načtení dat z faktové tabulky factApplications
+				    // Business logika: factApplications obsahuje jednu aktuální TRAIN žádost na jeden řádek
+				    // Z této tabulky vytvoříme dimenzi žadatele / aktuální žádosti
+				    Source = factApplications,
+				
+				    // Výběr pouze sloupců potřebných pro dimenzi žadatele
+				    // Business logika:
+				    // Dimenze žadatele bude obsahovat popisné atributy, podle kterých budeme filtrovat a analyzovat žádosti
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        Source,
+				        {
+				            "SK_ID_CURR",
+				            "TARGET",
+				            "NAME_CONTRACT_TYPE",
+				            "Is Cash Application",
+				            "CODE_GENDER",
+				            "Gender",
+				            "Age Years",
+				            "Age Group",
+				            "Age Group Sort",
+				            "NAME_EDUCATION_TYPE",
+				            "NAME_FAMILY_STATUS",
+				            "NAME_INCOME_TYPE"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Odstranění případných duplicit na úrovni aktuální žádosti
+				    // Business logika: v dimApplicant musí být každý SK_ID_CURR pouze jednou
+				    #"Removed Duplicate Applicants" = Table.Distinct(
+				        #"Selected Needed Columns",
+				        {"SK_ID_CURR"}
+				    ),
+				
+				    // Přejmenování technických názvů sloupců na čitelnější názvy pro report
+				    // Business logika: názvy v dimenzi mají být srozumitelné uživateli reportu
+				    #"Renamed Columns" = Table.RenameColumns(
+				        #"Removed Duplicate Applicants",
+				        {
+				            {"NAME_CONTRACT_TYPE", "Contract Type"},
+				            {"NAME_EDUCATION_TYPE", "Education Type"},
+				            {"NAME_FAMILY_STATUS", "Family Status"},
+				            {"NAME_INCOME_TYPE", "Income Type"}
+				        }
+				    ),
+				
+				    // Vytvoření popisku pro cílovou proměnnou TARGET
+				    // Business logika:
+				    // TARGET = 0 znamená bez problému se splácením
+				    // TARGET = 1 znamená problém se splácením
+				    #"Added Target Label" = Table.AddColumn(
+				        #"Renamed Columns",
+				        "Target Label",
+				        each
+				            if [TARGET] = 0 then "No Repayment Difficulty"
+				            else if [TARGET] = 1 then "Repayment Difficulty"
+				            else "Unknown",
+				        type text
+				    ),
+				
+				    // Agregace počtu předchozích žádostí na úroveň aktuální žádosti
+				    // Business logika:
+				    // Zadání požaduje demografickou distribuci také podle počtu předchozích žádostí
+				    // factPreviousApplications má jeden řádek na jednu předchozí žádost, proto zde počítáme počet řádků podle SK_ID_CURR
+				    #"Previous Application Counts" = Table.Group(
+				        factPreviousApplications,
+				        {"SK_ID_CURR"},
+				        {
+				            {
+				                "Previous Application Count",
+				                each Table.RowCount(_),
+				                Int64.Type
+				            }
+				        }
+				    ),
+				
+				    // Napojení počtu předchozích žádostí na dimenzi žadatele
+				    // Business logika:
+				    // Každý žadatel dostane informaci, kolik měl historických žádostí u Home Credit
+				    #"Merged Previous Application Counts" = Table.NestedJoin(
+				        #"Added Target Label",
+				        {"SK_ID_CURR"},
+				        #"Previous Application Counts",
+				        {"SK_ID_CURR"},
+				        "PreviousApplicationCounts",
+				        JoinKind.LeftOuter
+				    ),
+				
+				    // Rozbalení agregovaného počtu předchozích žádostí
+				    #"Expanded Previous Application Counts" = Table.ExpandTableColumn(
+				        #"Merged Previous Application Counts",
+				        "PreviousApplicationCounts",
+				        {"Previous Application Count"},
+				        {"Previous Application Count"}
+				    ),
+				
+				    // Nahrazení prázdných hodnot nulou
+				    // Business logika:
+				    // Pokud klient nemá záznam v previous_application, znamená to 0 pozorovaných předchozích žádostí
+				    #"Replaced Null Previous Application Count" = Table.ReplaceValue(
+				        #"Expanded Previous Application Counts",
+				        null,
+				        0,
+				        Replacer.ReplaceValue,
+				        {"Previous Application Count"}
+				    ),
+				
+				    // Nastavení datového typu po doplnění nul
+				    #"Changed Previous Application Count Type" = Table.TransformColumnTypes(
+				        #"Replaced Null Previous Application Count",
+				        {
+				            {"Previous Application Count", Int64.Type}
+				        }
+				    ),
+				
+				    // Vytvoření skupiny podle počtu předchozích žádostí
+				    // Business logika:
+				    // Pro report je lepší používat skupiny než detailní počet, protože hodnot může být mnoho
+				    #"Added Previous Application Count Band" = Table.AddColumn(
+				        #"Changed Previous Application Count Type",
+				        "Previous Application Count Band",
+				        each
+				            if [Previous Application Count] = 0 then "0"
+				            else if [Previous Application Count] = 1 then "1"
+				            else if [Previous Application Count] <= 3 then "2-3"
+				            else if [Previous Application Count] <= 5 then "4-5"
+				            else "6+",
+				        type text
+				    ),
+				
+				    // Vytvoření číselného řazení pro skupiny počtu předchozích žádostí
+				    // Business logika:
+				    // Bez tohoto sloupce by Power BI mohl řadit skupiny abecedně, ne podle logického pořadí
+				    #"Added Previous Application Count Band Sort" = Table.AddColumn(
+				        #"Added Previous Application Count Band",
+				        "Previous Application Count Band Sort",
+				        each
+				            if [Previous Application Count Band] = "0" then 1
+				            else if [Previous Application Count Band] = "1" then 2
+				            else if [Previous Application Count Band] = "2-3" then 3
+				            else if [Previous Application Count Band] = "4-5" then 4
+				            else if [Previous Application Count Band] = "6+" then 5
+				            else 99,
+				        Int64.Type
+				    ),
+				
+				    // Finální seřazení sloupců
+				    // Business logika:
+				    // Nejprve klíč a cílová proměnná, potom demografické a aplikační atributy
+				    #"Reordered Columns" = Table.ReorderColumns(
+				        #"Added Previous Application Count Band Sort",
+				        {
+				            "SK_ID_CURR",
+				            "TARGET",
+				            "Target Label",
+				            "Contract Type",
+				            "Is Cash Application",
+				            "CODE_GENDER",
+				            "Gender",
+				            "Age Years",
+				            "Age Group",
+				            "Age Group Sort",
+				            "Education Type",
+				            "Family Status",
+				            "Income Type",
+				            "Previous Application Count",
+				            "Previous Application Count Band",
+				            "Previous Application Count Band Sort"
+				        }
+				    )
+				
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,75 @@
+table dimCreditType
+	lineageTag: e9766d8b-cb41-428c-88b4-a68218c4fa47
+
+	column CREDIT_TYPE
+		dataType: string
+		lineageTag: 1d57d80a-1258-4ecd-bd01-b5040f3aef86
+		summarizeBy: none
+		sourceColumn: CREDIT_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Type'
+		dataType: string
+		lineageTag: f9a2faa1-c5ee-45d5-b837-48b189ec4d1e
+		summarizeBy: none
+		sourceColumn: Credit Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimCreditType = m
+		mode: import
+		queryGroup: DIMENSIONS
+		source =
+				let
+				    // Načtení dat z factBureauCredits
+				    // Business logika:
+				    // CREDIT_TYPE popisuje typ úvěru v externím úvěrovém registru
+				    // Tato dimenze bude použita jako filtr pro bureau kontrakty
+				    Source = factBureauCredits,
+				
+				    // Výběr pouze sloupce CREDIT_TYPE
+				    // Business logika: pro dimenzi typu bureau úvěru nepotřebujeme žádné metriky ani klientské klíče
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        Source,
+				        {
+				            "CREDIT_TYPE"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Odstranění duplicitních hodnot
+				    // Business logika: dimenze má obsahovat každý typ úvěru pouze jednou
+				    #"Removed Duplicates" = Table.Distinct(
+				        #"Selected Needed Columns"
+				    ),
+				
+				    // Vytvoření uživatelsky čitelného popisku typu úvěru
+				    // Business logika:
+				    // Pokud je hodnota prázdná, v reportu ji zobrazíme jako Unknown
+				    // Původní CREDIT_TYPE ponecháváme jako klíč pro vztah na factBureauCredits
+				    #"Added Credit Type Label" = Table.AddColumn(
+				        #"Removed Duplicates",
+				        "Credit Type",
+				        each
+				            if [CREDIT_TYPE] = null or Text.Trim([CREDIT_TYPE]) = "" then "Unknown"
+				            else Text.Trim([CREDIT_TYPE]),
+				        type text
+				    ),
+				
+				    // Seřazení hodnot podle popisku
+				    // Business logika: uživatelé budou v reportu pracovat s čitelným názvem Credit Type
+				    #"Sorted Rows" = Table.Sort(
+				        #"Added Credit Type Label",
+				        {
+				            {"Credit Type", Order.Ascending}
+				        }
+				    )
+				
+				in
+				    #"Sorted Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

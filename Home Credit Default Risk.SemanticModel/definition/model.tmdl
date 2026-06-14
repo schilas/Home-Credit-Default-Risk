@@ -42,7 +42,7 @@ queryGroup 'DATA ISLANDS\PARAMETERS DATA ISLANDS'
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["Measures Technical","Measures Design","Environment","Parameter_Environment","_StartDate","_EndDate","Date","_Language","Refresh Dates","factBureauCredits","factApplications","factBureauMonthlyStatus","factPreviousApplications"]
+annotation PBI_QueryOrder = ["Measures Technical","Measures Design","Environment","Parameter_Environment","_StartDate","_EndDate","Date","_Language","Refresh Dates","factBureauCredits","factApplications","factBureauMonthlyStatus","factPreviousApplications","dimApplicant","dimCreditType","dimBureauStatus","dimRelativeMonth"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -56,6 +56,10 @@ ref table factApplications
 ref table factBureauCredits
 ref table factBureauMonthlyStatus
 ref table factPreviousApplications
+ref table dimApplicant
+ref table dimCreditType
+ref table dimBureauStatus
+ref table dimRelativeMonth
 
 ref cultureInfo en-US
 

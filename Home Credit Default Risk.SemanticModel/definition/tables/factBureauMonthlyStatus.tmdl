@@ -14,7 +14,7 @@ table factBureauMonthlyStatus
 		dataType: int64
 		formatString: 0
 		lineageTag: ff0ca539-6f8a-47c3-8009-dc069068fd06
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: MONTHS_BALANCE
 
 		annotation SummarizationSetBy = Automatic

@@ -1,0 +1,75 @@
+table dimBureauStatus
+	lineageTag: 0b9b4e5d-2f1b-457b-817d-486f02657e93
+
+	column STATUS
+		dataType: string
+		lineageTag: ff5c9da9-2115-42cd-90ce-43e352ff4fd7
+		summarizeBy: none
+		sourceColumn: STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bureau Status Label'
+		dataType: string
+		lineageTag: 5025fac0-9b23-4cac-912d-ce27df3353b0
+		summarizeBy: none
+		sourceColumn: Bureau Status Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bureau Status Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 05bfed70-dd6b-4c97-b5c5-23e8ceb3ebb3
+		summarizeBy: none
+		sourceColumn: Bureau Status Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimBureauStatus = m
+		mode: import
+		queryGroup: DIMENSIONS
+		source =
+				let
+				    // Načtení dat z factBureauMonthlyStatus
+				    // Business logika:
+				    // STATUS popisuje měsíční stav bureau kontraktu, například bez prodlení, v prodlení, uzavřeno nebo neznámý stav
+				    Source = factBureauMonthlyStatus,
+				
+				    // Výběr pouze sloupců potřebných pro status dimenzi
+				    // STATUS = technická hodnota pro vztah na factBureauMonthlyStatus
+				    // Bureau Status Label = čitelný popisek pro report
+				    // Bureau Status Sort = logické pořadí statusů
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        Source,
+				        {
+				            "STATUS",
+				            "Bureau Status Label",
+				            "Bureau Status Sort"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Odstranění duplicit
+				    // Business logika: každý bureau status má být v dimenzi pouze jednou
+				    #"Removed Duplicates" = Table.Distinct(
+				        #"Selected Needed Columns"
+				    ),
+				
+				    // Seřazení statusů podle business logiky
+				    // Business logika:
+				    // Statusy mají být řazené od bezproblémového stavu přes zhoršující se prodlení až po uzavřené/neznámé
+				    #"Sorted Rows" = Table.Sort(
+				        #"Removed Duplicates",
+				        {
+				            {"Bureau Status Sort", Order.Ascending}
+				        }
+				    )
+				
+				in
+				    #"Sorted Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

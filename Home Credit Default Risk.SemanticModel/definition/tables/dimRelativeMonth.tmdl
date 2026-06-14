@@ -1,0 +1,97 @@
+table dimRelativeMonth
+	lineageTag: abe44ab2-be7c-4463-b3a9-f469f9cffd0d
+
+	column MONTHS_BALANCE
+		dataType: int64
+		formatString: 0
+		lineageTag: 98238bcf-3eaa-4377-a1ef-8cf3bf6486ef
+		summarizeBy: none
+		sourceColumn: MONTHS_BALANCE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Months Before Application'
+		dataType: int64
+		formatString: 0
+		lineageTag: 19079778-3901-4e49-85b5-4c177a98de26
+		summarizeBy: none
+		sourceColumn: Months Before Application
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Relative Month Label'
+		dataType: string
+		lineageTag: a01e5d08-f6c9-4b6a-a460-8efd88f908d4
+		summarizeBy: none
+		sourceColumn: Relative Month Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Relative Month Description'
+		dataType: string
+		lineageTag: 32125a18-38af-4ec6-8cdd-26557bb2f1ad
+		summarizeBy: none
+		sourceColumn: Relative Month Description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimRelativeMonth = m
+		mode: import
+		queryGroup: DIMENSIONS
+		source =
+				let
+				    // Načtení dat z factBureauMonthlyStatus
+				    // Business logika:
+				    // MONTHS_BALANCE je relativní časová osa vůči aktuální žádosti
+				    // Například -1 znamená jeden měsíc před žádostí, -2 dva měsíce před žádostí
+				    Source = factBureauMonthlyStatus,
+				
+				    // Výběr pouze časových atributů
+				    // MONTHS_BALANCE = technický klíč pro vztah na factBureauMonthlyStatus
+				    // Months Before Application = čitelný počet měsíců před žádostí
+				    // Relative Month Label = textový popisek pro report
+				    #"Selected Needed Columns" = Table.SelectColumns(
+				        Source,
+				        {
+				            "MONTHS_BALANCE",
+				            "Months Before Application",
+				            "Relative Month Label"
+				        },
+				        MissingField.Error
+				    ),
+				
+				    // Odstranění duplicitních měsíců
+				    // Business logika: každý relativní měsíc má být v dimenzi pouze jednou
+				    #"Removed Duplicates" = Table.Distinct(
+				        #"Selected Needed Columns"
+				    ),
+				
+				    // Vytvoření popisku pro business uživatele
+				    // Business logika:
+				    // Tento popisek je srozumitelnější než samotná hodnota -1, -2, -3
+				    #"Added Month Description" = Table.AddColumn(
+				        #"Removed Duplicates",
+				        "Relative Month Description",
+				        each
+				            if [MONTHS_BALANCE] = 0 then "Application month"
+				            else Text.From([Months Before Application]) & " month(s) before application",
+				        type text
+				    ),
+				
+				    // Seřazení měsíců od nejstarší historie po nejbližší měsíc k žádosti
+				    // Business logika:
+				    // Pro vývoj v čase je vhodné zachovat přirozené pořadí relativních měsíců
+				    #"Sorted Rows" = Table.Sort(
+				        #"Added Month Description",
+				        {
+				            {"MONTHS_BALANCE", Order.Ascending}
+				        }
+				    )
+				
+				in
+				    #"Sorted Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

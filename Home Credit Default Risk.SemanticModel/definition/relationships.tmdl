@@ -2,3 +2,21 @@ relationship AutoDetected_f307cf62-6596-43f8-b80d-5a3783a6a436
 	fromColumn: factPreviousApplications.SK_ID_CURR
 	toColumn: factApplications.SK_ID_CURR
 
+relationship AutoDetected_c282c3bb-2391-4d35-812e-67086c4e9765
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: dimApplicant.SK_ID_CURR
+	toColumn: factApplications.SK_ID_CURR
+
+relationship AutoDetected_d6b17c01-f195-4865-9072-452ca08c6d2f
+	fromColumn: factBureauCredits.CREDIT_TYPE
+	toColumn: dimCreditType.CREDIT_TYPE
+
+relationship AutoDetected_ee11c0b9-3d96-4a76-b90e-0389004366e6
+	fromColumn: factBureauMonthlyStatus.MONTHS_BALANCE
+	toColumn: dimRelativeMonth.MONTHS_BALANCE
+
+relationship AutoDetected_54106f80-7575-4325-8dfe-9ecba31dd828
+	fromColumn: factBureauMonthlyStatus.STATUS
+	toColumn: dimBureauStatus.STATUS
+
