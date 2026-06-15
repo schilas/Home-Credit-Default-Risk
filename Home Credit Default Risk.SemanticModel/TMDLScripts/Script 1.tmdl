@@ -1,34 +1,33 @@
 createOrReplace
 
-	relationship 4a5a8772-039e-0239-2d9f-d5cc5356166b
-		crossFilteringBehavior: bothDirections
-		fromCardinality: one
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111001
 		fromColumn: factApplications.SK_ID_CURR
-		toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+		toColumn: dimApplicant.SK_ID_CURR
 
-	relationship 4c57833d-32a6-fba5-582f-b9bd3c97918f
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111002
 		fromColumn: factBureauCredits.SK_ID_CURR
-		toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+		toColumn: dimApplicant.SK_ID_CURR
 
-	relationship dbe28e72-66a8-d95b-549f-84f88bfbae62
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111003
 		fromColumn: factPreviousApplications.SK_ID_CURR
-		toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+		toColumn: dimApplicant.SK_ID_CURR
 
-	relationship c7402aeb-396a-b5f7-a406-6d32be03ef41
-		crossFilteringBehavior: bothDirections
-		fromCardinality: one
-		fromColumn: dimApplicant.SK_ID_CURR
-		toColumn: factInstallmentDPD5Summary.SK_ID_CURR
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111004
+		fromColumn: factInstallmentDPD5Summary.SK_ID_CURR
+		toColumn: dimApplicant.SK_ID_CURR
 
-	relationship 596f2062-dd21-31a3-0733-7ce6c36da3cf
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111005
+		fromColumn: factBureauMonthlyStatus.SK_ID_BUREAU
+		toColumn: factBureauCredits.SK_ID_BUREAU
+
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111006
 		fromColumn: factBureauCredits.CREDIT_TYPE
 		toColumn: dimCreditType.CREDIT_TYPE
 
-	relationship 563ade5d-3b08-e66c-7c87-b83f796bfafe
-		fromColumn: factBureauMonthlyStatus.MONTHS_BALANCE
-		toColumn: dimRelativeMonth.MONTHS_BALANCE
-
-	relationship 8a731088-8fe1-4024-9ae5-0e0de5894e42
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111007
 		fromColumn: factBureauMonthlyStatus.STATUS
 		toColumn: dimBureauStatus.STATUS
 
+	relationship 6f1e21c7-7d7f-4c2f-a23e-111111111008
+		fromColumn: factBureauMonthlyStatus.MONTHS_BALANCE
+		toColumn: dimRelativeMonth.MONTHS_BALANCE

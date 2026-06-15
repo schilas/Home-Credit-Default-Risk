@@ -90,6 +90,7 @@ table 'Measures Design'
 		displayFolder: Report Wide Measures
 		lineageTag: 7c34c62d-d359-4c54-b27e-934c76ea61d3
 
+	/// Return 1 (and otherwise 0) when the current date selection’s approximate month span falls within the threshold that matches the selected auto period parameter (week, month, quarter, year, or longer), enabling dynamic time-period filtering.
 	measure AutoperiodFilter = ```
 			
 			VAR _MonthCount = COUNT('Date'[Date])/30

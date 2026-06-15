@@ -1,0 +1,32 @@
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111001
+	fromColumn: factApplications.SK_ID_CURR
+	toColumn: dimApplicant.SK_ID_CURR
+
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111002
+	fromColumn: factBureauCredits.SK_ID_CURR
+	toColumn: dimApplicant.SK_ID_CURR
+
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111003
+	fromColumn: factPreviousApplications.SK_ID_CURR
+	toColumn: dimApplicant.SK_ID_CURR
+
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111004
+	fromColumn: factInstallmentDPD5Summary.SK_ID_CURR
+	toColumn: dimApplicant.SK_ID_CURR
+
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111005
+	fromColumn: factBureauMonthlyStatus.SK_ID_BUREAU
+	toColumn: factBureauCredits.SK_ID_BUREAU
+
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111006
+	fromColumn: factBureauCredits.CREDIT_TYPE
+	toColumn: dimCreditType.CREDIT_TYPE
+
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111007
+	fromColumn: factBureauMonthlyStatus.STATUS
+	toColumn: dimBureauStatus.STATUS
+
+relationship 6f1e21c7-7d7f-4c2f-a23e-111111111008
+	fromColumn: factBureauMonthlyStatus.MONTHS_BALANCE
+	toColumn: dimRelativeMonth.MONTHS_BALANCE
+

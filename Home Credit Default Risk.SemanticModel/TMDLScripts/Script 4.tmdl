@@ -1,0 +1,150 @@
+createOrReplace
+
+	ref table 'Measures Design'
+
+		measure 'Accent Blue' = "#123F6D"
+			displayFolder: Colors\Accent Colors
+			lineageTag: 1179af43-543a-4965-b681-5a8e9d9070f2
+
+		measure 'Accent Green' = "#5D7875"
+			displayFolder: Colors\Accent Colors
+			lineageTag: 2e89fd89-0b98-4af0-8794-258bbb8d1b43
+
+		measure 'Accent Light Green' = "#CED9D7"
+			displayFolder: Colors\Accent Colors
+			lineageTag: 262b49e9-77e8-4319-b0b5-320d50a9ba8c
+
+		/// Return 1 (and otherwise 0) when the current date selection’s approximate month span falls within the threshold that matches the selected auto period parameter (week, month, quarter, year, or longer), enabling dynamic time-period filtering.
+		measure AutoperiodFilter = ```
+				
+				VAR _MonthCount = COUNT('Date'[Date])/30
+				VAR _AutoPeriod = SELECTEDVALUE('Par_AutoPeriod'[Par_AutoPeriod Order])
+				var _week = 3
+				var _month = 6
+				var _quarter = 16
+				var _year = 48
+				RETURN 
+				SWITCH(
+				    TRUE,
+				        _MonthCount <= _week && _AutoPeriod = 0, 1,
+				        _MonthCount > _week && _MonthCount <= _month && _AutoPeriod = 1, 1,
+				        _MonthCount > _month && _MonthCount <= _quarter && _AutoPeriod = 2, 1,
+				        _MonthCount > _quarter && _MonthCount <= _year && _AutoPeriod = 3, 1,
+				        _MonthCount > _year && _AutoPeriod = 4, 1,
+				        0
+				    )
+				```
+			formatString: 0
+			lineageTag: 1f30c8c4-3adb-4875-8398-a879c49d0617
+
+		measure 'Brick Red' = "#C03627"
+			displayFolder: Colors\Supplementary Colors
+			lineageTag: 979e11b7-29a6-4bf6-aa61-a30a12470f34
+
+		measure Card-MeasureName = ""
+			displayFolder: Cards
+			lineageTag: a5b392cf-9642-4c05-8121-b8934879f8e2
+
+		measure CF-MeasureName = ""
+			displayFolder: Conditional Formatting
+			lineageTag: 743f5bb3-2fd7-4da3-90f9-a64868c0eeab
+
+		measure DL-MeasureName = ""
+			displayFolder: Data Labels
+			lineageTag: 5cf40798-d88b-47dc-833b-8ed238375c43
+
+		measure EndUserDocumentation = ""
+			displayFolder: Report Wide Measures
+			lineageTag: 9b99bc9b-f2ce-419d-b3ba-6658aa0717fd
+
+		measure Environment = SELECTEDVALUE ( Environment[Environment Description] )
+			displayFolder: Report Wide Measures
+			lineageTag: 17ad2d3a-7cc7-42b3-b63b-db6f185c7ab5
+
+		measure 'Grape Purple' = "#9E1F63"
+			displayFolder: Colors\Supplementary Colors
+			lineageTag: c064048a-7c48-4977-8468-ca6e9577be0d
+
+		measure 'Grass Green' = "#4C9F70"
+			displayFolder: Colors\Supplementary Colors
+			lineageTag: af9e35b4-7c46-4bbe-a076-3a1d7db91e76
+
+		measure 'Group Gold' = "#E1B77E"
+			displayFolder: Colors\Primary Colors
+			lineageTag: c87bd4be-6510-41c7-b2ae-e9f7864bbf60
+
+		measure 'Group Gray' = "#A1A9B4"
+			displayFolder: Colors\Primary Colors
+			lineageTag: 136edc3c-05bf-42e3-b15b-130ffd912eef
+
+		measure 'Group Teal' = "#054E5A"
+			displayFolder: Colors\Primary Colors
+			lineageTag: 5fc77e24-168f-4d56-adc6-0106bd1a349c
+
+		measure 'Report Information' = "Home Credit Default Risk • Vytvořeno: Vojtěch Šildberger"
+			displayFolder: Report Wide Measures
+			lineageTag: b7cd2610-6c47-42f5-9e2c-f2ccb6498032
+
+		measure 'Sky Blue' = "#ADD9F4"
+			displayFolder: Colors\Supplementary Colors
+			lineageTag: d456d564-3802-4613-9c0b-47d385b97f11
+
+		measure SlicerCategory =
+				
+				var vrCategory = ""
+				var vrDivider = REPT ( "‾", 33 )
+				RETURN
+				vrCategory & UNICHAR ( 10 ) & vrDivider
+			displayFolder: Slicer Categories
+			lineageTag: 6aa12797-561f-4175-a591-d0955b6a06d7
+
+		measure 'Soft Peach' = "#F68363"
+			displayFolder: Colors\Supplementary Colors
+			lineageTag: 1608bd97-251a-49dc-9150-8fa4bf348eef
+
+		measure Support = ""
+			displayFolder: Report Wide Measures
+			lineageTag: 7c34c62d-d359-4c54-b27e-934c76ea61d3
+
+		measure 'Transparent Color' = "Rgba(255,255,255,0)"
+			displayFolder: Colors
+			lineageTag: ec03d5f4-a9ce-4a41-ad8d-17baec3f8809
+
+		measure UpToDate =
+				
+				DATEDIFF(MIN('Refresh Dates'[Refresh Date]),NOW(),HOUR)
+			formatString: 0
+			displayFolder: Refresh
+			lineageTag: c9b071fc-0818-44a2-933f-57fae8615ddc
+
+		measure VT-MeasureName = ""
+			displayFolder: Visual Titles
+			lineageTag: 106d239c-7573-4c3e-8623-c4662fef7e91
+
+		measure warningMessage =
+				
+				
+				var THRESHOLD_HOURS = 25
+				var NoOfSources = COUNTROWS (
+				    FILTER (
+				        'Refresh Dates',
+				        NOT ISBLANK ( 'Refresh Dates'[Refresh Date] )
+				            && [UpToDate] >= THRESHOLD_HOURS
+				    )
+				)
+				VAR _warning = IF(NoOfSources=1,"⚠️ One source is not up to date.",  "⚠️" &NoOfSources&" sources are not up to date.")
+				RETURN
+				IF(
+				    [UpToDate] >= THRESHOLD_HOURS,
+				    _warning
+				)
+			displayFolder: Refresh
+			lineageTag: 3b331202-9609-47fe-9314-21f88e6d08ea
+
+	ref table 'Measures Technical'
+
+		measure measure = BLANK()
+			formatString: #,0
+			displayFolder: Fact1
+			lineageTag: 77332b14-ba5d-4105-8282-dc6290ef79b5
+

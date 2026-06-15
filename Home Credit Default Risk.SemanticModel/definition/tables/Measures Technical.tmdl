@@ -6,6 +6,330 @@ table 'Measures Technical'
 		displayFolder: Fact1
 		lineageTag: 77332b14-ba5d-4105-8282-dc6290ef79b5
 
+	/// Počet aktuálních žádostí v TRAIN datasetu.
+	/// Tabulka factApplications má mít jeden řádek pro jednu aktuální žádost.
+	measure 'Applications Count' =
+			
+			COUNTROWS ( factApplications )
+		formatString: #,0
+		displayFolder: 01 Základní metriky\Žádosti
+		lineageTag: 40a76499-0895-423c-a9ea-e7a69f5db559
+
+	/// Celkový objem aktuálně požadovaného úvěru.
+	/// Používá se jako váha pro objemovou distribuci žádostí.
+	measure 'Credit Volume' =
+			
+			SUM ( factApplications[AMT_CREDIT] )
+		formatString: #,0
+		displayFolder: 01 Základní metriky\Žádosti
+		lineageTag: f5462b20-f8ad-435e-966d-2e8b427564e9
+
+	/// Průměrná výše požadovaného úvěru na jednu aktuální žádost.
+	measure 'Average Credit Amount' =
+			
+			DIVIDE (
+			    [Credit Volume],
+			    [Applications Count]
+			)
+		formatString: #,0.00
+		displayFolder: 01 Základní metriky\Žádosti
+		lineageTag: 6d85c1b8-103a-4a92-a58d-1f6e23288e85
+
+	/// Celkový roční příjem klientů v aktuálním kontextu filtru.
+	/// Používá se jako jmenovatel ve výpočtu DTI.
+	measure 'Annual Income' =
+			
+			SUM ( factApplications[AMT_INCOME_TOTAL] )
+		formatString: #,0
+		displayFolder: 01 Základní metriky\Příjem
+		lineageTag: 78e41b84-8715-4c5a-be84-da3c524f20c6
+
+	/// Výše úvěru aktuálně požadované žádosti v aktuálním kontextu filtru.
+	/// Používá se jako část DTI za aktuální kontrakt.
+	measure 'Current Application Credit' =
+			
+			SUM ( factApplications[AMT_CREDIT] )
+		formatString: #,0
+		displayFolder: 01 Základní metriky\Žádosti
+		lineageTag: 9b2f19de-2e5c-4ee0-9bdc-663ba5447799
+
+	/// Počet žádostí, kde TARGET = 1.
+	/// To znamená, že klient měl problém se splácením.
+	measure 'Repayment Difficulty Applications' =
+			
+			CALCULATE (
+			    [Applications Count],
+			    dimApplicant[TARGET] = 1
+			)
+		formatString: #,0
+		displayFolder: 01 Základní metriky\Rizikový výsledek
+		lineageTag: c91323f5-ad17-41c7-9f4b-19dbddae4b49
+
+	/// Počet žádostí, kde TARGET = 0.
+	/// To znamená, že klient neměl pozorovaný problém se splácením.
+	measure 'No Repayment Difficulty Applications' =
+			
+			CALCULATE (
+			    [Applications Count],
+			    dimApplicant[TARGET] = 0
+			)
+		formatString: #,0
+		displayFolder: 01 Základní metriky\Rizikový výsledek
+		lineageTag: bda65c4f-9e7d-4d59-bd26-dc6a2e054b36
+
+	/// Podíl žádostí s problémem se splácením v aktuálním kontextu filtru.
+	measure 'Repayment Difficulty Rate' =
+			
+			DIVIDE (
+			    [Repayment Difficulty Applications],
+			    [Applications Count]
+			)
+		formatString: 0.00%
+		displayFolder: 01 Základní metriky\Rizikový výsledek
+		lineageTag: 76ca1fe1-35c7-4e6d-bfa9-5fb6f9e9b36e
+
+	/// Celkový počet žádostí v aktuálním výběru reportu.
+	/// Používá se jako jmenovatel pro jednotkovou distribuci.
+	measure 'Applications Visible Total' =
+			
+			CALCULATE (
+			    [Applications Count],
+			    ALLSELECTED ()
+			)
+		formatString: #,0
+		displayFolder: 02 Distribuce\Počet žádostí
+		lineageTag: 4bde7feb-bb71-4ddb-8001-558af03d9775
+
+	/// Jednotková distribuce žádostí v procentech.
+	/// Použijte s dimenzemi jako pohlaví, věková skupina, vzdělání,
+	/// rodinný stav nebo skupina počtu předchozích žádostí.
+	measure 'Applications % of Visible Total' =
+			
+			DIVIDE (
+			    [Applications Count],
+			    [Applications Visible Total]
+			)
+		formatString: 0.00%
+		displayFolder: 02 Distribuce\Počet žádostí
+		lineageTag: 7358f16c-0d0c-4a1f-be0f-593a9e3c860f
+
+	/// Celkový objem požadovaného úvěru v aktuálním výběru reportu.
+	/// Používá se jako jmenovatel pro objemovou distribuci.
+	measure 'Credit Volume Visible Total' =
+			
+			CALCULATE (
+			    [Credit Volume],
+			    ALLSELECTED ()
+			)
+		formatString: #,0
+		displayFolder: 02 Distribuce\Objem úvěru
+		lineageTag: 793bc186-1dea-4047-a8b2-059f1f73bc28
+
+	/// Objemová distribuce žádostí v procentech, kde váhou je AMT_CREDIT.
+	/// Použijte s demografickými dimenzemi.
+	measure 'Credit Volume % of Visible Total' =
+			
+			DIVIDE (
+			    [Credit Volume],
+			    [Credit Volume Visible Total]
+			)
+		formatString: 0.00%
+		displayFolder: 02 Distribuce\Objem úvěru
+		lineageTag: 4220d6c5-5ade-453f-bc7b-312f1b9855b4
+
+	/// Součet AMT_CREDIT_SUM za aktivní kontrakty v úvěrovém registru.
+	/// Ve výpočtu DTI představuje existující aktivní zadlužení klienta.
+	measure 'Active Bureau Credit Exposure' =
+			
+			COALESCE (
+			    CALCULATE (
+			        SUM ( factBureauCredits[Active Bureau Credit Sum] ),
+			        REMOVEFILTERS ( dimCreditType )
+			    ),
+			    0
+			)
+		formatString: #,0
+		displayFolder: 03 DTI\Aktivní bureau expozice
+		lineageTag: d14beb50-7100-41f3-a1ed-cba27135b3b2
+
+	/// Debt To Income poměr.
+	/// Počítá se jako aktivní bureau expozice plus aktuálně požadovaný úvěr
+	/// děleno ročním příjmem klienta.
+	measure DTI =
+			
+			DIVIDE (
+			    [Active Bureau Credit Exposure] + [Current Application Credit],
+			    [Annual Income]
+			)
+		formatString: 0.00
+		displayFolder: 03 DTI\Klientská úroveň
+		lineageTag: dbf2f1bd-2f5f-44ac-9e5a-183b144f1a5b
+
+	/// Medián klientského DTI v aktuálním kontextu.
+	/// Použijte s dimApplicant[Income Type] pro výpočet podle typu příjmu.
+	measure 'Median DTI' =
+			
+			MEDIANX (
+			    FILTER (
+			        VALUES ( dimApplicant[SK_ID_CURR] ),
+			        CALCULATE ( SUM ( factApplications[AMT_INCOME_TOTAL] ) ) > 0
+			    ),
+			    [DTI]
+			)
+		formatString: 0.00
+		displayFolder: 03 DTI\Analýza podle typu příjmu
+		lineageTag: 0c9ac9f3-8d60-422a-a466-592d03e943f2
+
+	/// Počet žádostí v TRAIN datasetu, kde aktuální typ kontraktu je Cash loans.
+	measure 'Cash Applications Count' =
+			
+			CALCULATE (
+			    [Applications Count],
+			    dimApplicant[Is Cash Application] = TRUE ()
+			)
+		formatString: #,0
+		displayFolder: 04 Bureau trend\Cash žádosti
+		lineageTag: e05a3f19-d1c4-4b78-87a7-a7f529c71f68
+
+	/// Pevný jmenovatel pro trend no-DPD kontraktů.
+	/// Počítá všechny TRAIN cash žádosti a ignoruje filtry z bureau historie.
+	measure 'Cash Applications Count - Trend Denominator' =
+			
+			CALCULATE (
+			    [Applications Count],
+			    dimApplicant[Is Cash Application] = TRUE (),
+			    REMOVEFILTERS ( dimCreditType ),
+			    REMOVEFILTERS ( dimBureauStatus ),
+			    REMOVEFILTERS ( dimRelativeMonth ),
+			    REMOVEFILTERS ( factBureauCredits ),
+			    REMOVEFILTERS ( factBureauMonthlyStatus )
+			)
+		formatString: #,0
+		displayFolder: 04 Bureau trend\Cash žádosti
+		lineageTag: 26cfd4e7-8781-49c9-bb93-8de19c0cc8a5
+
+	/// Počet unikátních kontraktů v externím úvěrovém registru.
+	measure 'Bureau Contracts Count' =
+			
+			DISTINCTCOUNT ( factBureauCredits[SK_ID_BUREAU] )
+		formatString: #,0
+		displayFolder: 04 Bureau trend\Bureau kontrakty
+		lineageTag: fa34ac79-c52e-4a18-8f3a-7dc6adbd982f
+
+	/// Počet unikátních bureau kontraktů se statusem 0 v daném relativním měsíci.
+	/// Status 0 znamená bez prodlení.
+	measure 'No DPD Bureau Contracts' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( factBureauMonthlyStatus[SK_ID_BUREAU] ),
+			    REMOVEFILTERS ( dimBureauStatus ),
+			    factBureauMonthlyStatus[STATUS] = "0"
+			)
+		formatString: #,0
+		displayFolder: 04 Bureau trend\No DPD
+		lineageTag: ed80cfeb-a195-4923-84e1-a62505d840e6
+
+	/// Počet no-DPD bureau kontraktů napojených na TRAIN cash žádosti.
+	measure 'No DPD Bureau Contracts - Cash Applications' =
+			
+			CALCULATE (
+			    [No DPD Bureau Contracts],
+			    dimApplicant[Is Cash Application] = TRUE ()
+			)
+		formatString: #,0
+		displayFolder: 04 Bureau trend\No DPD
+		lineageTag: 06dd95e7-74f5-4e1d-9f44-02973a01b7ba
+
+	/// Průměrný počet no-DPD bureau kontraktů na jednu TRAIN cash žádost
+	/// podle relativního měsíce.
+	/// Použijte dimRelativeMonth na osu a dimCreditType jako filtr CREDIT_TYPE.
+	measure 'Avg No DPD Bureau Contracts per Cash Application' =
+			
+			DIVIDE (
+			    [No DPD Bureau Contracts - Cash Applications],
+			    [Cash Applications Count - Trend Denominator]
+			)
+		formatString: 0.000
+		displayFolder: 04 Bureau trend\No DPD
+		lineageTag: c96197a7-370c-4525-89b5-bd3035b521d1
+
+	/// Celkový počet historických splátek v nejnovější verzi splátkového kalendáře.
+	measure 'Installment Count' =
+			
+			SUM ( factInstallmentDPD5Summary[InstallmentCount] )
+		formatString: #,0
+		displayFolder: 05 Bonus DPD5\Splátky
+		lineageTag: c4adac48-dbe9-4abe-8716-e712d9de7552
+
+	/// Počet historických splátek, u kterých klient překročil DPD5.
+	measure 'DPD5 Installment Count' =
+			
+			SUM ( factInstallmentDPD5Summary[DPD5InstallmentCount] )
+		formatString: #,0
+		displayFolder: 05 Bonus DPD5\Splátky
+		lineageTag: a5134aa8-ba11-494d-a520-8cc1328fe5de
+
+	/// Počet TRAIN žádostí, u kterých klient někdy překročil DPD5
+	/// na libovolné předchozí Home Credit žádosti.
+	measure 'Applications Ever DPD5' =
+			
+			SUM ( factInstallmentDPD5Summary[EverDPD5Unit] )
+		formatString: #,0
+		displayFolder: 05 Bonus DPD5\Úroveň žádosti
+		lineageTag: 4a85e5bc-779a-457b-9900-b6ae04202f37
+
+	/// Počet TRAIN žádostí, u kterých klient nemá pozorovanou historickou DPD5 událost.
+	measure 'Applications Never DPD5' =
+			
+			[Applications Count] - [Applications Ever DPD5]
+		formatString: #,0
+		displayFolder: 05 Bonus DPD5\Úroveň žádosti
+		lineageTag: c2698859-b781-4ef1-9d2a-105b91ffd6e1
+
+	/// Podíl TRAIN žádostí, u kterých klient někdy překročil DPD5
+	/// na libovolné předchozí Home Credit žádosti.
+	measure 'Ever DPD5 Application Ratio' =
+			
+			DIVIDE (
+			    [Applications Ever DPD5],
+			    [Applications Count]
+			)
+		formatString: 0.00%
+		displayFolder: 05 Bonus DPD5\Úroveň žádosti
+		lineageTag: 554e2b94-45dc-42f9-89d8-d74e1f5c8889
+
+	/// Počet TRAIN žádostí, které mají alespoň jeden historický záznam ve splátkové historii.
+	measure 'Applications With Installment History' =
+			
+			COUNTROWS (
+			    FILTER (
+			        factInstallmentDPD5Summary,
+			        factInstallmentDPD5Summary[InstallmentCount] > 0
+			    )
+			)
+		formatString: #,0
+		displayFolder: 05 Bonus DPD5\Pokrytí dat
+		lineageTag: 498fdbb6-b9a1-4291-b6b2-41b4a036e136
+
+	/// Počet TRAIN žádostí bez pozorovaného historického záznamu ve splátkové historii.
+	measure 'Applications Without Installment History' =
+			
+			[Applications Count] - [Applications With Installment History]
+		formatString: #,0
+		displayFolder: 05 Bonus DPD5\Pokrytí dat
+		lineageTag: 107f7ed9-9cc3-4be8-a13b-f6c0dd55ee3e
+
+	/// Podíl TRAIN žádostí, které mají dostupnou historickou splátkovou historii.
+	measure 'Installment History Coverage %' =
+			
+			DIVIDE (
+			    [Applications With Installment History],
+			    [Applications Count]
+			)
+		formatString: 0.00%
+		displayFolder: 05 Bonus DPD5\Pokrytí dat
+		lineageTag: 7ab15446-a27d-42fa-ba58-085fca657856
+
 	partition 'Measures Technical-7ff08300-51f8-45e8-a681-19dcd996fb1d' = m
 		mode: import
 		queryGroup: 'MEASURE TABLES'

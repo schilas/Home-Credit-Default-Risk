@@ -10,8 +10,8 @@
       "nodes": [
         {
           "location": {
-            "x": 0,
-            "y": 2.8950260625000568
+            "x": 2107.1718331587012,
+            "y": 353.37963638774022
           },
           "nodeIndex": "Measures Technical",
           "size": {
@@ -23,8 +23,8 @@
         },
         {
           "location": {
-            "x": 11,
-            "y": 181.89456906250004
+            "x": 2118.1718331587012,
+            "y": 532.37917938774024
           },
           "nodeIndex": "Environment",
           "size": {
@@ -36,8 +36,8 @@
         },
         {
           "location": {
-            "x": 851,
-            "y": 33.751969062500052
+            "x": 2958.1718331587012,
+            "y": 384.23657938774022
           },
           "nodeIndex": "Date",
           "size": {
@@ -48,8 +48,8 @@
         },
         {
           "location": {
-            "x": 7,
-            "y": 98.895026062500079
+            "x": 2114.1718331587012,
+            "y": 449.37963638774022
           },
           "nodeIndex": "Measures Design",
           "size": {
@@ -60,8 +60,8 @@
         },
         {
           "location": {
-            "x": 0,
-            "y": 276.3231690625
+            "x": 2107.1718331587012,
+            "y": 626.8077793877402
           },
           "nodeIndex": "Refresh Dates",
           "size": {
@@ -73,8 +73,8 @@
         },
         {
           "location": {
-            "x": 1115,
-            "y": 126.25164056250006
+            "x": 3222.1718331587012,
+            "y": 476.7362508877402
           },
           "nodeIndex": "Par_AutoPeriod",
           "nodeLineageTag": "88cc63ea-60ee-4102-9a8c-a660e33bcdbe",
@@ -86,24 +86,11 @@
         },
         {
           "location": {
-            "x": 1399,
-            "y": 89.965712062500046
+            "x": 329.78878314400754,
+            "y": 0
           },
-          "nodeIndex": "factStakeholders",
-          "nodeLineageTag": "61e5b44b-b17f-4b96-b537-0b468ce3d6d5",
-          "size": {
-            "height": 224,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 1101,
-            "y": 535.5368193125
-          },
-          "nodeIndex": "dimUsers",
-          "nodeLineageTag": "8381f0b5-b7ff-40a2-bfa6-43ef66e3248d",
+          "nodeIndex": "dimApplicant",
+          "nodeLineageTag": "6ed0e525-7a91-4452-aed8-c5ef6bc0ef64",
           "size": {
             "height": 300,
             "width": 234
@@ -112,11 +99,102 @@
         },
         {
           "location": {
-            "x": 1967,
-            "y": 124.89348018750002
+            "x": 1077.1718331587012,
+            "y": 1.568383865393514
           },
-          "nodeIndex": "dimDashboards",
-          "nodeLineageTag": "48d5369f-1fb6-4625-a2db-d4bed014c80d",
+          "nodeIndex": "dimBureauStatus",
+          "nodeLineageTag": "0b9b4e5d-2f1b-457b-817d-486f02657e93",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 24,
+            "y": 0
+          },
+          "nodeIndex": "dimCreditType",
+          "nodeLineageTag": "e9766d8b-cb41-428c-88b4-a68218c4fa47",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 765.78878314400754,
+            "y": 0
+          },
+          "nodeIndex": "dimRelativeMonth",
+          "nodeLineageTag": "abe44ab2-be7c-4463-b3a9-f469f9cffd0d",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 905.0441281239423,
+            "y": 613
+          },
+          "nodeIndex": "factApplications",
+          "nodeLineageTag": "14147082-6939-4488-ade6-fad419711a7c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 307.790408312331,
+            "y": 620.66495910039009
+          },
+          "nodeIndex": "factBureauCredits",
+          "nodeLineageTag": "436e6c14-b154-4c86-a805-818f3d5afe09",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 618.41308182524017
+          },
+          "nodeIndex": "factBureauMonthlyStatus",
+          "nodeLineageTag": "ff21a759-e0f6-44f3-b586-ff1f285cc383",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1164.4186262492826,
+            "y": 604.480351346698
+          },
+          "nodeIndex": "factInstallmentDPD5Summary",
+          "nodeLineageTag": "dded8c92-b806-4a92-8ad5-7bc04b429f0d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 590.8755616230726,
+            "y": 614
+          },
+          "nodeIndex": "factPreviousApplications",
+          "nodeLineageTag": "9844b19c-8a36-495d-b868-6d63425d0e5e",
           "size": {
             "height": 152,
             "width": 234
