@@ -7,7 +7,7 @@
     "z": 27000,
     "height": 80.170648464163818,
     "width": 240.51194539249144,
-    "tabOrder": 19007
+    "tabOrder": 26000
   },
   "visual": {
     "visualType": "slicer",
@@ -155,23 +155,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "af1c2361a1219c149c59",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Previous Application Count Band"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

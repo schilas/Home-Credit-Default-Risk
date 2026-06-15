@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "03ca3e16c1b86e9eb0eb",
+  "name": "98680614c665a86359a0",
   "position": {
-    "x": 1411.1822660098521,
-    "y": 120,
-    "z": 14000,
-    "height": 81.13300492610837,
-    "width": 238,
-    "tabOrder": 13000
+    "x": 1094,
+    "y": 120.71672354948805,
+    "z": 21000,
+    "height": 80.170648464163818,
+    "width": 396.24573378839585,
+    "tabOrder": 21000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Median DTI"
+                  "Property": "Average Credit Amount"
                 }
               },
-              "queryRef": "Measures Technical.Median DTI",
-              "nativeQueryRef": "Median DTI"
+              "queryRef": "Measures Technical.Average Credit Amount",
+              "nativeQueryRef": "Average Credit Amount"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Median DTI"
+                "Property": "Average Credit Amount"
               }
             },
             "direction": "Descending"
@@ -92,7 +92,7 @@
             "labelPrecision": {
               "expr": {
                 "Literal": {
-                  "Value": "1L"
+                  "Value": "0L"
                 }
               }
             },
@@ -101,7 +101,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 7,
+                      "ColorId": 5,
                       "Percent": 0
                     }
                   }
@@ -126,7 +126,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Medián DTI'"
+                  "Value": "'Průměrná výše úvěru'"
                 }
               }
             },
@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "4421cefb544ca67de8ee",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Average Credit Amount"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

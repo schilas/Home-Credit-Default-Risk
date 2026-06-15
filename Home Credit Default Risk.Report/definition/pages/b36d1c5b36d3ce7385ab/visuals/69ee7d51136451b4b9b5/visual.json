@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "03ca3e16c1b86e9eb0eb",
+  "name": "69ee7d51136451b4b9b5",
   "position": {
-    "x": 1411.1822660098521,
-    "y": 120,
-    "z": 14000,
-    "height": 81.13300492610837,
-    "width": 238,
-    "tabOrder": 13000
+    "x": 682,
+    "y": 120.71672354948805,
+    "z": 22000,
+    "height": 80.170648464163818,
+    "width": 396.24573378839585,
+    "tabOrder": 22000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Median DTI"
+                  "Property": "Credit Volume"
                 }
               },
-              "queryRef": "Measures Technical.Median DTI",
-              "nativeQueryRef": "Median DTI"
+              "queryRef": "Measures Technical.Credit Volume",
+              "nativeQueryRef": "Credit Volume"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Median DTI"
+                "Property": "Credit Volume"
               }
             },
             "direction": "Descending"
@@ -85,14 +85,14 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "0D"
                 }
               }
             },
             "labelPrecision": {
               "expr": {
                 "Literal": {
-                  "Value": "1L"
+                  "Value": "3L"
                 }
               }
             },
@@ -101,7 +101,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 7,
+                      "ColorId": 5,
                       "Percent": 0
                     }
                   }
@@ -126,7 +126,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Medián DTI'"
+                  "Value": "'Celkový objem úvěrů'"
                 }
               }
             },
@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c2ae374281e081982b3b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Credit Volume"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

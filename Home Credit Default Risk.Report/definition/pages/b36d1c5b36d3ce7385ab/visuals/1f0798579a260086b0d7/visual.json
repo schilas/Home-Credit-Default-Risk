@@ -4,10 +4,10 @@
   "position": {
     "x": 7.3720136518771326,
     "y": 760.23890784982927,
-    "z": 29000,
+    "z": 19000,
     "height": 80.170648464163818,
     "width": 240.51194539249144,
-    "tabOrder": 28000
+    "tabOrder": 19000
   },
   "visual": {
     "visualType": "slicer",
@@ -115,7 +115,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'''dimApplicant''[Contract Type]'"
+                                "Value": "'''dimApplicant''[Gender]'"
                               }
                             }
                           ]
@@ -143,7 +143,7 @@
                                 "0": [
                                   {
                                     "Literal": {
-                                      "Value": "'''dimApplicant''[Contract Type]'"
+                                      "Value": "'''dimApplicant''[Gender]'"
                                     }
                                   }
                                 ]
@@ -167,7 +167,7 @@
                         },
                         "valueMap": [
                           {
-                            "0": "Typ smlouvy"
+                            "0": "Pohlaví"
                           }
                         ]
                       }

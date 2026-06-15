@@ -371,51 +371,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "e6ce5df5462434d69e76",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Applications % of Visible Total"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "37e969f0aeb0ab126280",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Credit Volume % of Visible Total"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "5ee9957ee00ba4da804d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Contract Type"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

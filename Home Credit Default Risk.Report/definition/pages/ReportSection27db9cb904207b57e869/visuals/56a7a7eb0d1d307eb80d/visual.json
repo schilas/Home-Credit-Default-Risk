@@ -298,51 +298,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "d465f295680c86c757e0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Median DTI"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "eda34ab02161d085229c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Repayment Difficulty Rate"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "5f00418ea2959b077597",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Applications Count"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

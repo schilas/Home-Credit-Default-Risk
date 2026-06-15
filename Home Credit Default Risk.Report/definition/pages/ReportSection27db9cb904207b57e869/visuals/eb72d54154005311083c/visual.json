@@ -7,7 +7,7 @@
     "z": 21000,
     "height": 80,
     "width": 240,
-    "tabOrder": 19001
+    "tabOrder": 20000
   },
   "visual": {
     "visualType": "slicer",
@@ -155,23 +155,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "e1783ec531199a6017c5",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "factApplications"
-              }
-            },
-            "Property": "Gender"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }
