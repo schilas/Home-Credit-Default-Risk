@@ -11,7 +11,7 @@
       "type": "SharedResources"
     },
     "customTheme": {
-      "name": "Air_Bank4074841155662521.json",
+      "name": "Air_Bank8688174291283995.json",
       "reportVersionAtImport": {
         "visual": "2.9.0",
         "report": "3.3.0",
@@ -61,13 +61,8 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "Air_Bank_logo6418704467841535.svg",
-          "path": "Air_Bank_logo6418704467841535.svg",
-          "type": "Image"
-        },
-        {
-          "name": "Air_Bank4074841155662521.json",
-          "path": "Air_Bank4074841155662521.json",
+          "name": "Air_Bank8688174291283995.json",
+          "path": "Air_Bank8688174291283995.json",
           "type": "CustomTheme"
         },
         {
@@ -88,6 +83,11 @@
         {
           "name": "doc9943331213974566.png",
           "path": "doc9943331213974566.png",
+          "type": "Image"
+        },
+        {
+          "name": "logo_airbank_RGB_zakladni0722666346372981.png",
+          "path": "logo_airbank_RGB_zakladni0722666346372981.png",
           "type": "Image"
         }
       ]

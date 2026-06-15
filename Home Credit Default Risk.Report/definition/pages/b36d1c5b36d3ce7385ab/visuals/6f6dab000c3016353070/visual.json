@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "de154c82e660adb5d23a",
+  "name": "6f6dab000c3016353070",
   "position": {
-    "x": 10,
-    "y": 7,
-    "z": 11000,
-    "height": 86,
-    "width": 232,
-    "tabOrder": 6000
+    "x": 1840,
+    "y": 20,
+    "z": 2000,
+    "height": 64,
+    "width": 64,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "image",
@@ -20,7 +20,7 @@
                 "name": {
                   "expr": {
                     "Literal": {
-                      "Value": "'logo_airbank_RGB_zakladni.png'"
+                      "Value": "'conversation.png'"
                     }
                   }
                 },
@@ -29,7 +29,7 @@
                     "ResourcePackageItem": {
                       "PackageName": "RegisteredResources",
                       "PackageType": 1,
-                      "ItemName": "logo_airbank_RGB_zakladni0722666346372981.png"
+                      "ItemName": "conversation4028333460934528.png"
                     }
                   }
                 },
@@ -39,13 +39,6 @@
                       "Value": "'Normal'"
                     }
                   }
-                }
-              }
-            },
-            "fit": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Fill'"
                 }
               }
             }
@@ -61,40 +54,6 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "padding": [
-        {
-          "properties": {
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "right": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
                 }
               }
             }
