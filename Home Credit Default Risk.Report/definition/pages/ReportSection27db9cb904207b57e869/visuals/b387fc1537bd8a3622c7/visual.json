@@ -81,7 +81,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Overview'"
+                  "Value": "'Přehled'"
                 }
               }
             },

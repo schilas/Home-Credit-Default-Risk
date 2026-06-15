@@ -19,7 +19,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'CT Data Domain – PBI Background - With Slicers.png'"
+                    "Value": "'CT Data Domain – PBI Background - With Slicers-replaced-replaced (1).png'"
                   }
                 }
               },
@@ -28,14 +28,14 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "CT_Data_Domain___PBI_Backgroun03720801876571578.png"
+                    "ItemName": "CT_Data_Domain___PBI_Backgroun5985102496826638.png"
                   }
                 }
               },
               "scaling": {
                 "expr": {
                   "Literal": {
-                    "Value": "'Fit'"
+                    "Value": "'Normal'"
                   }
                 }
               }
