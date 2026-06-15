@@ -367,6 +367,178 @@ Grain:
 - vzniká jako SQL agregace v Databricks,
 - do Power BI se načítá pouze malý agregovaný výstup.
 
+```puvodni zdrojova tabulka byla prilis velka na nahrani do power bi a tak sumarizovana tabulka je vytvorena/sumarizovana na zaklade nize uvedeneho SQL dotazu
+WITH train_applications AS (
+
+    -- Výběr všech žádostí z TRAIN datasetu
+    -- Business logika:
+    -- Zadání požaduje výpočet pouze pro aplikace v TRAIN datasetu.
+    SELECT DISTINCT
+        CAST(SK_ID_CURR AS BIGINT) AS SK_ID_CURR
+    FROM home_credit.application_train
+
+),
+
+installment_rows AS (
+
+    -- Načtení pouze potřebných sloupců ze splátkové historie
+    -- Business logika:
+    -- Pro DPD5 potřebujeme klienta, předchozí žádost, číslo splátky, verzi splátky,
+    -- datum splatnosti, datum platby, předepsanou částku a zaplacenou částku.
+    SELECT
+        CAST(ip.SK_ID_CURR AS BIGINT) AS SK_ID_CURR,
+        CAST(ip.SK_ID_PREV AS BIGINT) AS SK_ID_PREV,
+        CAST(ip.NUM_INSTALMENT_VERSION AS DOUBLE) AS NUM_INSTALMENT_VERSION,
+        CAST(ip.NUM_INSTALMENT_NUMBER AS BIGINT) AS NUM_INSTALMENT_NUMBER,
+        CAST(ip.DAYS_INSTALMENT AS BIGINT) AS DAYS_INSTALMENT,
+        CAST(ip.DAYS_ENTRY_PAYMENT AS BIGINT) AS DAYS_ENTRY_PAYMENT,
+        CAST(ip.AMT_INSTALMENT AS DOUBLE) AS AMT_INSTALMENT,
+        CAST(ip.AMT_PAYMENT AS DOUBLE) AS AMT_PAYMENT
+    FROM home_credit.installments_payments ip
+    INNER JOIN train_applications ta
+        ON CAST(ip.SK_ID_CURR AS BIGINT) = ta.SK_ID_CURR
+    WHERE ip.SK_ID_CURR IS NOT NULL
+      AND ip.SK_ID_PREV IS NOT NULL
+      AND ip.NUM_INSTALMENT_VERSION IS NOT NULL
+      AND ip.NUM_INSTALMENT_NUMBER IS NOT NULL
+      AND ip.DAYS_INSTALMENT IS NOT NULL
+      AND ip.AMT_INSTALMENT IS NOT NULL
+
+),
+
+latest_version_rows AS (
+
+    -- Označení nejnovější verze splátky
+    -- Business logika:
+    -- Zadání říká použít latest instalment version for each instalment.
+    -- Úroveň jedné splátky je SK_ID_CURR + SK_ID_PREV + NUM_INSTALMENT_NUMBER.
+    SELECT
+        *,
+        MAX(NUM_INSTALMENT_VERSION) OVER (
+            PARTITION BY SK_ID_CURR, SK_ID_PREV, NUM_INSTALMENT_NUMBER
+        ) AS LATEST_INSTALMENT_VERSION
+    FROM installment_rows
+
+),
+
+latest_installment_rows AS (
+
+    -- Ponechání pouze řádků z nejnovější verze splátkového kalendáře
+    -- Business logika:
+    -- Starší verze splátky ignorujeme, protože mohou být nahrazené novější verzí.
+    SELECT
+        SK_ID_CURR,
+        SK_ID_PREV,
+        NUM_INSTALMENT_VERSION,
+        NUM_INSTALMENT_NUMBER,
+        DAYS_INSTALMENT,
+        DAYS_ENTRY_PAYMENT,
+        AMT_INSTALMENT,
+        AMT_PAYMENT
+    FROM latest_version_rows
+    WHERE NUM_INSTALMENT_VERSION = LATEST_INSTALMENT_VERSION
+
+),
+
+installment_level AS (
+
+    -- Agregace na úroveň jedné splátky
+    -- Business logika:
+    -- Jedna splátka může mít více plateb.
+    -- Pro DPD5 nás zajímá, kolik bylo zaplaceno nejpozději do 5 dní po splatnosti.
+    SELECT
+        SK_ID_CURR,
+        SK_ID_PREV,
+        NUM_INSTALMENT_NUMBER,
+        MAX(NUM_INSTALMENT_VERSION) AS NUM_INSTALMENT_VERSION,
+        MAX(DAYS_INSTALMENT) AS DAYS_INSTALMENT,
+        MAX(AMT_INSTALMENT) AS AMT_INSTALMENT,
+
+        SUM(
+            CASE
+                WHEN DAYS_ENTRY_PAYMENT IS NOT NULL
+                 AND AMT_PAYMENT IS NOT NULL
+                 AND DAYS_ENTRY_PAYMENT <= DAYS_INSTALMENT + 5
+                THEN AMT_PAYMENT
+                ELSE 0
+            END
+        ) AS PAID_WITHIN_DPD5_WINDOW
+
+    FROM latest_installment_rows
+    GROUP BY
+        SK_ID_CURR,
+        SK_ID_PREV,
+        NUM_INSTALMENT_NUMBER
+
+),
+
+installment_dpd5 AS (
+
+    -- Vyhodnocení DPD5 na úrovni jedné splátky
+    -- Business logika:
+    -- DPD5 = TRUE, pokud splátka nebyla plně zaplacena do 5 dní po splatnosti.
+    -- Částečná platba se nepovažuje za plné zaplacení.
+    SELECT
+        SK_ID_CURR,
+        SK_ID_PREV,
+        NUM_INSTALMENT_NUMBER,
+        NUM_INSTALMENT_VERSION,
+        DAYS_INSTALMENT,
+        AMT_INSTALMENT,
+        PAID_WITHIN_DPD5_WINDOW,
+
+        CASE
+            WHEN PAID_WITHIN_DPD5_WINDOW < AMT_INSTALMENT THEN TRUE
+            ELSE FALSE
+        END AS IS_DPD5,
+
+        CASE
+            WHEN PAID_WITHIN_DPD5_WINDOW < AMT_INSTALMENT THEN 1
+            ELSE 0
+        END AS DPD5_UNIT
+
+    FROM installment_level
+
+),
+
+client_level AS (
+
+    -- Agregace na úroveň klienta / aktuální TRAIN žádosti
+    -- Business logika:
+    -- Bonusový úkol požaduje zjistit, zda klient někdy překročil DPD5
+    -- na jakékoliv předchozí žádosti.
+    SELECT
+        SK_ID_CURR,
+        COUNT(*) AS INSTALLMENT_COUNT,
+        SUM(DPD5_UNIT) AS DPD5_INSTALLMENT_COUNT,
+        MAX(DPD5_UNIT) AS EVER_DPD5_UNIT
+    FROM installment_dpd5
+    GROUP BY
+        SK_ID_CURR
+
+)
+
+-- Finální výstup na úrovni všech TRAIN žádostí
+-- Business logika:
+-- TRAIN žádosti bez splátkové historie musí zůstat v denominatoru.
+-- Proto se vrací i klienti bez záznamu v installments_payments s hodnotami 0 / FALSE.
+SELECT
+    ta.SK_ID_CURR,
+
+    COALESCE(cl.INSTALLMENT_COUNT, 0) AS InstallmentCount,
+    COALESCE(cl.DPD5_INSTALLMENT_COUNT, 0) AS DPD5InstallmentCount,
+
+    CASE
+        WHEN COALESCE(cl.EVER_DPD5_UNIT, 0) = 1 THEN TRUE
+        ELSE FALSE
+    END AS EverDPD5,
+
+    COALESCE(cl.EVER_DPD5_UNIT, 0) AS EverDPD5Unit
+
+FROM train_applications ta
+LEFT JOIN client_level cl
+    ON ta.SK_ID_CURR = cl.SK_ID_CURR
+```
 ### 5.6 `dimApplicant`
 
 Grain:
