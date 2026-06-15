@@ -1,0 +1,179 @@
+{
+  "name": "Air Bank",
+  "dataColors": [
+    "#99CC33",
+    "#B0BAC2",
+    "#FF1493",
+    "#CCB333",
+    "#6633CC",
+    "#334DCC",
+    "#CC334D",
+    "#497D00"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#202224",
+  "tableAccent": "#0099CC",
+  "textClasses": {
+    "label": {
+      "color": "#202224",
+      "fontFace": "'Unica77LL', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+      "fontSize": 12
+    },
+    "callout": {
+      "color": "#202224",
+      "fontFace": "'Unica77LL', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+      "fontSize": 20
+    },
+    "title": {
+      "color": "#202224",
+      "fontFace": "'Unica77LL', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+      "fontSize": 14
+    },
+    "header": {
+      "color": "#202224",
+      "fontFace": "'Unica77LL', wf_segoe-ui_normal, helvetica, arial, sans-serif",
+      "fontSize": 14
+    }
+  },
+  "bad": "#CC334D",
+  "neutral": "#F2F2F2",
+  "good": "#99CC33",
+  "minimum": "#F2F2F2",
+  "center": "#E7F3CE",
+  "maximum": "#99CC33",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "visualTooltip": [
+          {
+            "titleFontColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "valueFontColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#373D41"
+              }
+            },
+            "themedBackground": {
+              "solid": {
+                "color": "#202224"
+              }
+            }
+          }
+        ],
+        "outspacePane": [
+          {
+            "foregroundColor": {
+              "solid": {
+                "color": "#202224"
+              }
+            },
+            "titleSize": 10,
+            "headerSize": 10,
+            "checkboxAndApplyColor": {
+              "solid": {
+                "color": "#117865"
+              }
+            }
+          }
+        ],
+        "filterCard": [
+          {
+            "$id": "Applied",
+            "backgroundColor": {
+              "solid": {
+                "color": "#F6F6F6"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#202224"
+              }
+            },
+            "textSize": 10,
+            "transparency": 0
+          },
+          {
+            "$id": "Available",
+            "foregroundColor": {
+              "solid": {
+                "color": "#202224"
+              }
+            },
+            "textSize": 10
+          }
+        ],
+        "border": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F5F5F6"
+              }
+            },
+            "show": true,
+            "radius": 10
+          }
+        ],
+        "visualHeader": [
+          {
+            "border": {
+              "solid": {
+                "color": "#E6E6E6"
+              }
+            },
+            "foreground": {
+              "solid": {
+                "color": "#202224"
+              }
+            }
+          }
+        ],
+        "visualHeaderTooltip": [
+          {
+            "background": {
+              "solid": {
+                "color": "#373D41"
+              }
+            },
+            "titleFontColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "themedBackground": {
+              "solid": {
+                "color": "#202224"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#E6E6E6"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "backgroundLight": "#F2F2F2"
+}

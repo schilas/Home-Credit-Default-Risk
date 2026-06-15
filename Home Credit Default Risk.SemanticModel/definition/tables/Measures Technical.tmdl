@@ -176,9 +176,19 @@ table 'Measures Technical'
 			    ),
 			    [DTI]
 			)
-		formatString: 0.00
 		displayFolder: 03 DTI\Analýza podle typu příjmu
 		lineageTag: 0c9ac9f3-8d60-422a-a466-592d03e943f2
+
+		formatStringDefinition =
+				VAR _value = [Median DTI]
+				RETURN
+				    SWITCH (
+				        TRUE (),
+				        ISBLANK ( _value ), "0.0""x""",
+				        ABS ( _value ) >= 100, "#,0""x""",
+				        ABS ( _value ) >= 10, "#,0.0""x""",
+				        "0.0""x"""
+				    )
 
 	/// Počet žádostí v TRAIN datasetu, kde aktuální typ kontraktu je Cash loans.
 	measure 'Cash Applications Count' =

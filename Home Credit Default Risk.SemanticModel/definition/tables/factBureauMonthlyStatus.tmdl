@@ -136,7 +136,8 @@ table factBureauMonthlyStatus
 				            {"SK_ID_BUREAU", Int64.Type},
 				            {"MONTHS_BALANCE", Int64.Type},
 				            {"STATUS", type text}
-				        }
+				        },
+				        "en-US"
 				    ),
 				
 				    // Očištění sloupce STATUS od případných mezer

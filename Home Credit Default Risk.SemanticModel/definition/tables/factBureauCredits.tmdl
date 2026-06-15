@@ -127,7 +127,8 @@ table factBureauCredits
 				            {"CREDIT_ACTIVE", type text},
 				            {"CREDIT_TYPE", type text},
 				            {"AMT_CREDIT_SUM", type number}
-				        }
+				        },
+				        "en-US"
 				    ),
 				
 				    // Očištění textových sloupců od mezer na začátku a na konci

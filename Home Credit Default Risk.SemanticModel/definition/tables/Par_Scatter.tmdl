@@ -1,0 +1,51 @@
+table Par_Scatter
+	lineageTag: 732bdf91-16c3-49b1-b9a2-eaa181f2ffea
+
+	column Par_Scatter
+		lineageTag: cf137901-37be-487f-921f-50a58334db97
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Par_Scatter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Par_Scatter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Par_Scatter Fields'
+		isHidden
+		lineageTag: 79b973d7-7a40-43a4-92f8-9f200031fb3d
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Par_Scatter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Par_Scatter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 8ba0719c-489c-4b15-8788-3b0deffc3875
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Par_Scatter = calculated
+		mode: import
+		source =
+				{
+				    ("Typ příjmu", NAMEOF('dimApplicant'[Income Type]), 0),
+				    ("Věková skupina", NAMEOF('dimApplicant'[Age Group]), 1),
+				    ("Vzdělání", NAMEOF('dimApplicant'[Education Type]), 2),
+				    ("Rodinný stav", NAMEOF('dimApplicant'[Family Status]), 3),
+				    ("Počet předchozích žádostí", NAMEOF('dimApplicant'[Previous Application Count Band]), 4)
+				}
+
+	annotation PBI_Id = f488eff13ba8416b88e9d8677825655a
+

@@ -61,6 +61,8 @@ ref table dimCreditType
 ref table dimBureauStatus
 ref table dimRelativeMonth
 ref table factInstallmentDPD5Summary
+ref table Parameter
+ref table Par_Scatter
 
 ref cultureInfo en-US
 

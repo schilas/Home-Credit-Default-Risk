@@ -1,0 +1,53 @@
+table Parameter
+	lineageTag: ed542e10-4de0-4cef-824f-b7226cd7596c
+
+	column Parameter
+		lineageTag: 47ce42cb-2e7b-4227-9470-3d5559e1745f
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: a62f0784-1ebf-4a00-a094-3fea18a7f9c6
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: c0cf3edd-5a6f-4106-9787-f224c53a1eef
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parameter = calculated
+		mode: import
+		source =
+				{
+				    ("Typ smlouvy", NAMEOF('dimApplicant'[Contract Type]), 0),
+				    ("Pohlaví", NAMEOF('dimApplicant'[Gender]), 1),
+				    ("Věková skupina", NAMEOF('dimApplicant'[Age Group]), 2),
+				    ("Vzdělání", NAMEOF('dimApplicant'[Education Type]), 3),
+				    ("Rodinný stav", NAMEOF('dimApplicant'[Family Status]), 4),
+				    ("Typ příjmu", NAMEOF('dimApplicant'[Income Type]), 5),
+				    ("Počet předchozích žádostí", NAMEOF('dimApplicant'[Previous Application Count Band]), 6)
+				}
+
+	annotation PBI_Id = 41db471105634a85967f040434a0913a
+

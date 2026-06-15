@@ -4,7 +4,7 @@
   "position": {
     "x": 268.18624044475331,
     "y": 0,
-    "z": 9000,
+    "z": 10000,
     "height": 88.061153578874212,
     "width": 245.50382209867962,
     "tabOrder": 5000
@@ -81,7 +81,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Přehled'"
+                  "Value": "'Manažerský přehled rizika'"
                 }
               }
             },

@@ -72,7 +72,8 @@ table factPreviousApplications
 				        {
 				            {"SK_ID_CURR", Int64.Type},
 				            {"SK_ID_PREV", Int64.Type}
-				        }
+				        },
+				        "en-US"
 				    ),
 				
 				    // Odstranění řádků bez klíče aktuální žádosti nebo bez klíče předchozí žádosti

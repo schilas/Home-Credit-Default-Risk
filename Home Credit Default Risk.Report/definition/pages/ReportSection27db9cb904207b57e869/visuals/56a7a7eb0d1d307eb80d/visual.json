@@ -1,0 +1,348 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "56a7a7eb0d1d307eb80d",
+  "position": {
+    "x": 838.56655290102378,
+    "y": 213.78839590443684,
+    "z": 20000,
+    "height": 778.66894197952217,
+    "width": 1064.334470989761,
+    "tabOrder": 19000
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dimApplicant"
+                    }
+                  },
+                  "Property": "Age Group"
+                }
+              },
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
+              "active": true,
+              "displayName": "Věková skupina"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Par_Scatter"
+                    }
+                  },
+                  "Property": "Par_Scatter"
+                }
+              },
+              "index": 0,
+              "length": 1
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Applications Count"
+                }
+              },
+              "queryRef": "Measures Technical.Applications Count",
+              "nativeQueryRef": "Počet žádostí",
+              "displayName": "Počet žádostí"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Median DTI"
+                }
+              },
+              "queryRef": "Measures Technical.Median DTI",
+              "nativeQueryRef": "Medián DTI (x příjem)",
+              "active": true,
+              "displayName": "Medián DTI (x příjem)"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Repayment Difficulty Rate"
+                }
+              },
+              "queryRef": "Measures Technical.Repayment Difficulty Rate",
+              "nativeQueryRef": "Míra problémů se splácením",
+              "displayName": "Míra problémů se splácením"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "markers": [
+        {
+          "properties": {
+            "borderColorMatchFill": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 9,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 9,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "xAxisReferenceLine": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "displayName": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Median DTI'"
+                }
+              }
+            },
+            "lineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 3,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "value": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Median DTI"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "1"
+          }
+        }
+      ],
+      "y1AxisReferenceLine": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "displayName": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Míra problémů se splácením'"
+                }
+              }
+            },
+            "value": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Repayment Difficulty Rate"
+                }
+              }
+            },
+            "lineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 3,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "1"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Zadlužení a problémy se splácením podle typu příjmu'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "d465f295680c86c757e0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Median DTI"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "eda34ab02161d085229c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Repayment Difficulty Rate"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5f00418ea2959b077597",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Applications Count"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

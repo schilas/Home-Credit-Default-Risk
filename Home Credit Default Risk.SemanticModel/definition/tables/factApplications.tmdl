@@ -207,7 +207,8 @@ table factApplications
 				            {"NAME_INCOME_TYPE", type text},
 				            {"AMT_CREDIT", type number},
 				            {"AMT_INCOME_TOTAL", type number}
-				        }
+				        },
+				        "en-US"
 				    ),
 				
 				    // Očištění textových hodnot od případných mezer na začátku nebo na konci
