@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "619967d086d484d8e1c1",
+  "name": "f27af0cd7d96930971d5",
   "position": {
     "x": 270,
     "y": 120.71672354948805,
-    "z": 20000,
+    "z": 18001,
     "height": 80.170648464163818,
     "width": 396,
-    "tabOrder": 20000
+    "tabOrder": 18001
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Applications Count"
+                  "Property": "Cash Applications Count"
                 }
               },
-              "queryRef": "Measures Technical.Applications Count",
-              "nativeQueryRef": "Applications Count"
+              "queryRef": "Measures Technical.Cash Applications Count",
+              "nativeQueryRef": "Cash Applications Count"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Applications Count"
+                "Property": "Cash Applications Count"
               }
             },
             "direction": "Descending"
@@ -126,7 +126,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Počet žádostí'"
+                  "Value": "'Počet cash žádostí'"
                 }
               }
             },
@@ -214,7 +214,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "a8366320c70ed96c0e57",
+        "name": "4038441f3d23043c3620",
         "field": {
           "Measure": {
             "Expression": {
@@ -222,7 +222,7 @@
                 "Entity": "Measures Technical"
               }
             },
-            "Property": "Applications Count"
+            "Property": "Cash Applications Count"
           }
         },
         "type": "Advanced"

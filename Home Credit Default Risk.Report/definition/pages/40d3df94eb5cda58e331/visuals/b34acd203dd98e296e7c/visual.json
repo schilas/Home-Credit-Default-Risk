@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "619967d086d484d8e1c1",
+  "name": "b34acd203dd98e296e7c",
   "position": {
-    "x": 270,
+    "x": 1094,
     "y": 120.71672354948805,
-    "z": 20000,
+    "z": 18002,
     "height": 80.170648464163818,
-    "width": 396,
-    "tabOrder": 20000
+    "width": 396.24573378839585,
+    "tabOrder": 18002
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Applications Count"
+                  "Property": "No DPD Bureau Contracts"
                 }
               },
-              "queryRef": "Measures Technical.Applications Count",
-              "nativeQueryRef": "Applications Count"
+              "queryRef": "Measures Technical.No DPD Bureau Contracts",
+              "nativeQueryRef": "No DPD Bureau Contracts"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Applications Count"
+                "Property": "No DPD Bureau Contracts"
               }
             },
             "direction": "Descending"
@@ -126,7 +126,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Počet žádostí'"
+                  "Value": "'Bureau kontrakty bez DPD'"
                 }
               }
             },
@@ -214,7 +214,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "a8366320c70ed96c0e57",
+        "name": "9b564700d80177eb309b",
         "field": {
           "Measure": {
             "Expression": {
@@ -222,7 +222,7 @@
                 "Entity": "Measures Technical"
               }
             },
-            "Property": "Applications Count"
+            "Property": "No DPD Bureau Contracts"
           }
         },
         "type": "Advanced"
