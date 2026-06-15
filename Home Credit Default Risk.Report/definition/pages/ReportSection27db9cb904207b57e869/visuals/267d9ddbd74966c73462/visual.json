@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "de154c82e660adb5d23a",
+  "name": "267d9ddbd74966c73462",
   "position": {
-    "x": 10,
-    "y": 7,
-    "z": 11000,
-    "height": 86,
-    "width": 232,
-    "tabOrder": 7001
+    "x": 1770,
+    "y": 20,
+    "z": 2000,
+    "height": 64,
+    "width": 64,
+    "tabOrder": 7004
   },
   "visual": {
     "visualType": "image",
@@ -20,7 +20,7 @@
                 "name": {
                   "expr": {
                     "Literal": {
-                      "Value": "'Air_Bank_logo.svg'"
+                      "Value": "'doc.png'"
                     }
                   }
                 },
@@ -29,7 +29,7 @@
                     "ResourcePackageItem": {
                       "PackageName": "RegisteredResources",
                       "PackageType": 1,
-                      "ItemName": "Air_Bank_logo6418704467841535.svg"
+                      "ItemName": "doc9943331213974566.png"
                     }
                   }
                 },

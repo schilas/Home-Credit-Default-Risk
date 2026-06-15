@@ -4,7 +4,7 @@
   "position": {
     "x": 1704,
     "y": 20,
-    "z": 0,
+    "z": 4000,
     "height": 64,
     "width": 64,
     "tabOrder": 4000
@@ -176,5 +176,28 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1e31c783e0bd31b87dc0",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Refresh Dates"
+                  }
+                },
+                "Property": "Datasource"
+              }
+            },
+            "Function": 3
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

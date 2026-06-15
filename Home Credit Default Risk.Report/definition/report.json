@@ -71,8 +71,23 @@
           "type": "CustomTheme"
         },
         {
+          "name": "calendar_(1)7611539939482053.png",
+          "path": "calendar_(1)7611539939482053.png",
+          "type": "Image"
+        },
+        {
+          "name": "conversation4028333460934528.png",
+          "path": "conversation4028333460934528.png",
+          "type": "Image"
+        },
+        {
           "name": "CT_Data_Domain___PBI_Backgroun5985102496826638.png",
           "path": "CT_Data_Domain___PBI_Backgroun5985102496826638.png",
+          "type": "Image"
+        },
+        {
+          "name": "doc9943331213974566.png",
+          "path": "doc9943331213974566.png",
           "type": "Image"
         }
       ]

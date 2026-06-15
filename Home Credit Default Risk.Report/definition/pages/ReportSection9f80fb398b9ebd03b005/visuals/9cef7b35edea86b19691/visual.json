@@ -5,8 +5,8 @@
     "x": 0,
     "y": 0,
     "z": 0,
-    "height": 80,
-    "width": 475,
+    "height": 85,
+    "width": 480,
     "tabOrder": 0
   },
   "visual": {
@@ -152,8 +152,9 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#054E5A'"
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
                     }
                   }
                 }
@@ -234,8 +235,9 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#E1B77E'"
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0
                     }
                   }
                 }
@@ -331,5 +333,65 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7bfbf07e72ac1acd6bd6",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Refresh Dates"
+              }
+            },
+            "Property": "Datasource"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d382a01f11138ee73a23",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Refresh Dates"
+              }
+            },
+            "Property": "Table"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "85414f900c21556c4536",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Refresh Dates"
+              }
+            },
+            "Property": "Refresh Date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "9f3ae53d0022aebb6daa",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Refresh Dates"
+              }
+            },
+            "Property": "Time Zone"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }
