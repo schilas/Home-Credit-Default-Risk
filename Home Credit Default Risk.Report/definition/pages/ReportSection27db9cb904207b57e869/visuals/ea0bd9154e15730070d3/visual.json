@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0fd94363269081984ab0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Ever DPD5 Application Ratio"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

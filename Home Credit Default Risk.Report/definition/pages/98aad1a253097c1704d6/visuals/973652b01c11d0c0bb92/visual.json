@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "f8eea7a1026bdd7d43dc",
+  "name": "973652b01c11d0c0bb92",
   "position": {
-    "x": 270.29972752043597,
-    "y": 120.32697547683922,
-    "z": 12000,
-    "height": 80.217983651226149,
-    "width": 269,
-    "tabOrder": 11000
+    "x": 928,
+    "y": 120,
+    "z": 21000,
+    "height": 80.170648464163818,
+    "width": 313.31058020477815,
+    "tabOrder": 21000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Applications Count"
+                  "Property": "Current Application Credit"
                 }
               },
-              "queryRef": "Measures Technical.Applications Count",
-              "nativeQueryRef": "Applications Count"
+              "queryRef": "Measures Technical.Current Application Credit",
+              "nativeQueryRef": "Current Application Credit"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Applications Count"
+                "Property": "Current Application Credit"
               }
             },
             "direction": "Descending"
@@ -85,7 +85,7 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "0D"
                 }
               }
             },
@@ -126,7 +126,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Počet žádostí'"
+                  "Value": "'Objem aktuálních žádostí'"
                 }
               }
             },
@@ -210,23 +210,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "8885e0232e964c4e1099",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Applications Count"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

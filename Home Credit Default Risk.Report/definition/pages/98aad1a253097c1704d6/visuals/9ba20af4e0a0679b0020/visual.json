@@ -1,19 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "dd6d9ab10a014bb509e2",
+  "name": "9ba20af4e0a0679b0020",
   "position": {
     "x": 270,
     "y": 575.938566552901,
-    "z": 26000,
+    "z": 27000,
     "height": 455.22184300341291,
-    "width": 994.30034129692831,
-    "tabOrder": 26000
+    "width": 971.26279863481227,
+    "tabOrder": 27000
   },
   "visual": {
-    "visualType": "pivotTable",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Rows": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -23,35 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Age Group"
+                  "Property": "Income Type"
                 }
               },
-              "queryRef": "dimApplicant.Age Group",
-              "nativeQueryRef": "Věková skupina",
-              "active": true,
-              "displayName": "Věková skupina"
-            }
-          ],
-          "fieldParameters": [
-            {
-              "parameterExpr": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Parameter"
-                    }
-                  },
-                  "Property": "Parameter"
-                }
-              },
-              "index": 0,
-              "length": 1,
-              "sortDirection": "Ascending"
-            }
-          ]
-        },
-        "Values": {
-          "projections": [
+              "queryRef": "dimApplicant.Income Type",
+              "nativeQueryRef": "Typ příjmu",
+              "displayName": "Typ příjmu"
+            },
             {
               "field": {
                 "Measure": {
@@ -75,12 +53,12 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Applications % of Visible Total"
+                  "Property": "Median DTI"
                 }
               },
-              "queryRef": "Measures Technical.Applications % of Visible Total",
-              "nativeQueryRef": "Podíl žádostí",
-              "displayName": "Podíl žádostí"
+              "queryRef": "Measures Technical.Median DTI",
+              "nativeQueryRef": "Medián DTI",
+              "displayName": "Medián DTI"
             },
             {
               "field": {
@@ -90,27 +68,12 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Credit Volume % of Visible Total"
+                  "Property": "Average Credit Amount"
                 }
               },
-              "queryRef": "Measures Technical.Credit Volume % of Visible Total",
-              "nativeQueryRef": "Podíl objemu úvěrů",
-              "displayName": "Podíl objemu úvěrů"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Measures Technical"
-                    }
-                  },
-                  "Property": "Volume Share vs Unit Share Gap"
-                }
-              },
-              "queryRef": "Measures Technical.Volume Share vs Unit Share Gap",
-              "nativeQueryRef": "Rozdíl objem vs žádosti (p.b.)",
-              "displayName": "Rozdíl objem vs žádosti (p.b.)"
+              "queryRef": "Measures Technical.Average Credit Amount",
+              "nativeQueryRef": "Průměrná výše úvěru",
+              "displayName": "Průměrná výše úvěru"
             },
             {
               "field": {
@@ -126,26 +89,24 @@
               "queryRef": "Measures Technical.Repayment Difficulty Rate",
               "nativeQueryRef": "Míra problémů se splácením",
               "displayName": "Míra problémů se splácením"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Ever DPD5 Application Ratio"
+                }
+              },
+              "queryRef": "Measures Technical.Ever DPD5 Application Ratio",
+              "nativeQueryRef": "Historické DPD5+",
+              "displayName": "Historické DPD5+"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "dimApplicant"
-                  }
-                },
-                "Property": "Age Group"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ]
       }
     },
     "objects": {
@@ -289,26 +250,6 @@
                   }
                 }
               }
-            },
-            "valuesOnRow": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "subTotals": [
-        {
-          "properties": {
-            "perColumnLevel": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
             }
           }
         }
@@ -392,7 +333,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Detail segmentace portfolia'"
+                  "Value": "'Rizikový profil podle typu příjmu'"
                 }
               }
             }
@@ -438,5 +379,93 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c14c21e80700a4d10297",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Income Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2e6c2f910294020eed00",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Applications Count"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fac51003a603532cb465",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Median DTI"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "25ba70079ea79b7c751a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Average Credit Amount"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c99de8d30095ce83010c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Repayment Difficulty Rate"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b07116de06c0826a0263",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Ever DPD5 Application Ratio"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

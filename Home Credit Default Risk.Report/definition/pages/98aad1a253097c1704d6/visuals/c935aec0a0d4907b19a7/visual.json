@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "f8eea7a1026bdd7d43dc",
+  "name": "c935aec0a0d4907b19a7",
   "position": {
-    "x": 270.29972752043597,
-    "y": 120.32697547683922,
-    "z": 12000,
-    "height": 80.217983651226149,
-    "width": 269,
-    "tabOrder": 11000
+    "x": 599,
+    "y": 120,
+    "z": 23000,
+    "height": 80.170648464163818,
+    "width": 313.31058020477815,
+    "tabOrder": 23000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Applications Count"
+                  "Property": "Median DTI"
                 }
               },
-              "queryRef": "Measures Technical.Applications Count",
-              "nativeQueryRef": "Applications Count"
+              "queryRef": "Measures Technical.Median DTI",
+              "nativeQueryRef": "Median DTI"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Applications Count"
+                "Property": "Median DTI"
               }
             },
             "direction": "Descending"
@@ -85,14 +85,14 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "0D"
                 }
               }
             },
             "labelPrecision": {
               "expr": {
                 "Literal": {
-                  "Value": "0L"
+                  "Value": "3L"
                 }
               }
             },
@@ -126,7 +126,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Počet žádostí'"
+                  "Value": "'Medián DTI'"
                 }
               }
             },
@@ -214,7 +214,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "8885e0232e964c4e1099",
+        "name": "3508952724436de02352",
         "field": {
           "Measure": {
             "Expression": {
@@ -222,7 +222,7 @@
                 "Entity": "Measures Technical"
               }
             },
-            "Property": "Applications Count"
+            "Property": "Median DTI"
           }
         },
         "type": "Advanced"

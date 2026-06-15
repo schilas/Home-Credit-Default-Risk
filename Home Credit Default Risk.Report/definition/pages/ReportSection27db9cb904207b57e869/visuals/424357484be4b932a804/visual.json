@@ -101,7 +101,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 5,
+                      "ColorId": 2,
                       "Percent": 0
                     }
                   }
@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "06a2cc6daec46478061c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Average Credit Amount"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

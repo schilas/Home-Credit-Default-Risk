@@ -289,37 +289,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "3900ca4da234e433c72d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Volume Share vs Unit Share Gap"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "53c68f274632adae81d6",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Age Group"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }
