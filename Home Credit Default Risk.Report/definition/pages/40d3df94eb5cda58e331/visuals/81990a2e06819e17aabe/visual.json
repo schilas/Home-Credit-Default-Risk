@@ -114,7 +114,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Medián DTI podle typu příjmu'"
+                  "Value": "'Počet bureau kontraktů podle typu úvěru'"
                 }
               }
             },

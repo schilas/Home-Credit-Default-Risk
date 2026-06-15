@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dimApplicant"
+                      "Entity": "dimCreditType"
                     }
                   },
-                  "Property": "Contract Type"
+                  "Property": "Credit Type"
                 }
               },
-              "queryRef": "dimApplicant.Contract Type",
-              "nativeQueryRef": "Contract Type",
+              "queryRef": "dimCreditType.Credit Type",
+              "nativeQueryRef": "Credit Type",
               "active": true
             }
           ]
@@ -61,7 +61,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Typ smlouvy'"
+                  "Value": "'Typ bureau úvěru'"
                 }
               }
             }
@@ -159,15 +159,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "3fc719ae78640a8b73a7",
+        "name": "0aa6e130686e00742d49",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "dimApplicant"
+                "Entity": "dimCreditType"
               }
             },
-            "Property": "Contract Type"
+            "Property": "Credit Type"
           }
         },
         "type": "Categorical"

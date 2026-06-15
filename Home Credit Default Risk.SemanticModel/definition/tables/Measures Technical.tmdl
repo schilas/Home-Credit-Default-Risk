@@ -259,7 +259,7 @@ table 'Measures Technical'
 			    [No DPD Bureau Contracts - Cash Applications],
 			    [Cash Applications Count - Trend Denominator]
 			)
-		formatString: 0.000
+		formatString: 0.00
 		displayFolder: 04 Bureau trend\No DPD
 		lineageTag: c96197a7-370c-4525-89b5-bd3035b521d1
 
