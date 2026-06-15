@@ -7,7 +7,7 @@
     "z": 24000,
     "height": 80.170648464163818,
     "width": 240.51194539249144,
-    "tabOrder": 19004
+    "tabOrder": 23000
   },
   "visual": {
     "visualType": "slicer",
@@ -155,23 +155,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "1eea46112e8007cd2993",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Family Status"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

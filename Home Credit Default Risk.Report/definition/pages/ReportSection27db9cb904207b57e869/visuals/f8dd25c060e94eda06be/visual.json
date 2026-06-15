@@ -353,23 +353,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "507e7cf0a69cb046c027",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Repayment Difficulty Rate"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

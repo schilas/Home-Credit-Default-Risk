@@ -7,7 +7,7 @@
     "z": 29000,
     "height": 80.170648464163818,
     "width": 240.51194539249144,
-    "tabOrder": 19009
+    "tabOrder": 28000
   },
   "visual": {
     "visualType": "slicer",
@@ -61,7 +61,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dimenze pro grafy'"
+                  "Value": "'Zobrazit grafy podle'"
                 }
               }
             }
@@ -263,7 +263,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "b0aeda5820ab7ba8b856",
+        "name": "ae9d0132b7756de77955",
         "field": {
           "Column": {
             "Expression": {

@@ -74,6 +74,9 @@ table dimApplicant
 		lineageTag: b7b317b8-0792-4f81-b016-6c4b038e6a34
 		summarizeBy: none
 		sourceColumn: Age Group
+		sortByColumn: 'Age Group Sort'
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 
@@ -125,6 +128,9 @@ table dimApplicant
 		lineageTag: 4d95db8d-c44f-4e92-bb7c-454556f3bd85
 		summarizeBy: none
 		sourceColumn: Previous Application Count Band
+		sortByColumn: 'Previous Application Count Band Sort'
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 

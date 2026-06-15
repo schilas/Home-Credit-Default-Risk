@@ -340,6 +340,13 @@ table 'Measures Technical'
 		displayFolder: 05 Bonus DPD5\Pokrytí dat
 		lineageTag: 7ab15446-a27d-42fa-ba58-085fca657856
 
+	measure 'Volume Share vs Unit Share Gap' =
+			
+			[Credit Volume % of Visible Total] - [Applications % of Visible Total]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 02 Distribuce\Počet žádostí
+		lineageTag: 0f53a644-276e-4cac-9180-369d8f2732aa
+
 	partition 'Measures Technical-7ff08300-51f8-45e8-a681-19dcd996fb1d' = m
 		mode: import
 		queryGroup: 'MEASURE TABLES'

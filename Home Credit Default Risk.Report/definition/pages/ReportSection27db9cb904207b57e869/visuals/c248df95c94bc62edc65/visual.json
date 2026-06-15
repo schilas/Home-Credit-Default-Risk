@@ -283,8 +283,9 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#B0BAC2'"
+                    "ThemeDataColor": {
+                      "ColorId": 3,
+                      "Percent": 0
                     }
                   }
                 }
@@ -370,37 +371,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "e6ce5df5462434d69e76",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Applications % of Visible Total"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "37e969f0aeb0ab126280",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Credit Volume % of Visible Total"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

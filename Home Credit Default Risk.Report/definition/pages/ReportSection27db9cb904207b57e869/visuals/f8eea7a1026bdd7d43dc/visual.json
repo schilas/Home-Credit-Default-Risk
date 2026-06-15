@@ -210,23 +210,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "d7207f78bd88d0c0546b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Applications Count"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

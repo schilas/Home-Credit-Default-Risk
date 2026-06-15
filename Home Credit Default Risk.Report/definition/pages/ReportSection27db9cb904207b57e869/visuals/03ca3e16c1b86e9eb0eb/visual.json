@@ -210,23 +210,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "4877b0ad42b06e326c0e",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Median DTI"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

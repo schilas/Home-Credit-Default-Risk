@@ -1,0 +1,211 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "1a9678a063097024b6c0",
+  "position": {
+    "x": 270,
+    "y": 212.86689419795221,
+    "z": 24000,
+    "height": 347.4061433447099,
+    "width": 808.15699658703068,
+    "tabOrder": 24000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dimApplicant"
+                    }
+                  },
+                  "Property": "Age Group"
+                }
+              },
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
+              "active": true,
+              "displayName": "Věková skupina"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Parameter"
+                    }
+                  },
+                  "Property": "Parameter"
+                }
+              },
+              "index": 0,
+              "length": 1
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Applications % of Visible Total"
+                }
+              },
+              "queryRef": "Measures Technical.Applications % of Visible Total",
+              "nativeQueryRef": "Podíl žádostí",
+              "displayName": "Podíl žádostí"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measures Technical"
+                    }
+                  },
+                  "Property": "Credit Volume % of Visible Total"
+                }
+              },
+              "queryRef": "Measures Technical.Credit Volume % of Visible Total",
+              "nativeQueryRef": "Podíl objemu úvěrů",
+              "displayName": "Podíl objemu úvěrů"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Measures Technical"
+                  }
+                },
+                "Property": "Applications % of Visible Total"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomCenter'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Podíl žádostí a objemu úvěrů podle vybrané segmentace'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2e9fc5f46923d060aa9b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Applications % of Visible Total"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "836ca219606c650a60c0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Credit Volume % of Visible Total"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e983e5e9bab2a9c17769",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Age Group"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}
