@@ -61,7 +61,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dimenze pro grafy'"
+                  "Value": "'Zobrazit grafy podle'"
                 }
               }
             }
@@ -115,7 +115,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'''dimApplicant''[Gender]'"
+                                "Value": "'''dimApplicant''[Age Group]'"
                               }
                             }
                           ]
@@ -143,7 +143,7 @@
                                 "0": [
                                   {
                                     "Literal": {
-                                      "Value": "'''dimApplicant''[Gender]'"
+                                      "Value": "'''dimApplicant''[Age Group]'"
                                     }
                                   }
                                 ]
@@ -167,7 +167,7 @@
                         },
                         "valueMap": [
                           {
-                            "0": "Pohlaví"
+                            "0": "Věková skupina"
                           }
                         ]
                       }
@@ -259,5 +259,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f4cf8288acd5db271170",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Parameter"
+              }
+            },
+            "Property": "Parameter"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

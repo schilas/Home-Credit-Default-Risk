@@ -11798,16 +11798,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.714
 			          }
-			        },
-			        {
-			          "Pohlaví": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -15212,6 +15202,32 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "measure_technical.volume_share_vs_unit_share_gap": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures Technical",
+			          "ConceptualProperty": "Volume Share vs Unit Share Gap"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "volume share vs unit share gap": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Rozdíl objem vs žádosti (p.b.)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
@@ -15449,6 +15465,39 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "dim_applicants_have_fact_applications"
+			        }
+			      ]
+			    },
+			    "fact_application_has_measure_technical_volume_share_vs_unit_share_gap": {
+			      "Binding": {
+			        "ConceptualEntity": "factApplications"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_application": {
+			          "Target": {
+			            "Entity": "fact_application"
+			          }
+			        },
+			        "measure_technical.volume_share_vs_unit_share_gap": {
+			          "Target": {
+			            "Entity": "measure_technical.volume_share_vs_unit_share_gap"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_application"
+			            },
+			            "Object": {
+			              "Role": "measure_technical.volume_share_vs_unit_share_gap"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_applications_have_volume_share_vs_unit_share_gap"
 			        }
 			      ]
 			    },

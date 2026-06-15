@@ -4,10 +4,10 @@
   "position": {
     "x": 270,
     "y": 212.86689419795221,
-    "z": 23001,
+    "z": 24000,
     "height": 347.4061433447099,
     "width": 808.15699658703068,
-    "tabOrder": 23001
+    "tabOrder": 24000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -23,13 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Gender"
+                  "Property": "Age Group"
                 }
               },
-              "queryRef": "dimApplicant.Gender",
-              "nativeQueryRef": "Pohlaví",
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
               "active": true,
-              "displayName": "Pohlaví"
+              "displayName": "Věková skupina"
             }
           ],
           "fieldParameters": [
@@ -138,7 +138,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Podíl žádostí a objemu úvěrů podle'"
+                  "Value": "'Podíl žádostí a objemu úvěrů podle vybrané segmentace'"
                 }
               }
             },
@@ -146,6 +146,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'center'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
                 }
               }
             }
@@ -158,7 +165,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "296f7cc47e4e704a8006",
+        "name": "2e9fc5f46923d060aa9b",
         "field": {
           "Measure": {
             "Expression": {
@@ -172,7 +179,7 @@
         "type": "Advanced"
       },
       {
-        "name": "d14c3b58161a4045c840",
+        "name": "836ca219606c650a60c0",
         "field": {
           "Measure": {
             "Expression": {
@@ -186,7 +193,7 @@
         "type": "Advanced"
       },
       {
-        "name": "46384a669d48a95d1580",
+        "name": "e983e5e9bab2a9c17769",
         "field": {
           "Column": {
             "Expression": {
@@ -194,7 +201,7 @@
                 "Entity": "dimApplicant"
               }
             },
-            "Property": "Gender"
+            "Property": "Age Group"
           }
         },
         "type": "Categorical"

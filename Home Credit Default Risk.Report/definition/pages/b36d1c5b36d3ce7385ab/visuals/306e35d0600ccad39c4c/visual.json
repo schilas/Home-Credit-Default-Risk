@@ -4,10 +4,10 @@
   "position": {
     "x": 1093.8225255972695,
     "y": 212.86689419795221,
-    "z": 23002,
+    "z": 25000,
     "height": 347.4061433447099,
     "width": 808.15699658703068,
-    "tabOrder": 23002
+    "tabOrder": 25000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -23,13 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Gender"
+                  "Property": "Age Group"
                 }
               },
-              "queryRef": "dimApplicant.Gender",
-              "nativeQueryRef": "Pohlaví",
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
               "active": true,
-              "displayName": "Pohlaví"
+              "displayName": "Věková skupina"
             }
           ],
           "fieldParameters": [
@@ -63,7 +63,8 @@
                 }
               },
               "queryRef": "Measures Technical.Repayment Difficulty Rate",
-              "nativeQueryRef": "Repayment Difficulty Rate"
+              "nativeQueryRef": "Míra problémů se splácením",
+              "displayName": "Míra problémů se splácením"
             }
           ]
         }
@@ -83,8 +84,7 @@
             },
             "direction": "Descending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
     "objects": {
@@ -150,43 +150,18 @@
                   "Value": "'center'"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
             }
           }
         }
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "8bdb7da20437d960257a",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Gender"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "ad0679100ee9cb049569",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Repayment Difficulty Rate"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
