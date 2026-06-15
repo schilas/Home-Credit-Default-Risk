@@ -101,7 +101,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 5,
+                      "ColorId": 2,
                       "Percent": 0
                     }
                   }
@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "fc7c7f7062d30d8bbb5a",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Credit Volume"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

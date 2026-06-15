@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "1a9678a063097024b6c0",
+  "name": "ddd07c10e4106ac3060e",
   "position": {
     "x": 270,
     "y": 212.86689419795221,
-    "z": 24000,
+    "z": 25000,
     "height": 347.4061433447099,
-    "width": 808.15699658703068,
-    "tabOrder": 24000
+    "width": 971.26279863481227,
+    "tabOrder": 25000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -23,29 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Age Group"
+                  "Property": "Income Type"
                 }
               },
-              "queryRef": "dimApplicant.Age Group",
-              "nativeQueryRef": "Věková skupina",
+              "queryRef": "dimApplicant.Income Type",
+              "nativeQueryRef": "Typ příjmu",
               "active": true,
-              "displayName": "Věková skupina"
-            }
-          ],
-          "fieldParameters": [
-            {
-              "parameterExpr": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Parameter"
-                    }
-                  },
-                  "Property": "Parameter"
-                }
-              },
-              "index": 0,
-              "length": 1
+              "displayName": "Typ příjmu"
             }
           ]
         },
@@ -59,27 +43,12 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Applications % of Visible Total"
+                  "Property": "Median DTI"
                 }
               },
-              "queryRef": "Measures Technical.Applications % of Visible Total",
-              "nativeQueryRef": "Podíl žádostí",
-              "displayName": "Podíl žádostí"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Measures Technical"
-                    }
-                  },
-                  "Property": "Credit Volume % of Visible Total"
-                }
-              },
-              "queryRef": "Measures Technical.Credit Volume % of Visible Total",
-              "nativeQueryRef": "Podíl objemu úvěrů",
-              "displayName": "Podíl objemu úvěrů"
+              "queryRef": "Measures Technical.Median DTI",
+              "nativeQueryRef": "edián DTI (x roční příjem)",
+              "displayName": "edián DTI (x roční příjem)"
             }
           ]
         }
@@ -94,7 +63,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Applications % of Visible Total"
+                "Property": "Median DTI"
               }
             },
             "direction": "Descending"
@@ -138,7 +107,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Podíl žádostí a objemu úvěrů podle vybrané segmentace'"
+                  "Value": "'Medián DTI podle typu příjmu'"
                 }
               }
             },
@@ -161,5 +130,37 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "6d4bae35bb80deabc9c5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Income Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0316d55ab00d027436ae",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Median DTI"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

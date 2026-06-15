@@ -101,7 +101,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 7,
+                      "ColorId": 2,
                       "Percent": 0
                     }
                   }
@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e046c29dcaac87e2000b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Median DTI"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

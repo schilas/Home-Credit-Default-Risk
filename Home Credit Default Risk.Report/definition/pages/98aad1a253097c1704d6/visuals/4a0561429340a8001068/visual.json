@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "f8eea7a1026bdd7d43dc",
+  "name": "4a0561429340a8001068",
   "position": {
     "x": 270.29972752043597,
-    "y": 120.32697547683922,
-    "z": 12000,
+    "y": 120,
+    "z": 20000,
     "height": 80.217983651226149,
-    "width": 269,
-    "tabOrder": 11000
+    "width": 313,
+    "tabOrder": 20000
   },
   "visual": {
     "visualType": "card",
@@ -210,23 +210,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "8885e0232e964c4e1099",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Measures Technical"
-              }
-            },
-            "Property": "Applications Count"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
