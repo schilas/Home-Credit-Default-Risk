@@ -1,92 +1,100 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "7e8d90d3dbb13071c05c",
+  "name": "0b4032ff740a07e90581",
   "position": {
-    "x": 1704,
-    "y": 20,
-    "z": 5000,
-    "height": 64,
-    "width": 64,
-    "tabOrder": 4000
+    "x": 4.6075085324232079,
+    "y": 199.04436860068259,
+    "z": 22000,
+    "height": 80.170648464163818,
+    "width": 240.51194539249144,
+    "tabOrder": 19002
   },
   "visual": {
-    "visualType": "card",
+    "visualType": "slicer",
     "query": {
       "queryState": {
         "Values": {
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Column": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Refresh Dates"
-                        }
-                      },
-                      "Property": "Datasource"
+                    "SourceRef": {
+                      "Entity": "dimApplicant"
                     }
                   },
-                  "Function": 3
+                  "Property": "Age Group"
                 }
               },
-              "queryRef": "Min(Reload Time.Datasource)"
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Age Group",
+              "active": true
             }
           ]
         }
       }
     },
     "objects": {
-      "categoryLabels": [
+      "data": [
         {
           "properties": {
-            "show": {
+            "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'Dropdown'"
                 }
               }
             }
           }
         }
       ],
-      "wordWrap": [
+      "header": [
         {
           "properties": {
-            "show": {
+            "textSize": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "preserveWhitespace": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "12D"
                 }
               }
             },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Measures Design"
-                        }
-                      },
-                      "Property": "Transparent Color"
-                    }
-                  }
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Věková skupina'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "selfFilterEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "items": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
                 }
               }
             }
@@ -95,33 +103,6 @@
       ]
     },
     "visualContainerObjects": {
-      "visualTooltip": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "type": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Canvas'"
-                }
-              }
-            },
-            "section": {
-              "expr": {
-                "Literal": {
-                  "Value": "'ReportSection9f80fb398b9ebd03b005'"
-                }
-              }
-            }
-          }
-        }
-      ],
       "background": [
         {
           "properties": {
@@ -151,6 +132,17 @@
       "visualHeader": [
         {
           "properties": {
+            "border": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E6E6E6'"
+                    }
+                  }
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
@@ -160,21 +152,26 @@
             }
           }
         }
-      ],
-      "title": [
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Refresh Tooltip'"
-                }
-              }
-            }
-          }
-        }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7f9d2b58c3cc433caea7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Age Group"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

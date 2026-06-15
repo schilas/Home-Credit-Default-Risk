@@ -4,7 +4,7 @@
   "position": {
     "x": 270,
     "y": 622.013651877133,
-    "z": 18000,
+    "z": 19000,
     "height": 409.14675767918084,
     "width": 552.90102389078493,
     "tabOrder": 18000
@@ -30,6 +30,22 @@
               "nativeQueryRef": "Typ smlouvy",
               "active": true,
               "displayName": "Typ smlouvy"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Parameter"
+                    }
+                  },
+                  "Property": "Parameter"
+                }
+              },
+              "index": 0,
+              "length": 1
             }
           ]
         },
@@ -357,20 +373,6 @@
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "83a37717cb6805011b10",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Contract Type"
-          }
-        },
-        "type": "Categorical"
-      },
       {
         "name": "e6ce5df5462434d69e76",
         "field": {

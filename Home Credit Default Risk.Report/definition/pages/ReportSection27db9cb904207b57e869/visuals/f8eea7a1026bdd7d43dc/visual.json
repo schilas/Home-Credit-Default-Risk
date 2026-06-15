@@ -4,7 +4,7 @@
   "position": {
     "x": 270.29972752043597,
     "y": 120.32697547683922,
-    "z": 11000,
+    "z": 12000,
     "height": 80.217983651226149,
     "width": 269,
     "tabOrder": 11000
@@ -210,5 +210,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "d7207f78bd88d0c0546b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Applications Count"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

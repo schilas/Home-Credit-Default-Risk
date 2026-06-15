@@ -4,8 +4,8 @@
   "position": {
     "x": 838.56655290102378,
     "y": 213.78839590443684,
-    "z": 19000,
-    "height": 817.37201365187707,
+    "z": 20000,
+    "height": 778.66894197952217,
     "width": 1064.334470989761,
     "tabOrder": 19000
   },
@@ -23,13 +23,29 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Income Type"
+                  "Property": "Age Group"
                 }
               },
-              "queryRef": "dimApplicant.Income Type",
-              "nativeQueryRef": "Typ příjmu",
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
               "active": true,
-              "displayName": "Typ příjmu"
+              "displayName": "Věková skupina"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Par_Scatter"
+                    }
+                  },
+                  "Property": "Par_Scatter"
+                }
+              },
+              "index": 0,
+              "length": 1
             }
           ]
         },
@@ -266,26 +282,25 @@
             }
           }
         }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "5d43243608a3d94e76c9",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Income Type"
-          }
-        },
-        "type": "Categorical"
-      },
       {
         "name": "d465f295680c86c757e0",
         "field": {

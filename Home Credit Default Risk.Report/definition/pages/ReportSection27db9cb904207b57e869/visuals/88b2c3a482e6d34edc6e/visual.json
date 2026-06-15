@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "549cc94db0de84c2d09a",
+  "name": "88b2c3a482e6d34edc6e",
   "position": {
-    "x": 1688.1911262798633,
-    "y": 0,
-    "z": 1000,
-    "height": 93.0716723549488,
-    "width": 231.29692832764505,
-    "tabOrder": 7000
+    "x": 838.56655290102378,
+    "y": 213.78839590443684,
+    "z": 0,
+    "height": 817.37201365187707,
+    "width": 1064.334470989761,
+    "tabOrder": 19011
   },
   "visual": {
     "visualType": "shape",
@@ -38,6 +38,19 @@
           }
         }
       ],
+      "fill": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "outline": [
         {
           "properties": {
@@ -50,44 +63,10 @@
             }
           }
         }
-      ],
-      "fill": [
-        {
-          "properties": {
-            "fillColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": 0
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "id": "default"
-          }
-        }
       ]
     },
     "visualContainerObjects": {
-      "background": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
+      "visualHeader": [
         {
           "properties": {
             "show": {
@@ -102,6 +81,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "howCreated": "InsertVisualButton"
+  }
 }
