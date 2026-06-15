@@ -155,5 +155,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "624729070cba87504c50",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Family Status"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

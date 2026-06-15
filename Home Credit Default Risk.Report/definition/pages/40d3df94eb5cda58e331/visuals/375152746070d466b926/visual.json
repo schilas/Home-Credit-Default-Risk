@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "e2c30bc0a9c009e2d206",
+  "name": "375152746070d466b926",
   "position": {
     "x": 10.136518771331058,
-    "y": 519.72696245733789,
-    "z": 16000,
+    "y": 760.23890784982927,
+    "z": 18008,
     "height": 80.170648464163818,
     "width": 240.51194539249144,
-    "tabOrder": 16000
+    "tabOrder": 18008
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dimApplicant"
+                      "Entity": "dimCreditType"
                     }
                   },
-                  "Property": "Income Type"
+                  "Property": "Credit Type"
                 }
               },
-              "queryRef": "dimApplicant.Income Type",
-              "nativeQueryRef": "Income Type",
+              "queryRef": "dimCreditType.Credit Type",
+              "nativeQueryRef": "Credit Type",
               "active": true
             }
           ]
@@ -61,7 +61,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Typ příjmu'"
+                  "Value": "'Typ bureau úvěru'"
                 }
               }
             }
@@ -159,15 +159,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "8e97a75416e523ced6ba",
+        "name": "c4f3ac3125ca6a145986",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "dimApplicant"
+                "Entity": "dimCreditType"
               }
             },
-            "Property": "Income Type"
+            "Property": "Credit Type"
           }
         },
         "type": "Categorical"

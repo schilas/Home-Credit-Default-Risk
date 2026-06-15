@@ -155,5 +155,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "64e74f2fdb63c4186260",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "factInstallmentDPD5Summary"
+              }
+            },
+            "Property": "EverDPD5"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

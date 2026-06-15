@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "619967d086d484d8e1c1",
+  "name": "e5a117004db0a9ea540b",
   "position": {
-    "x": 270,
+    "x": 1506,
     "y": 120.71672354948805,
-    "z": 20000,
+    "z": 18004,
     "height": 80.170648464163818,
-    "width": 396,
-    "tabOrder": 20000
+    "width": 396.24573378839585,
+    "tabOrder": 18004
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "Measures Technical"
                     }
                   },
-                  "Property": "Applications Count"
+                  "Property": "Avg No DPD Bureau Contracts per Cash Application"
                 }
               },
-              "queryRef": "Measures Technical.Applications Count",
-              "nativeQueryRef": "Applications Count"
+              "queryRef": "Measures Technical.Avg No DPD Bureau Contracts per Cash Application",
+              "nativeQueryRef": "Avg No DPD Bureau Contracts per Cash Application"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "Measures Technical"
                   }
                 },
-                "Property": "Applications Count"
+                "Property": "Avg No DPD Bureau Contracts per Cash Application"
               }
             },
             "direction": "Descending"
@@ -126,7 +126,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Počet žádostí'"
+                  "Value": "'Průměr bez-DPD kontraktů na cash žádost'"
                 }
               }
             },
@@ -214,7 +214,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "a8366320c70ed96c0e57",
+        "name": "4e33566425c8aa867ba5",
         "field": {
           "Measure": {
             "Expression": {
@@ -222,7 +222,7 @@
                 "Entity": "Measures Technical"
               }
             },
-            "Property": "Applications Count"
+            "Property": "Avg No DPD Bureau Contracts per Cash Application"
           }
         },
         "type": "Advanced"
