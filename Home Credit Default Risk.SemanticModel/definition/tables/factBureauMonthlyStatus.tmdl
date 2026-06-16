@@ -97,7 +97,7 @@ table factBureauMonthlyStatus
 				    // Tento soubor obsahuje měsíční historii stavů bureau kontraktů
 				    // Jeden řádek představuje jeden měsíc jednoho kontraktu v úvěrovém registru
 				    Source = Csv.Document(
-				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\bureau_balance.csv"),
+				        File.Contents(filePath&"bureau_balance.csv"),
 				        [
 				            Delimiter = ",",
 				            Columns = 3,

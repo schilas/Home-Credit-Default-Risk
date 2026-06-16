@@ -51,7 +51,7 @@ table factInstallmentDPD5Summary
 		queryGroup: FACTS
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\factInstallmentDPD5Summary.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(filePath&"factInstallmentDPD5Summary.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SK_ID_CURR", Int64.Type}, {"InstallmentCount", Int64.Type}, {"DPD5InstallmentCount", Int64.Type}, {"EverDPD5", type logical}, {"EverDPD5Unit", Int64.Type}},
 				        "en-US")

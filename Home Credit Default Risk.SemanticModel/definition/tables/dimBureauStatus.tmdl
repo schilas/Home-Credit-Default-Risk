@@ -71,5 +71,5 @@ table dimBureauStatus
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Text
+	annotation PBI_ResultType = Exception
 

@@ -32,9 +32,80 @@ expression _StartDate =
 
 	annotation PBI_ResultType = Date
 
-expression _Language = "en-us" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression _Language = "cs-cs" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 6845c0e2-a490-4bd3-adae-5ec481ece7f0
 	queryGroup: 'CALENDAR\PARAMETERS CALENDAR'
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression filePath = "C:\Users\cznvosi\Downloads\home-credit-default-risk\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7ad0dc7b-5be9-4cde-bc04-6e3e80f10a6c
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression Date = ```
+		let
+		StartDate = #"_StartDate",
+		Today = Date.From(DateTime.LocalNow()), // today's date
+		EndDate = #"_EndDate" /*was "#date(2017, 1, 1)" Updated on 201802027: hard Coded End of Year caused some formulas to break, switching to dynamic date*/,
+		#"-- Parameters Above --" = 1,
+		#"-- Build Dates --" = #"-- Parameters Above --",
+		ListDates = List.Dates(StartDate, Number.From(EndDate - StartDate) + 1, #duration(1,0,0,0)),
+		#"Converted to Table" = Table.FromList(ListDates, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+		#"Renamed Columns as Date" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Date"}}),
+		#"Changed Type to Date" = Table.TransformColumnTypes(#"Renamed Columns as Date",{{"Date", type date}}),
+		#"-- Add Calendar Columns --" = #"Changed Type to Date",
+		#"Date Number" = Table.AddColumn(#"-- Add Calendar Columns --", "Date Num", each Number.FromText(Text.Combine({Date.ToText(Date.From([Date]), "yyyy"), Date.ToText(Date.From([Date]), "MM"), Date.ToText(Date.From([Date]), "dd")})), Int64.Type),
+		Year = Table.AddColumn(#"Date Number", "Year", each Date.Year([Date]), Int64.Type),
+		Month = Table.AddColumn(Year, "Month", each Text.Start(Date.MonthName([Date],_Language),3), type text),
+		#"Month Num" = Table.AddColumn(Month, "Month Num", each Date.Month([Date]), Int64.Type),
+		#"Month Long" = Table.AddColumn(#"Month Num", "Month Long", each Date.MonthName([Date],_Language), type text),
+		#"Month Day Num" = Table.AddColumn(#"Month Long", "Month Day Num", each Date.Day([Date]), Int64.Type),
+		#"Year Month" = Table.AddColumn(#"Month Day Num", "Year Month", each [Month] & "-" & Text.End(Text.From([Year]),2), type text),
+		#"Year Month Num" = Table.AddColumn(#"Year Month", "Year Month Num", each [Year]*100 + [Month Num] /*e.g. Sep-2016 would become 201609*/, Int64.Type),
+		#"Year Month Long" = Table.AddColumn(#"Year Month Num", "Year Month Long", each [Month] & "-" & Text.From([Year]), type text),
+		#"Year Month CM" = Table.AddColumn(#"Year Month Long", "Year Month CM", each if Date.IsInCurrentMonth([Date]) then "CM" else [Year Month], type text),
+		    #"Week Num" = Table.AddColumn(#"Year Month CM", "Week Num" /*ISO8601*/, each if
+		Number.RoundDown((Date.DayOfYear([Date])-(Date.DayOfWeek([Date], Day.Monday)+1)+10)/7)=0
+		then
+		Number.RoundDown((Date.DayOfYear(#date(Date.Year([Date])-1,12,31))-(Date.DayOfWeek(#date(Date.Year([Date])-1,12,31), Day.Monday)+1)+10)/7)
+		else if
+		(Number.RoundDown((Date.DayOfYear([Date])-(Date.DayOfWeek([Date], Day.Monday)+1)+10)/7)=53
+		and (Date.DayOfWeek(#date(Date.Year([Date]),12,31), Day.Monday)+1<4))
+		then
+		1
+		else
+		Number.RoundDown((Date.DayOfYear([Date])-(Date.DayOfWeek([Date], Day.Monday)+1)+10)/7), Int64.Type),
+		    #"Week Num Long" = Table.AddColumn(#"Week Num", "Week Long", each "W" & Text.End("0"&Number.ToText([Week Num]),2), type text),
+		    #"Year Week Long" = Table.AddColumn(#"Week Num Long", "Year Week Long", each if ([Month Num]=1 and [Week Num]>25) 
+		then Text.End(Text.From([Year]-1),4) & "-" & [Week Long] else (
+		if ([Month Num]=12 and [Week Num]=1) 
+		then Text.End(Text.From([Year]+1),4) & "-" & [Week Long]
+		else Text.End(Text.From([Year]),4) & "-" & [Week Long]), type text),
+		    Weekday = Table.AddColumn(#"Year Week Long", "Weekday", each Text.Start(Date.DayOfWeekName([Date],_Language),3), type text),
+		#"Weekday Num" = Table.AddColumn(Weekday, "Weekday Num", each Date.DayOfWeek([Date])+1, Int64.Type),
+		Quarter = Table.AddColumn(#"Weekday Num", "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date])), type text),
+		#"Quarter Num" = Table.AddColumn(Quarter, "Quarter Num", each Date.QuarterOfYear([Date]), Int64.Type),
+		    #"Year Quarter" = Table.AddColumn(#"Quarter Num", "Year Quarter", each Text.From([Year])&"-"&[Quarter], type text),
+		#"Today Offset" = Table.AddColumn(#"Year Quarter", "Day Offset", each Duration.Days([Date]-Today), Int64.Type),
+		#"Month Offset" = Table.AddColumn(#"Today Offset", "Month Offset", each (([Year]-Date.Year(Today))*12)+([Month Num]-Date.Month(Today)), Int64.Type),
+		#"Year Offset" = Table.AddColumn(#"Month Offset", "Year Offset", each [Year]-Date.Year(Today),Int64.Type),
+		#"Month Sort" = Table.DuplicateColumn(#"Year Offset", "Year Month Num", "YearMonthSort", Int64.Type),
+		#"Quarter Sort" = Table.AddColumn(#"Month Sort", "YearQuarterSort", each Text.From([Year])&Text.From([Quarter Num])),
+		#"Week Sort" = Table.AddColumn(#"Quarter Sort", "YearWeekSort", each Text.From([Year])&Text.End([Week Long],2)),
+		IsToday = Table.AddColumn(#"Week Sort", "IsToday", each [Date]=DateTime.Date(DateTime.LocalNow()), type logical),
+		    #"Changed Type" = Table.TransformColumnTypes(IsToday,{{"Year Month Num", type text}, {"YearQuarterSort", Int64.Type}, {"YearWeekSort", Int64.Type}})
+		in
+		    #"Changed Type"
+		```
+	lineageTag: afcfcfab-cc68-4405-ae47-54c6682f11fc
+	queryGroup: CALENDAR
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
 

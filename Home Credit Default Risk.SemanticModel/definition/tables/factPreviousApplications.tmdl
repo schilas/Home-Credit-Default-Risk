@@ -37,7 +37,7 @@ table factPreviousApplications
 				    // Tento soubor obsahuje historické žádosti klientů u Home Credit
 				    // Jeden řádek představuje jednu předchozí žádost klienta
 				    Source = Csv.Document(
-				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\previous_application.csv"),
+				        File.Contents(filePath&"previous_application.csv"),
 				        [
 				            Delimiter = ",",
 				            Columns = 37,
@@ -135,5 +135,5 @@ table factPreviousApplications
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 

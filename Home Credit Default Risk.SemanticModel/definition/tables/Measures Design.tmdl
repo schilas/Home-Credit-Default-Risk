@@ -9,7 +9,7 @@ table 'Measures Design'
 		displayFolder: Report Wide Measures
 		lineageTag: b7cd2610-6c47-42f5-9e2c-f2ccb6498032
 
-	measure EndUserDocumentation = "https://github.com/schilas/Home-Credit-Default-Risk"
+	measure EndUserDocumentation = "https://github.com/schilas/Home-Credit-Default-Risk/tree/main"
 		displayFolder: Report Wide Measures
 		lineageTag: 9b99bc9b-f2ce-419d-b3ba-6658aa0717fd
 

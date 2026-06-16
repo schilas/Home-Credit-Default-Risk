@@ -82,7 +82,7 @@ table factBureauCredits
 				    // Tento soubor obsahuje úvěrové kontrakty klienta reportované z externího úvěrového registru
 				    // Jeden řádek představuje jeden historický nebo aktivní bureau kontrakt klienta
 				    Source = Csv.Document(
-				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\bureau.csv"),
+				        File.Contents(filePath&"bureau.csv"),
 				        [
 				            Delimiter = ",",
 				            Columns = 17,
@@ -202,5 +202,5 @@ table factBureauCredits
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 

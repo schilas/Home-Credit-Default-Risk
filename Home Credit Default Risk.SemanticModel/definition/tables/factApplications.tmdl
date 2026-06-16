@@ -148,7 +148,7 @@ table factApplications
 				    // Načtení zdrojového CSV souboru application_train.csv
 				    // Tento soubor je hlavní TRAIN dataset, kde jeden řádek představuje jednu aktuální žádost o úvěr
 				    Source = Csv.Document(
-				        File.Contents("C:\Users\cznvosi\Downloads\home-credit-default-risk\application_train.csv"),
+				        File.Contents(filePath&"application_train.csv"),
 				        [
 				            Delimiter = ",",
 				            Columns = 122,
