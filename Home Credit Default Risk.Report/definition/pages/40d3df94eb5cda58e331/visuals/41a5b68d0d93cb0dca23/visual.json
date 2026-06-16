@@ -157,7 +157,7 @@
             "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'Right'"
+                  "Value": "'Left'"
                 }
               }
             },

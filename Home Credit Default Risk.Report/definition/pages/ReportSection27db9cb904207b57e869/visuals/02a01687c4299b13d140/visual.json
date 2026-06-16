@@ -158,5 +158,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c84b0246031177e79855",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Design"
+              }
+            },
+            "Property": "Environment"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

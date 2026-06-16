@@ -23,13 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Age Group"
+                  "Property": "Family Status"
                 }
               },
-              "queryRef": "dimApplicant.Age Group",
-              "nativeQueryRef": "Věková skupina",
+              "queryRef": "dimApplicant.Family Status",
+              "nativeQueryRef": "Rodinný stav",
               "active": true,
-              "displayName": "Věková skupina"
+              "displayName": "Rodinný stav"
             }
           ],
           "fieldParameters": [
@@ -124,6 +124,19 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "maxMarginFactor": {
+              "expr": {
+                "Literal": {
+                  "Value": "30L"
                 }
               }
             }

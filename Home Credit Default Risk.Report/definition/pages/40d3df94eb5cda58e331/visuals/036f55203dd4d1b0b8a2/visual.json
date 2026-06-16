@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "036f55203dd4d1b0b8a2",
   "position": {
-    "x": 5,
-    "y": 120,
+    "x": 705.50665301944719,
+    "y": 0,
     "z": 11000,
-    "height": 80,
-    "width": 240,
+    "height": 94.329580348004086,
+    "width": 239.75435005117706,
     "tabOrder": 11000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "factApplications"
+                      "Entity": "dimRelativeMonth"
                     }
                   },
-                  "Property": "Gender"
+                  "Property": "MONTHS_BALANCE"
                 }
               },
-              "queryRef": "factApplications.Gender",
-              "nativeQueryRef": "Gender",
+              "queryRef": "dimRelativeMonth.MONTHS_BALANCE",
+              "nativeQueryRef": "MONTHS_BALANCE",
               "active": true
             }
           ]
@@ -41,7 +41,7 @@
             "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dropdown'"
+                  "Value": "'Between'"
                 }
               }
             }

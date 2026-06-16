@@ -314,7 +314,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Míra problémů se splácením podle typu smlouvy'"
+                  "Value": "'Míra problémů se splácením podle segmentu'"
                 }
               }
             }
@@ -353,5 +353,37 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1aa07ac69a4043942b40",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Contract Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d1a1cdf81c84bae8a7aa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Repayment Difficulty Rate"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

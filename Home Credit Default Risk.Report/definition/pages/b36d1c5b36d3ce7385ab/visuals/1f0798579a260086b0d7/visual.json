@@ -115,7 +115,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'''dimApplicant''[Age Group]'"
+                                "Value": "'''dimApplicant''[Family Status]'"
                               }
                             }
                           ]
@@ -143,7 +143,7 @@
                                 "0": [
                                   {
                                     "Literal": {
-                                      "Value": "'''dimApplicant''[Age Group]'"
+                                      "Value": "'''dimApplicant''[Family Status]'"
                                     }
                                   }
                                 ]
@@ -167,7 +167,7 @@
                         },
                         "valueMap": [
                           {
-                            "0": "Věková skupina"
+                            "0": "Rodinný stav"
                           }
                         ]
                       }

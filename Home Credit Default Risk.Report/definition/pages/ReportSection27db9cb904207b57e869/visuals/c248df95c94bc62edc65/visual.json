@@ -332,7 +332,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Podíl žádostí a objemu úvěrů podle typu smlouvy'"
+                  "Value": "'Podíl žádostí a objemu úvěrů podle segmentu'"
                 }
               }
             }
@@ -371,5 +371,51 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "82bcc39e6b8c60637451",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Contract Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "bf71df0d5150180a640c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Applications % of Visible Total"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7e83541560ea306004bd",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Credit Volume % of Visible Total"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

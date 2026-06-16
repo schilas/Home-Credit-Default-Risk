@@ -6449,6 +6449,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.468
 			          }
+			        },
+			        {
+			          "Žádosti s DPD5+ historií": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -6958,6 +6968,16 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.748
+			          }
+			        },
+			        {
+			          "Pokrytí splátkovou histori": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -11519,6 +11539,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.582
 			          }
+			        },
+			        {
+			          "Výsledek splácení": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -12234,6 +12264,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.727
 			          }
+			        },
+			        {
+			          "Vzdělání": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -12657,6 +12697,16 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "Počet předchozích žádostí": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15338,6 +15388,38 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "measure_technical.ever_DPD5_ratio__with_installment_history": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures Technical",
+			          "ConceptualProperty": "Ever DPD5 Ratio - With Installment History"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ever DPD5 ratio - with installment history": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "ever DPD5 ratio with installment history": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "DPD5+ při dostupné historii": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
@@ -15575,6 +15657,39 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "dim_applicants_have_fact_applications"
+			        }
+			      ]
+			    },
+			    "fact_installment_DPD5_summary_has_measure_technical_ever_DPD5_ratio__with_installment_history": {
+			      "Binding": {
+			        "ConceptualEntity": "factInstallmentDPD5Summary"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fact_installment_DPD5_summary": {
+			          "Target": {
+			            "Entity": "fact_installment_DPD5_summary"
+			          }
+			        },
+			        "measure_technical.ever_DPD5_ratio__with_installment_history": {
+			          "Target": {
+			            "Entity": "measure_technical.ever_DPD5_ratio__with_installment_history"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fact_installment_DPD5_summary"
+			            },
+			            "Object": {
+			              "Role": "measure_technical.ever_DPD5_ratio__with_installment_history"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fact_installment_DPD5_summaries_have_ever_DPD5_ratio__with_installment_history"
 			        }
 			      ]
 			    },

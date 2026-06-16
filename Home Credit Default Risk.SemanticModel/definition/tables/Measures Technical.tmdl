@@ -347,6 +347,16 @@ table 'Measures Technical'
 		displayFolder: 02 Distribuce\Počet žádostí
 		lineageTag: 0f53a644-276e-4cac-9180-369d8f2732aa
 
+	measure 'Ever DPD5 Ratio - With Installment History' =
+			
+			DIVIDE (
+			    [Applications Ever DPD5],
+			    [Applications With Installment History]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 05 Bonus DPD5\Úroveň žádosti
+		lineageTag: 61d0b05f-4250-40e3-8350-d1c82eeaf1dc
+
 	partition 'Measures Technical-7ff08300-51f8-45e8-a681-19dcd996fb1d' = m
 		mode: import
 		queryGroup: 'MEASURE TABLES'

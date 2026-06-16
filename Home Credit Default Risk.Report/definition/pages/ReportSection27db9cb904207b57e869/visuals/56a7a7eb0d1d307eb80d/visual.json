@@ -262,7 +262,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Zadlužení a problémy se splácením podle typu příjmu'"
+                  "Value": "'Zadlužení a problémy se splácením podle typu segmentu'"
                 }
               }
             },
@@ -298,5 +298,65 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "628deb39b89832b69e12",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Age Group"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4242e6a6e201087959eb",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Applications Count"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6c8136002d12c155b504",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Median DTI"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "604cadad1017c57b1b3d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measures Technical"
+              }
+            },
+            "Property": "Repayment Difficulty Rate"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

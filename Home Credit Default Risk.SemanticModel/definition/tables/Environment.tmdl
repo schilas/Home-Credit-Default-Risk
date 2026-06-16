@@ -31,10 +31,12 @@ table Environment
 				let
 				    Source = #table({"Environment"},{{ Parameter_Environment}}),
 				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Environment", type text}}),
-				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Environment Description", each if [Environment] = "UAT" then "USER ACCEPTANCE" else if [Environment] = "DEV" then "DEVELOPMENT" else ""),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Environment Description", each if [Environment] = "UAT" then "USER ACCEPTANCE" else if [Environment] = "DEV" then "Case Study" else ""),
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Conditional Column",{{"Environment Description", type text}})
 				in
 				    #"Changed Type1"
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
 
