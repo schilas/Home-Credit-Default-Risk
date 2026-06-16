@@ -942,7 +942,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "Measures Design",
-			          "ConceptualProperty": "SlicerCategory"
+			          "ConceptualProperty": "SlicerCategoryPage"
 			        }
 			      },
 			      "State": "Generated",

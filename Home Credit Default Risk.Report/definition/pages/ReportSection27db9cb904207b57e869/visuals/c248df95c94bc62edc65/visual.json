@@ -23,13 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Contract Type"
+                  "Property": "Age Group"
                 }
               },
-              "queryRef": "dimApplicant.Contract Type",
-              "nativeQueryRef": "Typ smlouvy",
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
               "active": true,
-              "displayName": "Typ smlouvy"
+              "displayName": "Věková skupina"
             }
           ],
           "fieldParameters": [
@@ -83,24 +83,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Measures Technical"
-                  }
-                },
-                "Property": "Applications % of Visible Total"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -374,20 +356,6 @@
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "82bcc39e6b8c60637451",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Contract Type"
-          }
-        },
-        "type": "Categorical"
-      },
       {
         "name": "bf71df0d5150180a640c",
         "field": {

@@ -13,9 +13,9 @@ table 'Measures Design'
 		displayFolder: Report Wide Measures
 		lineageTag: 9b99bc9b-f2ce-419d-b3ba-6658aa0717fd
 
-	measure SlicerCategory =
+	measure SlicerCategoryPage =
 			
-			var vrCategory = ""
+			var vrCategory = "Filtry pro tuto stránku"
 			var vrDivider = REPT ( "‾", 33 )
 			RETURN
 			vrCategory & UNICHAR ( 10 ) & vrDivider
@@ -116,6 +116,15 @@ table 'Measures Design'
 			)
 		displayFolder: Refresh
 		lineageTag: 3b331202-9609-47fe-9314-21f88e6d08ea
+
+	measure SlicerCategoryGlobal =
+			
+			var vrCategory = "Report level filtry"
+			var vrDivider = REPT ( "‾", 33 )
+			RETURN
+			vrCategory & UNICHAR ( 10 ) & vrDivider
+		displayFolder: Slicer Categories
+		lineageTag: 8071ee74-3137-4be8-9820-481a3236cac5
 
 	partition 'Measures Design-90c31891-e3c3-4d43-9de4-0b32f344a1aa' = m
 		mode: import

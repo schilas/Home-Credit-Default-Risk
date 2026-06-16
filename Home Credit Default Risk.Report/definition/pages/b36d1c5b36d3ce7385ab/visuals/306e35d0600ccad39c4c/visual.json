@@ -23,13 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Family Status"
+                  "Property": "Age Group"
                 }
               },
-              "queryRef": "dimApplicant.Family Status",
-              "nativeQueryRef": "Rodinný stav",
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
               "active": true,
-              "displayName": "Rodinný stav"
+              "displayName": "Věková skupina"
             }
           ],
           "fieldParameters": [

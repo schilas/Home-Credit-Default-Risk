@@ -6,6 +6,8 @@ expression Parameter_Environment = "DEV" meta [IsParameterQuery=true, List={"UAT
 
 	annotation LinkedQueryName = Parameter_Environment
 
+	annotation PBI_NavigationStepName = Navigation
+
 expression _EndDate =
 		let
 		    Source = Date.From(Date.EndOfYear(DateTime.FixedLocalNow()))
@@ -34,5 +36,5 @@ expression _Language = "en-us" meta [IsParameterQuery=true, Type="Text", IsParam
 	lineageTag: 6845c0e2-a490-4bd3-adae-5ec481ece7f0
 	queryGroup: 'CALENDAR\PARAMETERS CALENDAR'
 
-	annotation PBI_ResultType = Text
+	annotation PBI_ResultType = Exception
 

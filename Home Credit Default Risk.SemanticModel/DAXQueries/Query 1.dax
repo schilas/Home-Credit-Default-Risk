@@ -1,0 +1,257 @@
+DEFINE
+    MEASURE 'factApplications'[__Applications Count Check] =
+        DISTINCTCOUNT ( 'factApplications'[SK_ID_CURR] )
+
+    MEASURE 'factInstallmentDPD5Summary'[__Summary Rows] =
+        COUNTROWS ( 'factInstallmentDPD5Summary' )
+
+    MEASURE 'factInstallmentDPD5Summary'[__Summary Distinct Applications] =
+        DISTINCTCOUNT ( 'factInstallmentDPD5Summary'[SK_ID_CURR] )
+
+    MEASURE 'factInstallmentDPD5Summary'[__Summary Duplicate Rows] =
+        [__Summary Rows] - [__Summary Distinct Applications]
+
+    MEASURE 'factInstallmentDPD5Summary'[__Summary Applications With Installments] =
+        CALCULATE (
+            DISTINCTCOUNT ( 'factInstallmentDPD5Summary'[SK_ID_CURR] ),
+            'factInstallmentDPD5Summary'[InstallmentCount] > 0
+        )
+
+    MEASURE 'factInstallmentDPD5Summary'[__Summary Applications With Zero Installments] =
+        CALCULATE (
+            DISTINCTCOUNT ( 'factInstallmentDPD5Summary'[SK_ID_CURR] ),
+            'factInstallmentDPD5Summary'[InstallmentCount] = 0
+        )
+
+    MEASURE 'factInstallmentDPD5Summary'[__Summary Applications With Blank Installments] =
+        CALCULATE (
+            DISTINCTCOUNT ( 'factInstallmentDPD5Summary'[SK_ID_CURR] ),
+            ISBLANK ( 'factInstallmentDPD5Summary'[InstallmentCount] )
+        )
+
+    MEASURE 'factApplications'[__Applications Missing In Summary] =
+        VAR _Applications =
+            VALUES ( 'factApplications'[SK_ID_CURR] )
+        VAR _SummaryApplications =
+            VALUES ( 'factInstallmentDPD5Summary'[SK_ID_CURR] )
+        RETURN
+            COUNTROWS (
+                EXCEPT (
+                    _Applications,
+                    _SummaryApplications
+                )
+            )
+
+    MEASURE 'factApplications'[__Applications Extra In Summary] =
+        VAR _Applications =
+            VALUES ( 'factApplications'[SK_ID_CURR] )
+        VAR _SummaryApplications =
+            VALUES ( 'factInstallmentDPD5Summary'[SK_ID_CURR] )
+        RETURN
+            COUNTROWS (
+                EXCEPT (
+                    _SummaryApplications,
+                    _Applications
+                )
+            )
+
+    MEASURE 'factApplications'[__Applications With Installment History - TREATAS] =
+        VAR _CurrentApplications =
+            VALUES ( 'factApplications'[SK_ID_CURR] )
+        RETURN
+            CALCULATE (
+                DISTINCTCOUNT ( 'factInstallmentDPD5Summary'[SK_ID_CURR] ),
+                TREATAS (
+                    _CurrentApplications,
+                    'factInstallmentDPD5Summary'[SK_ID_CURR]
+                ),
+                'factInstallmentDPD5Summary'[InstallmentCount] > 0
+            )
+
+    MEASURE 'factApplications'[__Applications Without Installment History - TREATAS] =
+        [__Applications Count Check]
+            - [__Applications With Installment History - TREATAS]
+
+    MEASURE 'factApplications'[__Installment History Coverage % - TREATAS] =
+        DIVIDE (
+            [__Applications With Installment History - TREATAS],
+            [__Applications Count Check]
+        )
+
+    MEASURE 'factApplications'[__Coverage Difference Check] =
+        [__Applications Count Check]
+            - [__Applications With Installment History - TREATAS]
+            - [__Applications Without Installment History - TREATAS]
+
+    MEASURE 'factApplications'[__Applications Ever DPD5 - TREATAS] =
+        VAR _CurrentApplications =
+            VALUES ( 'factApplications'[SK_ID_CURR] )
+        RETURN
+            CALCULATE (
+                DISTINCTCOUNT ( 'factInstallmentDPD5Summary'[SK_ID_CURR] ),
+                TREATAS (
+                    _CurrentApplications,
+                    'factInstallmentDPD5Summary'[SK_ID_CURR]
+                ),
+                'factInstallmentDPD5Summary'[EverDPD5Unit] = 1
+            )
+
+    MEASURE 'factApplications'[__Ever DPD5 Ratio - All Applications] =
+        DIVIDE (
+            [__Applications Ever DPD5 - TREATAS],
+            [__Applications Count Check]
+        )
+
+    MEASURE 'factApplications'[__Ever DPD5 Ratio - With History] =
+        DIVIDE (
+            [__Applications Ever DPD5 - TREATAS],
+            [__Applications With Installment History - TREATAS]
+        )
+
+EVALUATE
+VAR _Applications = [__Applications Count Check]
+VAR _SummaryRows = [__Summary Rows]
+VAR _SummaryDistinct = [__Summary Distinct Applications]
+VAR _DuplicateRows = [__Summary Duplicate Rows]
+VAR _WithHistorySummary = [__Summary Applications With Installments]
+VAR _ZeroHistorySummary = [__Summary Applications With Zero Installments]
+VAR _BlankHistorySummary = [__Summary Applications With Blank Installments]
+VAR _MissingInSummary = [__Applications Missing In Summary]
+VAR _ExtraInSummary = [__Applications Extra In Summary]
+VAR _WithHistoryTreatas = [__Applications With Installment History - TREATAS]
+VAR _WithoutHistoryTreatas = [__Applications Without Installment History - TREATAS]
+VAR _CoverageTreatas = [__Installment History Coverage % - TREATAS]
+VAR _CoverageDiff = [__Coverage Difference Check]
+VAR _EverDPD5 = [__Applications Ever DPD5 - TREATAS]
+VAR _EverDPD5All = [__Ever DPD5 Ratio - All Applications]
+VAR _EverDPD5WithHistory = [__Ever DPD5 Ratio - With History]
+RETURN
+    UNION (
+        ROW (
+            "Kontrola", "1. Počet TRAIN žádostí",
+            "Výsledek", FORMAT ( _Applications, "#,0" ),
+            "Co má vyjít", "307,511 nebo aktuální počet žádostí v modelu",
+            "Interpretace", "Toto je hlavní denominator pro report."
+        ),
+        ROW (
+            "Kontrola", "2. Počet řádků v factInstallmentDPD5Summary",
+            "Výsledek", FORMAT ( _SummaryRows, "#,0" ),
+            "Co má vyjít", "Ideálně stejné jako počet TRAIN žádostí",
+            "Interpretace", "Summary tabulka by měla mít jeden řádek na SK_ID_CURR."
+        ),
+        ROW (
+            "Kontrola", "3. Počet unikátních SK_ID_CURR ve summary",
+            "Výsledek", FORMAT ( _SummaryDistinct, "#,0" ),
+            "Co má vyjít", "Stejné jako počet TRAIN žádostí",
+            "Interpretace", "Ověřuje, kolik unikátních žádostí/klientů je ve summary tabulce."
+        ),
+        ROW (
+            "Kontrola", "4. Duplicitní řádky ve summary",
+            "Výsledek", FORMAT ( _DuplicateRows, "#,0" ),
+            "Co má vyjít", "0",
+            "Interpretace", "Pokud je více než 0, summary tabulka má duplicity na SK_ID_CURR."
+        ),
+        ROW (
+            "Kontrola", "5. TRAIN žádosti chybějící ve summary",
+            "Výsledek", FORMAT ( _MissingInSummary, "#,0" ),
+            "Co má vyjít", "0",
+            "Interpretace", "Pokud je více než 0, některé TRAIN žádosti se nedostaly do DPD5 summary tabulky."
+        ),
+        ROW (
+            "Kontrola", "6. Extra žádosti ve summary mimo TRAIN",
+            "Výsledek", FORMAT ( _ExtraInSummary, "#,0" ),
+            "Co má vyjít", "0",
+            "Interpretace", "Pokud je více než 0, summary tabulka obsahuje klienty mimo TRAIN dataset."
+        ),
+        ROW (
+            "Kontrola", "7. Žádosti se splátkovou historií podle summary",
+            "Výsledek", FORMAT ( _WithHistorySummary, "#,0" ),
+            "Co má vyjít", "Méně nebo rovno počtu TRAIN žádostí",
+            "Interpretace", "Počet unikátních žádostí, kde InstallmentCount > 0."
+        ),
+        ROW (
+            "Kontrola", "8. Žádosti bez splátkové historie podle summary",
+            "Výsledek", FORMAT ( _ZeroHistorySummary, "#,0" ),
+            "Co má vyjít", "Může být 0, ale u tohoto datasetu bych ověřil, zda to dává smysl",
+            "Interpretace", "Počet žádostí, kde InstallmentCount = 0. Pokud je 0, coverage může opravdu být 100 %."
+        ),
+        ROW (
+            "Kontrola", "9. Žádosti s prázdným InstallmentCount",
+            "Výsledek", FORMAT ( _BlankHistorySummary, "#,0" ),
+            "Co má vyjít", "0",
+            "Interpretace", "Pokud je více než 0, ve summary tabulce jsou prázdné hodnoty, které je potřeba ošetřit."
+        ),
+        ROW (
+            "Kontrola", "10. Žádosti se splátkovou historií - bezpečný výpočet TREATAS",
+            "Výsledek", FORMAT ( _WithHistoryTreatas, "#,0" ),
+            "Co má vyjít", "Mělo by odpovídat kontrole č. 7",
+            "Interpretace", "Toto je bezpečný numerator pro coverage measure v reportu."
+        ),
+        ROW (
+            "Kontrola", "11. Žádosti bez splátkové historie - bezpečný výpočet TREATAS",
+            "Výsledek", FORMAT ( _WithoutHistoryTreatas, "#,0" ),
+            "Co má vyjít", "Applications Count minus žádosti se splátkovou historií",
+            "Interpretace", "Pokud je tato hodnota 0, coverage vyjde 100 %."
+        ),
+        ROW (
+            "Kontrola", "12. Pokrytí splátkovou historií - bezpečný výpočet TREATAS",
+            "Výsledek", FORMAT ( _CoverageTreatas, "0.00%" ),
+            "Co má vyjít", "Maximálně 100 %",
+            "Interpretace", "Toto je hodnota, kterou by měla ukazovat KPI karta Pokrytí splátkovou historií."
+        ),
+        ROW (
+            "Kontrola", "13. Kontrola rozdělení With + Without",
+            "Výsledek", FORMAT ( _CoverageDiff, "#,0" ),
+            "Co má vyjít", "0",
+            "Interpretace", "Pokud není 0, žádosti nejsou správně rozdělené na se splátkovou historií / bez historie."
+        ),
+        ROW (
+            "Kontrola", "14. Žádosti s DPD5+ historií",
+            "Výsledek", FORMAT ( _EverDPD5, "#,0" ),
+            "Co má vyjít", "Méně nebo rovno počtu žádostí se splátkovou historií",
+            "Interpretace", "Počet žádostí, kde klient měl alespoň jednu historickou DPD5+ událost."
+        ),
+        ROW (
+            "Kontrola", "15. Historické DPD5+ ze všech TRAIN žádostí",
+            "Výsledek", FORMAT ( _EverDPD5All, "0.00%" ),
+            "Co má vyjít", "Oficiální bonusová metrika",
+            "Interpretace", "Denominator jsou všechny TRAIN žádosti."
+        ),
+        ROW (
+            "Kontrola", "16. DPD5+ pouze ze žádostí se splátkovou historií",
+            "Výsledek", FORMAT ( _EverDPD5WithHistory, "0.00%" ),
+            "Co má vyjít", "Pokud coverage = 100 %, má být stejné jako kontrola č. 15",
+            "Interpretace", "Denominator jsou pouze žádosti, kde existuje splátková historie."
+        )
+    )
+
+EVALUATE
+SUMMARIZECOLUMNS (
+    'dimApplicant'[Previous Application Count Band],
+    "Počet žádostí", [__Applications Count Check],
+    "Se splátkovou historií", [__Applications With Installment History - TREATAS],
+    "Bez splátkové historie", [__Applications Without Installment History - TREATAS],
+    "Pokrytí splátkovou historií", FORMAT ( [__Installment History Coverage % - TREATAS], "0.00%" ),
+    "Žádosti s DPD5+ historií", [__Applications Ever DPD5 - TREATAS],
+    "Historické DPD5+ ze všech žádostí", FORMAT ( [__Ever DPD5 Ratio - All Applications], "0.00%" ),
+    "DPD5+ ze žádostí s historií", FORMAT ( [__Ever DPD5 Ratio - With History], "0.00%" )
+)
+ORDER BY
+    'dimApplicant'[Previous Application Count Band]
+
+EVALUATE
+TOPN (
+    50,
+    FILTER (
+        SELECTCOLUMNS (
+            'factInstallmentDPD5Summary',
+            "SK_ID_CURR", 'factInstallmentDPD5Summary'[SK_ID_CURR],
+            "InstallmentCount", 'factInstallmentDPD5Summary'[InstallmentCount],
+            "DPD5InstallmentCount", 'factInstallmentDPD5Summary'[DPD5InstallmentCount],
+            "EverDPD5Unit", 'factInstallmentDPD5Summary'[EverDPD5Unit]
+        ),
+        [InstallmentCount] = 0
+    ),
+    [SK_ID_CURR],
+    ASC
+)

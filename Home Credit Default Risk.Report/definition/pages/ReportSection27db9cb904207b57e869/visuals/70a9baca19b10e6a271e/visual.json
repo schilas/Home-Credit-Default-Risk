@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "70a9baca19b10e6a271e",
   "position": {
-    "x": 10.136518771331058,
-    "y": 439.55631399317406,
+    "x": 10,
+    "y": 685,
     "z": 25000,
-    "height": 80.170648464163818,
-    "width": 240.51194539249144,
+    "height": 80,
+    "width": 241,
     "tabOrder": 24000
   },
   "visual": {
@@ -154,6 +154,29 @@
         }
       ]
     },
+    "syncGroup": {
+      "groupName": "Contract Type",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f13aa6980e2057d3b00e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimApplicant"
+              }
+            },
+            "Property": "Contract Type"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

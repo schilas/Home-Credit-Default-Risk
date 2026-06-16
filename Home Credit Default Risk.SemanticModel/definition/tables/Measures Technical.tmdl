@@ -10,7 +10,7 @@ table 'Measures Technical'
 	/// Tabulka factApplications má mít jeden řádek pro jednu aktuální žádost.
 	measure 'Applications Count' =
 			
-			COUNTROWS ( factApplications )
+			DISTINCTCOUNT ( factApplications[SK_ID_CURR] )
 		formatString: #,0
 		displayFolder: 01 Základní metriky\Žádosti
 		lineageTag: 40a76499-0895-423c-a9ea-e7a69f5db559
@@ -283,7 +283,17 @@ table 'Measures Technical'
 	/// na libovolné předchozí Home Credit žádosti.
 	measure 'Applications Ever DPD5' =
 			
-			SUM ( factInstallmentDPD5Summary[EverDPD5Unit] )
+			VAR _CurrentApplications =
+			    VALUES ( factApplications[SK_ID_CURR] )
+			RETURN
+			    CALCULATE (
+			        DISTINCTCOUNT ( factInstallmentDPD5Summary[SK_ID_CURR] ),
+			        TREATAS (
+			            _CurrentApplications,
+			            factInstallmentDPD5Summary[SK_ID_CURR]
+			        ),
+			        factInstallmentDPD5Summary[EverDPD5Unit] = 1
+			    )
 		formatString: #,0
 		displayFolder: 05 Bonus DPD5\Úroveň žádosti
 		lineageTag: 4a85e5bc-779a-457b-9900-b6ae04202f37
@@ -311,12 +321,17 @@ table 'Measures Technical'
 	/// Počet TRAIN žádostí, které mají alespoň jeden historický záznam ve splátkové historii.
 	measure 'Applications With Installment History' =
 			
-			COUNTROWS (
-			    FILTER (
-			        factInstallmentDPD5Summary,
+			VAR _CurrentApplications =
+			    VALUES ( factApplications[SK_ID_CURR] )
+			RETURN
+			    CALCULATE (
+			        DISTINCTCOUNT ( factInstallmentDPD5Summary[SK_ID_CURR] ),
+			        TREATAS (
+			            _CurrentApplications,
+			            factInstallmentDPD5Summary[SK_ID_CURR]
+			        ),
 			        factInstallmentDPD5Summary[InstallmentCount] > 0
 			    )
-			)
 		formatString: #,0
 		displayFolder: 05 Bonus DPD5\Pokrytí dat
 		lineageTag: 498fdbb6-b9a1-4291-b6b2-41b4a036e136
@@ -370,7 +385,7 @@ table 'Measures Technical'
 
 	annotation PBI_QueryRelationships = {"columnCount":0,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":[],"ColumnCount":0,"KeyColumnNames":[],"ColumnIdentities":[],"RelationshipInfo":[]}
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 
 	annotation LinkedQueryName = Measures Technical
 

@@ -61,7 +61,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Pohlaví'"
+                  "Value": "'Měsíc vůči žádosti'"
                 }
               }
             }
@@ -155,5 +155,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "4f5d8fb1d38beda90473",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dimRelativeMonth"
+              }
+            },
+            "Property": "MONTHS_BALANCE"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

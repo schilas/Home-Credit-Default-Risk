@@ -23,13 +23,13 @@
                       "Entity": "dimApplicant"
                     }
                   },
-                  "Property": "Contract Type"
+                  "Property": "Age Group"
                 }
               },
-              "queryRef": "dimApplicant.Contract Type",
-              "nativeQueryRef": "Typ smlouvy",
+              "queryRef": "dimApplicant.Age Group",
+              "nativeQueryRef": "Věková skupina",
               "active": true,
-              "displayName": "Typ smlouvy"
+              "displayName": "Věková skupina"
             }
           ],
           "fieldParameters": [
@@ -68,24 +68,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Measures Technical"
-                  }
-                },
-                "Property": "Repayment Difficulty Rate"
-              }
-            },
-            "direction": "Descending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -356,20 +338,6 @@
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "1aa07ac69a4043942b40",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dimApplicant"
-              }
-            },
-            "Property": "Contract Type"
-          }
-        },
-        "type": "Categorical"
-      },
       {
         "name": "d1a1cdf81c84bae8a7aa",
         "field": {
