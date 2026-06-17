@@ -108,7 +108,7 @@ table 'Measures Design'
 			            && [UpToDate] >= THRESHOLD_HOURS
 			    )
 			)
-			VAR _warning = IF(NoOfSources=1,"⚠️ One source is not up to date.",  "⚠️" &NoOfSources&" sources are not up to date.")
+			VAR _warning = IF(NoOfSources=1,"⚠️ Report není aktualizovaný.",  "⚠️" &NoOfSources&" ze zdrojů není aktualizovaný.")
 			RETURN
 			IF(
 			    [UpToDate] >= THRESHOLD_HOURS,

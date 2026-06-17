@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 1283.1718331587012,
+        "x": 1283,
         "y": 0
       },
       "nodes": [
@@ -33,18 +33,6 @@
           },
           "zIndex": 2,
           "expandedHeight": 122
-        },
-        {
-          "location": {
-            "x": 2958.1718331587012,
-            "y": 384.23657938774022
-          },
-          "nodeIndex": "Date",
-          "size": {
-            "height": 369,
-            "width": 214
-          },
-          "zIndex": 7
         },
         {
           "location": {

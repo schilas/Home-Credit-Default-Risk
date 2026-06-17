@@ -4511,7 +4511,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "edián DTI (x roční příjem)": {
+			          "Medián DTI": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -4521,7 +4521,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Medián DTI": {
+			          "edián DTI (x roční příjem)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -10220,16 +10220,6 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.727
-			          }
-			        },
-			        {
-			          "Typ smlouvy": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
